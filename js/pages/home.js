@@ -9,12 +9,14 @@ function personCard(p) {
   const tClass = p.testament === 'old' ? 'old' : 'new';
   const tLabel = p.testament === 'old' ? t('oldTestament') : t('newTestament');
   const name = tName(p.id) || p.name;
+  const sub = tSubtitle(p.id) || p.subtitle;
   return `<a href="#/person/${p.id}" class="person-card">
     <img src="${getPersonImage(p)}" alt="${name}" loading="lazy">
     <div class="overlay">
+      <div class="card-subtitle">${sub}</div>
       <div class="name">${name}</div>
-      <div class="testament ${tClass}">${tLabel}</div>
     </div>
+    <div class="testament ${tClass}">${tLabel}</div>
   </a>`;
 }
 

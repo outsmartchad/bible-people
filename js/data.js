@@ -5,7 +5,7 @@ export const PEOPLE = [
   {
     id: 'jesus',
     name: 'Jesus Christ',
-    subtitle: 'The Messiah',
+    subtitle: 'Son of God & Savior of the World',
     testament: 'new',
     category: 'Messiah',
     era: 'c. 4 BC – c. AD 30',
@@ -42,7 +42,7 @@ Jesus' ministry culminated in Jerusalem, where he was betrayed by Judas Iscariot
   {
     id: 'moses',
     name: 'Moses',
-    subtitle: 'The Lawgiver',
+    subtitle: 'Prophet & Lawgiver',
     testament: 'old',
     category: 'Prophet',
     era: 'c. 1400–1280 BC',
@@ -116,7 +116,7 @@ Abraham's life was marked by both remarkable faith and very human failures. He t
   {
     id: 'david',
     name: 'King David',
-    subtitle: 'A Man After God\'s Own Heart',
+    subtitle: 'King of Israel',
     testament: 'old',
     category: 'King',
     era: 'c. 1040–970 BC',
@@ -153,7 +153,7 @@ Yet David's story also contains one of the Bible's most devastating moral failur
   {
     id: 'mary',
     name: 'Mary, Mother of Jesus',
-    subtitle: 'Blessed Among Women',
+    subtitle: 'Mother of Jesus',
     testament: 'new',
     category: 'Women of Faith',
     era: 'c. 18 BC – c. AD 48',
@@ -190,7 +190,7 @@ After the resurrection, Mary is found among the disciples in the upper room, pra
   {
     id: 'peter',
     name: 'Simon Peter',
-    subtitle: 'The Rock',
+    subtitle: 'Apostle & Rock of the Church',
     testament: 'new',
     category: 'Apostle',
     era: 'c. AD 1–68',
