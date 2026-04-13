@@ -34,8 +34,12 @@ function route() {
   updateNav(hash);
   document.querySelector('nav')?.classList.remove('open');
   window.scrollTo(0, 0);
+  // Page transition
+  app.style.animation = 'none';
+  app.offsetHeight; // force reflow
+  app.style.animation = 'fadeIn .3s ease-out';
   if (hash === '/' || hash === '') renderHome(app);
-  else if (hash === '/gallery') renderGallery(app);
+  else if (hash.startsWith('/gallery')) renderGallery(app);
   else if (hash === '/map') renderMap(app);
   else if (hash === '/about') renderAbout(app);
   else if (hash.startsWith('/person/')) renderPerson(app, hash.split('/person/')[1]);
