@@ -31,6 +31,8 @@ function updateNav(hash) {
 function route() {
   const hash = location.hash.slice(1) || '/';
   updateNav(hash);
+  // Close mobile menu on navigation
+  document.querySelector('nav')?.classList.remove('open');
   window.scrollTo(0, 0);
   if (hash === '/' || hash === '') renderHome(app);
   else if (hash === '/gallery') renderGallery(app);
