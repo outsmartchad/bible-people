@@ -328,5 +328,113 @@ export const DISCUSSION_QUESTIONS = {
     'He rebuilt Jerusalem\'s walls in 52 days while enemies mocked, threatened, and tried to lure him into traps. How do you stay focused on the work when opposition is constant?',
     'Discuss: Nehemiah told Sanballat "I am doing a great work and cannot come down." When do you need to refuse a meeting, conversation, or distraction to protect your focus?',
     'As a group, consider: Nehemiah made the wealthy return land they had seized from the poor. What does his economic reform reveal about the connection between spiritual renewal and justice?'
+  ],
+  'adam': [
+    'Adam walked with God in the garden yet still chose the fruit. What does his story reveal about how proximity to God doesn\'t automatically prevent disobedience?',
+    'When confronted, Adam blamed Eve and indirectly blamed God — "the woman you gave me." How do you deflect responsibility when caught, and what would owning it fully look like?',
+    'Discuss: Adam named every living creature, exercising authority before the fall. How does meaningful work shape identity, and what happens when that work is cursed?',
+    'As a group, consider: Adam hid from God after sinning. What are you hiding from God right now, and what would it take to stop hiding?'
+  ],
+  'eve': [
+    'Eve engaged in a theological conversation with the serpent rather than walking away. When has entertaining a tempting argument led you somewhere you never intended to go?',
+    'The text says Eve saw the fruit was "good for food, pleasing to the eye, and desirable for gaining wisdom." How do those three appeals — physical, aesthetic, intellectual — still operate in your life?',
+    'Discuss: Eve is often reduced to "the woman who ate the apple," but she was also the first mother to grieve a murdered child. How does reducing someone to their worst moment distort their full story?',
+    'Share a time when a desire for knowledge or understanding led you to cross a boundary you knew existed.'
+  ],
+  'job': [
+    'Job lost his children, wealth, and health in a single day and still said "the Lord gave and the Lord has taken away." What is the honest limit of your worship under suffering?',
+    'Job\'s friends sat with him in silence for seven days before speaking — and everything went wrong when they opened their mouths. When is presence without explanation the most faithful response to suffering?',
+    'Discuss: God answered Job out of the whirlwind but never explained why he suffered. How do you live with a God who is powerful enough to explain but chooses not to?',
+    'As a group, consider: Job said "I had heard of you by the hearing of the ear, but now my eye sees you." What is the difference between knowing about God and encountering God, and what brought you across that line?'
+  ],
+  'gideon': [
+    'Gideon asked God for not one but two fleece tests before obeying. Is testing God a sign of weak faith or honest caution, and where is your line?',
+    'God reduced Gideon\'s army from 32,000 to 300 so Israel couldn\'t take the credit. What resource, team, or safety net has God stripped away so you couldn\'t attribute success to yourself?',
+    'Discuss: Gideon tore down his father\'s altar to Baal at night because he was afraid. Does it matter that his obedience was fearful rather than bold?',
+    'Share a time when God asked you to do something that made no tactical sense — like surrounding an army with torches and jars — and the outcome surprised you.'
+  ],
+  'samson': [
+    'Samson had supernatural strength but couldn\'t govern his own desires. What area of extraordinary gifting in your life coexists with your deepest vulnerability?',
+    'Samson told Delilah his secret after she asked the same manipulative question three times. How do you recognize when persistence from someone is love versus exploitation?',
+    'Discuss: Samson\'s final prayer — "let me die with the Philistines" — was both an act of faith and of vengeance. Can a prayer be simultaneously holy and broken? How do you hold that tension?',
+    'As a group, consider: Samson\'s parents tried to steer him away from the Philistine woman, but he insisted. When has someone you trusted warned you and you ignored them — and what happened?'
+  ],
+  'ezekiel': [
+    'God told Ezekiel to lie on his side for 390 days as a sign to Israel. What is the most uncomfortable thing you believe God has asked you to endure as a witness to others?',
+    'Ezekiel saw the valley of dry bones come to life. What situation in your life or community looks completely dead, and do you believe God can breathe life into it?',
+    'Discuss: Ezekiel was told to eat a scroll and it tasted like honey. What does it mean to internalize God\'s word so deeply that it becomes part of your body, not just your mind?',
+    'Share a time when you were called to speak hope into a situation everyone else had given up on.'
+  ],
+  'caleb': [
+    'Caleb and Joshua were the only two spies who said "we can take the land," and they waited 40 years for the rest of Israel to die in the desert. How do you sustain conviction when everyone around you disagrees and you pay the price for their fear?',
+    'At 85, Caleb asked for the mountain with the giants on it. What challenge are you tempted to avoid because of age, fatigue, or the assumption that your best years are behind you?',
+    'Discuss: Caleb said "I wholly followed the Lord my God." What does wholehearted — not partial, not mostly — obedience look like in practice?',
+    'As a group, consider: Caleb\'s reward was not rest but harder territory. How do you respond when faithfulness earns you a bigger fight instead of a break?'
+  ],
+  'cain': [
+    'God warned Cain that sin was "crouching at the door" before he killed Abel. When have you received a clear warning and ignored it anyway?',
+    'Cain said "am I my brother\'s keeper?" as a deflection, but the question lingers. What does genuine responsibility for another person\'s wellbeing actually require of you?',
+    'Discuss: God marked Cain to protect him even after the murder. What does that protection reveal about judgment and mercy coexisting in the same act?',
+    'Share a time when jealousy over someone else\'s acceptance — like Cain watching Abel\'s offering accepted — grew into something darker than you expected.'
+  ],
+  'abel': [
+    'Abel brought the firstborn of his flock — his best — while Cain brought "some" of his crops. What does the difference between your best offering and a convenient offering look like in your life?',
+    'Abel\'s blood "cried out from the ground" after his death. How does the idea that injustice has a voice — even after the victim is silenced — shape how you think about justice?',
+    'Discuss: Abel did everything right and was murdered for it. How do you process that faithfulness does not guarantee safety?',
+    'As a group, consider: Hebrews 11 says Abel "still speaks, even though he is dead." Whose faithful life continues to speak into yours long after they are gone?'
+  ],
+  'lot': [
+    'Lot chose the well-watered plain near Sodom because it looked prosperous. When has a decision based purely on visible advantage pulled you into an environment that corrupted you?',
+    'Lot\'s wife looked back at Sodom and became a pillar of salt. What are you still looking back at that God has told you to leave behind?',
+    'Discuss: Lot offered his daughters to the mob to protect his guests. How do you evaluate a "lesser evil" decision when every option involves harm?',
+    'As a group, consider: Lot had to be physically dragged out of Sodom by angels. When has God had to forcibly remove you from a situation you were too attached to leave voluntarily?'
+  ],
+  'rebekah': [
+    'Rebekah watered ten camels for a stranger — an act of extraordinary generosity that changed her life. When has going far beyond what was asked opened an unexpected door for you?',
+    'Rebekah orchestrated Jacob\'s deception of Isaac to secure the blessing she believed God had promised. When have you manipulated circumstances to "help" God fulfill a promise on your timeline?',
+    'Discuss: Rebekah told Jacob "let the curse fall on me" when he feared the deception. What does it reveal when a parent absorbs consequences to advance their child\'s position?',
+    'Share a time when favoritism within a family — like Rebekah\'s preference for Jacob over Esau — created division you had to navigate.'
+  ],
+  'rachel': [
+    'Rachel waited seven years for Jacob, then watched him be given to her sister on her wedding night. How do you process betrayal that comes from the people who were supposed to protect you?',
+    'Rachel stole her father\'s household gods when leaving Laban. What old attachments or securities do you carry into a new season that you should have left behind?',
+    'Discuss: Rachel cried to Jacob "give me children or I\'ll die," placing her identity entirely in motherhood. What outcome have you made so central to your identity that its absence feels like death?',
+    'As a group, consider: Rachel died giving birth to Benjamin and named him "son of my suffering" — Jacob renamed him "son of my right hand." How does perspective transform the meaning of painful experiences?'
+  ],
+  'leah': [
+    'Leah was the unloved wife who kept naming her sons things like "surely my husband will love me now." When have you tried to earn love that was never going to come through achievement?',
+    'Despite being unwanted by Jacob, Leah became the mother of Judah — the line of David and Jesus. How does God\'s choice of the overlooked challenge your understanding of significance?',
+    'Discuss: Leah\'s eyes are described as "weak" or "tender" compared to Rachel\'s beauty. How does living in someone else\'s shadow shape your self-perception, and how do you break free of that?',
+    'Share a time when being the unchosen one in a relationship or role turned out to carry its own unexpected blessing.'
+  ],
+  'miriam': [
+    'Miriam watched over baby Moses in the basket and spoke up to Pharaoh\'s daughter at exactly the right moment. When has quick thinking in a terrifying situation saved something precious?',
+    'Miriam led Israel in worship after crossing the Red Sea, then was struck with leprosy for challenging Moses\'s authority. How do you hold together someone\'s genuine gifting and their genuine failure?',
+    'Discuss: Moses interceded for Miriam\'s healing after she had publicly opposed him. What does it cost to pray for someone who has just undermined you?',
+    'As a group, consider: Miriam was a prophetess, worship leader, and sister of two of Israel\'s greatest leaders — yet her jealousy nearly destroyed her. What does her story teach about the danger of comparison among people who serve together?'
+  ],
+  'abigail': [
+    'Abigail intercepted David with provisions and a speech that stopped him from committing a massacre. When has wise intervention at the right moment prevented someone from doing something they would have regretted?',
+    'Abigail acted decisively behind her foolish husband Nabal\'s back to save her household. How do you navigate loyalty to a person and responsibility to a larger group when those two conflict?',
+    'Discuss: Abigail told David "when the Lord has done every good thing he promised, you won\'t have the stain of needless bloodshed on your conscience." How do you speak truth to powerful people without provoking their anger?',
+    'Share a time when you had to clean up a mess created by someone else\'s arrogance or stupidity, and how you managed the emotional cost.'
+  ],
+  'mordecai': [
+    'Mordecai refused to bow to Haman even though it endangered every Jew in the empire. When has your personal conviction put others at risk, and how did you weigh that?',
+    'Mordecai told Esther "if you remain silent, relief will come from another place — but you and your father\'s house will perish." How do you challenge someone to act when they are paralyzed by fear?',
+    'Discuss: Mordecai sat in sackcloth at the king\'s gate rather than hiding his grief. What role does public lament play in a culture that prefers people to be fine?',
+    'As a group, consider: Mordecai raised Esther as his own daughter, and that quiet investment became the instrument of national deliverance. What long-term investment in someone else\'s life might bear fruit you cannot yet imagine?'
+  ],
+  'lazarus': [
+    'Jesus wept at Lazarus\'s tomb even though he knew he was about to raise him. What does that reveal about grief being valid even when you know the ending?',
+    'Lazarus was dead four days — beyond any cultural expectation of resuscitation. What situation in your life has passed the point where anyone believes recovery is possible?',
+    'Discuss: After being raised, Lazarus became a target — the chief priests plotted to kill him because his existence was evidence. When has your testimony made you a threat to people invested in a different narrative?',
+    'Share a time when you experienced a "Lazarus moment" — something you had fully mourned and buried that came back to life unexpectedly.'
+  ],
+  'nicodemus': [
+    'Nicodemus came to Jesus at night, afraid to be seen. What spiritual conversation or step are you only willing to take in private, and what would it cost to do it publicly?',
+    'Jesus told Nicodemus "you must be born again" and he took it literally. When has a spiritual truth been so disorienting that you couldn\'t process it beyond the surface level?',
+    'Discuss: Nicodemus defended Jesus before the Sanhedrin by asking "does our law condemn a man without first hearing him?" How do you advocate for fairness in a hostile room without exposing yourself fully?',
+    'As a group, consider: Nicodemus brought 75 pounds of spices to Jesus\'s burial — an extravagant public act after a life of private faith. What finally moves someone from secret belief to visible commitment?'
   ]
 };
