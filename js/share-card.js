@@ -186,8 +186,6 @@ export async function sharePersonCard(person, displayName, scripture, imgUrl) {
     if (navigator.canShare?.({ files: [file] })) {
       try {
         await navigator.share({
-          title: displayName,
-          text: scripture ? `${scripture.text} — ${scripture.reference || scripture.ref}` : displayName,
           files: [file]
         });
         return;
