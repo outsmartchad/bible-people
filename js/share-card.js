@@ -1,46 +1,27 @@
 // share-card.js — Generate 1080x1080 share cards with Canvas
-// Uses inline QR code generation (no external library)
+// Uses qrcode-generator (CDN) for real scannable QR codes
 
 const SITE_URL = 'outsmartchad.github.io/bible-people';
 
-// Minimal QR code generator — generates a simple QR-like grid pattern for the URL
-// For a real QR code we'd need a library; this generates a branded placeholder grid
 function drawQRCode(ctx, x, y, size) {
   const url = `https://${SITE_URL}`;
-  const modules = 21; // QR version 1
-  const cellSize = size / modules;
+  // qrcode-generator loaded via CDN as global `qrcode`
+  const qr = qrcode(0, 'L');
+  qr.addData(url);
+  qr.make();
 
-  // Draw background
+  const moduleCount = qr.getModuleCount();
+  const cellSize = size / moduleCount;
+
+  // White background with padding
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(x, y, size, size);
+  ctx.fillRect(x - 4, y - 4, size + 8, size + 8);
 
-  // Draw a deterministic pattern from the URL string
-  ctx.fillStyle = '#2D2118';
-  const seed = url.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-
-  // Position patterns (3 corners)
-  const drawFinder = (fx, fy) => {
-    ctx.fillRect(fx, fy, cellSize * 7, cellSize * 7);
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(fx + cellSize, fy + cellSize, cellSize * 5, cellSize * 5);
-    ctx.fillStyle = '#2D2118';
-    ctx.fillRect(fx + cellSize * 2, fy + cellSize * 2, cellSize * 3, cellSize * 3);
-  };
-  drawFinder(x, y);
-  drawFinder(x + cellSize * 14, y);
-  drawFinder(x, y + cellSize * 14);
-
-  // Data modules (pseudo-random from URL hash)
-  let hash = seed;
-  for (let row = 0; row < modules; row++) {
-    for (let col = 0; col < modules; col++) {
-      // Skip finder patterns
-      if ((row < 8 && col < 8) || (row < 8 && col > 12) || (row > 12 && col < 8)) continue;
-      hash = ((hash * 1103515245 + 12345) >>> 0) % 2147483648;
-      if (hash % 3 === 0) {
-        ctx.fillStyle = '#2D2118';
-        ctx.fillRect(x + col * cellSize, y + row * cellSize, cellSize, cellSize);
-      }
+  // Draw QR modules
+  for (let row = 0; row < moduleCount; row++) {
+    for (let col = 0; col < moduleCount; col++) {
+      ctx.fillStyle = qr.isDark(row, col) ? '#2D2118' : '#ffffff';
+      ctx.fillRect(x + col * cellSize, y + row * cellSize, cellSize + 0.5, cellSize + 0.5);
     }
   }
 }
