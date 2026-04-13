@@ -137,6 +137,9 @@ footer{background:var(--footer-bg);padding:60px 48px 24px}
 .map-info h3{font-family:var(--font-heading);color:var(--burgundy);font-size:18px}
 .map-info p{font-size:13px;color:#888;margin-top:4px}
 #leaflet-map{width:100%;height:100%}
+.map-legend{position:absolute;bottom:16px;right:16px;background:var(--white);border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.12);padding:12px 16px;z-index:1000;display:flex;flex-wrap:wrap;gap:8px 16px;max-width:300px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#555}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
 /* About */
 .about-hero{background:var(--burgundy);padding:80px 48px 60px;text-align:center;color:var(--white)}
@@ -213,6 +216,17 @@ footer{background:var(--footer-bg);padding:60px 48px 24px}
 .related-person p{font-size:13px;color:#555}
 .person-nav{display:flex;justify-content:space-between;max-width:1100px;margin:0 auto;padding:24px 48px 48px;border-top:1px solid #eee}
 .person-nav a{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--burgundy);font-weight:700}
+.how-saw-god{margin-top:48px;padding:32px;background:linear-gradient(135deg,rgba(107,31,61,.05),rgba(184,134,11,.05));border-radius:12px;border:1px solid rgba(107,31,61,.1)}
+.how-saw-god h3{font-family:var(--font-heading);font-size:22px;color:var(--burgundy);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.how-saw-god h3 i{color:var(--gold-light)}
+.saw-god-item{display:flex;gap:12px;margin-bottom:16px;align-items:flex-start}
+.saw-god-item i{color:var(--gold);font-size:20px;flex-shrink:0;margin-top:2px}
+.saw-god-item p{font-size:14px;color:#555;line-height:1.7}
+.scripture-links{margin-top:32px;padding-top:24px;border-top:1px solid #eee}
+.scripture-links h4{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-bottom:12px}
+.scripture-link{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--gold);margin-bottom:8px;transition:color .2s}
+.scripture-link:hover{color:var(--burgundy)}
+.scripture-link i{font-size:14px}
 
 /* Responsive */
 @media(max-width:1024px){

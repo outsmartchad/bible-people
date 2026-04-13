@@ -62,6 +62,8 @@ export const en = {
   timothy316: '— 2 Timothy 3:16',
   theStory: 'The Story', spiritualJourney: 'Spiritual Journey',
   learningToWalk: 'Learning to Walk with God',
+  howSawGod: 'How {name} Saw God',
+  scriptureLinks: 'Scripture Links',
   keyScriptures: 'Key Scriptures', timeline: 'Timeline',
   relatedPeople: 'Related People', allPeople: 'All People',
   explore: 'Explore', wordOfTheDay: 'Word of the Day',

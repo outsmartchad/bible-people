@@ -7,6 +7,16 @@ const TYPE_COLORS = {
   Fortress: '#555', Region: '#9370DB',
 };
 
+const TYPE_ICONS = {
+  'All Types': 'ri-apps-line', City: 'ri-building-line', Mountain: 'ri-cloud-line',
+  River: 'ri-drop-line', 'Sea/Lake': 'ri-ship-line', Temple: 'ri-ancient-gate-line',
+  Garden: 'ri-plant-line', Fortress: 'ri-shield-line', Region: 'ri-map-2-line',
+};
+
+const PERIOD_ICONS = {
+  All: 'ri-layout-grid-line', OT: 'ri-ancient-pavilion-line', NT: 'ri-cross-line', Both: 'ri-links-line',
+};
+
 const TYPES = ['All Types', ...new Set(LOCATIONS.map(l => l.type))];
 
 function badgeClass(period) {
@@ -15,32 +25,44 @@ function badgeClass(period) {
   return 'both';
 }
 
+function tType(type) {
+  return t(type) || type;
+}
+
 export function renderMap(container) {
+  const totalEvents = LOCATIONS.reduce((s, l) => s + l.events, 0);
   container.innerHTML = `<div class="map-page"><div class="map-container">
     <div class="map-sidebar">
-      <h2>${t('biblicalMap')}</h2>
-      <div class="subtitle">${t('exploreLocations')}</div>
-      <div class="filter-label">PERIOD</div>
+      <h2><i class="ri-map-pin-line"></i> ${t('biblicalMap')}</h2>
+      <div class="subtitle">${LOCATIONS.length} ${t('locations')}</div>
+      <div class="filter-label">${t('period').toUpperCase()}</div>
       <div class="period-filters">
-        <span class="period-btn active" data-period="All">All</span>
-        <span class="period-btn" data-period="OT">OT</span>
-        <span class="period-btn" data-period="NT">NT</span>
-        <span class="period-btn" data-period="Both">Both</span>
+        <span class="period-btn active" data-period="All"><i class="${PERIOD_ICONS.All}"></i> ${t('allPeriods')}</span>
+        <span class="period-btn" data-period="OT"><i class="${PERIOD_ICONS.OT}"></i> ${t('oldTestament')}</span>
+        <span class="period-btn" data-period="NT"><i class="${PERIOD_ICONS.NT}"></i> ${t('newTestament')}</span>
+        <span class="period-btn" data-period="Both"><i class="${PERIOD_ICONS.Both}"></i> ${t('bothPeriods')}</span>
       </div>
-      <div class="filter-label">PLACE TYPE</div>
+      <div class="filter-label">${(t('placeType') || 'PLACE TYPE').toUpperCase()}</div>
       <div class="type-filters">
-        ${TYPES.map((t, i) => `<span class="type-chip${i === 0 ? ' active' : ''}" data-type="${t}">${t}</span>`).join('')}
+        ${TYPES.map((tp, i) => `<span class="type-chip${i === 0 ? ' active' : ''}" data-type="${tp}"><i class="${TYPE_ICONS[tp] || 'ri-map-pin-line'}"></i> ${tp === 'All Types' ? t('allTypes') : tType(tp)}</span>`).join('')}
       </div>
-      <div class="locations-label">LOCATIONS</div>
+      <div class="locations-label">${t('locations').toUpperCase()}</div>
       <div id="locations-list">
         ${LOCATIONS.map((l, i) => `<div class="location-item" data-idx="${i}">
-          <div class="loc-name">${tLocation(l.name)}</div>
-          <div class="loc-meta">${l.type} · <span class="loc-badge ${badgeClass(l.period)}">${l.period}</span> · ${l.events} events</div>
+          <div class="loc-name"><i class="${TYPE_ICONS[l.type] || 'ri-map-pin-line'}" style="color:${TYPE_COLORS[l.type]};margin-right:6px"></i>${tLocation(l.name)}</div>
+          <div class="loc-meta"><span class="loc-badge ${badgeClass(l.period)}">${l.period}</span> · ${l.events} ${t('events')}</div>
         </div>`).join('')}
       </div>
     </div>
     <div class="map-area">
-      <div class="map-info"><h3>${t('biblicalIsrael')}</h3><p>${LOCATIONS.length} ${t('locations')} · ${LOCATIONS.reduce((s, l) => s + l.events, 0)} ${t('events')}</p></div>
+      <div class="map-info">
+        <h3><i class="ri-map-pin-2-fill" style="color:var(--gold)"></i> ${t('biblicalIsrael')}</h3>
+        <p>Click any marker to explore events and history.</p>
+        <p style="margin-top:4px;font-weight:600">${LOCATIONS.length} ${t('locations')} · ${totalEvents} ${t('events')}</p>
+      </div>
+      <div class="map-legend">
+        ${Object.entries(TYPE_COLORS).map(([type, color]) => `<div class="legend-item"><span class="legend-dot" style="background:${color}"></span>${tType(type)}</div>`).join('')}
+      </div>
       <div id="leaflet-map"></div>
     </div>
   </div></div>`;
@@ -59,7 +81,7 @@ function initMap() {
     const color = TYPE_COLORS[loc.type] || '#6b1f3d';
     const marker = L.circleMarker([loc.lat, loc.lng], {
       radius: 8, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.9,
-    }).bindPopup(`<strong>${loc.name}</strong><br>${loc.type} · ${loc.period} · ${loc.events} events`);
+    }).bindPopup(`<strong>${tLocation(loc.name)}</strong><br>${loc.type} · ${loc.period} · ${loc.events} ${t('events')}`);
     marker.addTo(map);
     marker._locData = loc;
     return marker;
@@ -75,7 +97,6 @@ function initMap() {
       const matchT = activeType === 'All Types' || loc.type === activeType;
       if (matchP && matchT) { m.addTo(map); } else { m.removeFrom(map); }
     });
-    // Update sidebar list
     document.querySelectorAll('.location-item').forEach((el, i) => {
       const loc = LOCATIONS[i];
       const matchP = activePeriod === 'All' || loc.period === activePeriod || (activePeriod === 'Both' && loc.period === 'Both');

@@ -100,6 +100,8 @@ export const zhTW = {
   theStory: '故事',
   spiritualJourney: '靈性旅程',
   learningToWalk: '學習與神同行',
+  howSawGod: '{name}如何認識神',
+  scriptureLinks: '經文連結',
   keyScriptures: '重要經文',
   timeline: '時間線',
   relatedPeople: '相關人物',
