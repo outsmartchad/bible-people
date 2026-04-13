@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible People — Stories, Lives & Journeys from Scripture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #b8860b;
+      --gold-light: #f0d080;
+      --burgundy: #6b1f3d;
+      --cream: #fafaf5;
+      --footer-bg: #ede8dc;
+      --dark: #2D2118;
+      --white: #ffffff;
+      --font-body: 'Lato', system-ui, sans-serif;
+      --font-heading: 'Crimson Text', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--dark); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { border: none; cursor: pointer; font-family: inherit; }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(30, 20, 15, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 0 48px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; color: var(--white); font-family: var(--font-heading); font-size: 20px; font-weight: 600; }
+    .logo i { font-size: 24px; color: var(--gold-light); }
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a { color: var(--gold-light); font-size: 14px; font-weight: 400; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--white); }
+    .btn-outline-nav { border: 1px solid rgba(255,255,255,0.3); padding: 8px 20px; border-radius: 9999px; color: var(--white) !important; font-size: 13px; transition: background 0.2s; }
+    .btn-outline-nav:hover { background: rgba(255,255,255,0.1); }
+
+    /* ─── BUTTONS ─── */
+    .btn-gold { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--white); padding: 14px 32px; border-radius: 9999px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; transition: background 0.2s; }
+    .btn-gold:hover { background: #9a7209; }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 14px 32px; border-radius: 9999px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; transition: background 0.2s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+    .btn-view-all { display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--dark); padding: 12px 28px; border-radius: 9999px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; background: transparent; color: var(--dark); }
+    .btn-view-all:hover { background: var(--dark); color: var(--white); }
+
+    /* ─── HERO ─── */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--white); overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(30,20,10,0.5), rgba(30,20,10,0.7)); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; max-width: 680px; padding: 0 24px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(184,134,11,0.25); border: 1px solid rgba(184,134,11,0.4); padding: 8px 20px; border-radius: 9999px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px; color: var(--gold-light); }
+    .hero h1 { font-family: var(--font-heading); font-size: 52px; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+    .hero h1 em { font-style: italic; color: var(--gold-light); }
+    .hero p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.85); margin-bottom: 32px; }
+    .hero-divider { width: 80px; height: 2px; background: var(--gold); margin: 0 auto 32px; position: relative; }
+    .hero-divider::after { content: "\2727"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--gold-light); font-size: 18px; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .scroll-indicator { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 2; color: rgba(255,255,255,0.5); font-size: 13px; text-align: center; }
+    .scroll-indicator span { display: block; width: 1px; height: 40px; background: rgba(255,255,255,0.3); margin: 8px auto 0; }
+
+    /* ─── FEATURED ─── */
+    .featured { background: var(--cream); padding: 80px 48px; text-align: center; }
+    .section-label { color: var(--gold); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+    .featured h2, .section-title { font-family: var(--font-heading); font-size: 38px; font-weight: 700; color: var(--burgundy); margin-bottom: 16px; }
+    .section-divider { width: 60px; height: 2px; background: var(--gold); margin: 0 auto 48px; position: relative; }
+    .section-divider::after { content: "\2302"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--gold); font-size: 16px; }
+    .people-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto 40px; }
+    .person-card { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 2/3; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; display: block; }
+    .person-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+    .person-card img { width: 100%; height: 100%; object-fit: cover; }
+    .person-card .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 12px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+    .person-card .name { color: var(--white); font-family: var(--font-heading); font-size: 16px; font-weight: 600; }
+    .person-card .testament { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+    .testament-old { color: var(--gold); }
+    .testament-new { color: #4fc3a1; }
+
+    /* ─── STATS ─── */
+    .stats-section { background: var(--burgundy); padding: 60px 48px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1100px; margin: 0 auto; text-align: center; color: var(--white); }
+    .stat-item i { font-size: 28px; color: var(--gold-light); margin-bottom: 12px; display: block; }
+    .stat-item .number { font-family: var(--font-heading); font-size: 38px; font-weight: 700; margin-bottom: 4px; }
+    .stat-item .label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+
+    /* ─── CTA ─── */
+    .cta { position: relative; padding: 100px 24px; text-align: center; color: var(--white); overflow: hidden; }
+    .cta-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .cta-overlay { position: absolute; inset: 0; background: rgba(40, 20, 10, 0.7); z-index: 1; }
+    .cta-content { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
+    .cta-icon { font-size: 32px; color: var(--gold-light); margin-bottom: 16px; }
+    .cta h2 { font-family: var(--font-heading); font-size: 38px; font-weight: 700; margin-bottom: 16px; }
+    .cta p { font-size: 16px; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 32px; }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--footer-bg); padding: 60px 48px 24px; }
+    .footer-top { display: grid; grid-template-columns: 1.2fr 1fr 1.2fr; gap: 48px; margin-bottom: 40px; }
+    .footer-brand .logo { color: var(--dark); margin-bottom: 12px; }
+    .footer-brand p { font-size: 14px; color: #6b6560; line-height: 1.7; }
+    .footer-links h4, .footer-quote h4 { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: var(--burgundy); margin-bottom: 16px; }
+    .footer-links ul { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { font-size: 14px; color: #5a5550; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--burgundy); }
+    .footer-quote blockquote { font-family: var(--font-heading); font-style: italic; font-size: 16px; color: #4a4540; border-left: 3px solid var(--burgundy); padding-left: 16px; margin-bottom: 8px; }
+    .footer-quote cite { font-size: 13px; color: var(--gold); font-style: normal; }
+    .footer-bottom { border-top: 1px solid rgba(0,0,0,0.1); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #8a8580; }
+    .footer-bottom .verse { font-family: var(--font-heading); font-style: italic; color: var(--burgundy); }
+
+    /* ─── GALLERY PAGE ─── */
+    .gallery-hero { background: var(--burgundy); color: var(--white); padding: 100px 48px 48px; text-align: center; }
+    .gallery-hero h1 { font-family: var(--font-heading); font-size: 48px; font-weight: 700; margin-bottom: 12px; }
+    .gallery-hero p { font-size: 16px; color: rgba(255,255,255,0.8); max-width: 560px; margin: 0 auto 24px; }
+    .gallery-mini-stats { display: flex; gap: 32px; justify-content: center; }
+    .gallery-mini-stats .mini-stat { text-align: center; }
+    .gallery-mini-stats .mini-num { font-family: var(--font-heading); font-size: 28px; font-weight: 700; color: var(--gold-light); }
+    .gallery-mini-stats .mini-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); }
+    .gallery-controls { max-width: 1200px; margin: 0 auto; padding: 32px 48px; }
+    .filter-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .filter-tab { padding: 8px 18px; border-radius: 9999px; border: 1px solid #ddd; background: var(--white); font-size: 13px; color: #666; cursor: pointer; transition: all 0.2s; }
+    .filter-tab.active, .filter-tab:hover { background: var(--burgundy); color: var(--white); border-color: var(--burgundy); }
+    .testament-filters { display: flex; gap: 8px; margin-bottom: 16px; }
+    .testament-btn { padding: 8px 18px; border-radius: 9999px; border: 1px solid #ddd; background: var(--white); font-size: 13px; color: #666; cursor: pointer; transition: all 0.2s; }
+    .testament-btn.active { background: var(--gold); color: var(--white); border-color: var(--gold); }
+    .search-input { width: 100%; padding: 12px 16px 12px 40px; border: 1px solid #ddd; border-radius: 12px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; background: var(--white); }
+    .search-input:focus { border-color: var(--gold); }
+    .search-wrap { position: relative; margin-bottom: 32px; }
+    .search-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #aaa; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 48px 64px; }
+    .gallery-card { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 2/3; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+    .gallery-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+    .gallery-card img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-card .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); }
+    .gallery-card .card-name { color: var(--white); font-family: var(--font-heading); font-size: 18px; font-weight: 600; }
+    .gallery-card .card-subtitle { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 2px; }
+    .gallery-card .card-badge { position: absolute; top: 12px; right: 12px; padding: 4px 10px; border-radius: 9999px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .badge-old { background: rgba(184,134,11,0.9); color: var(--white); }
+    .badge-new { background: rgba(79,195,161,0.9); color: var(--white); }
+    .no-results { text-align: center; padding: 60px 24px; color: #999; font-size: 16px; }
+
+    /* ─── MAP PAGE ─── */
+    .map-page { display: flex; height: calc(100vh - 64px); margin-top: 64px; }
+    .map-sidebar { width: 280px; background: var(--white); border-right: 1px solid #e5e0d8; display: flex; flex-direction: column; overflow: hidden; }
+    .map-sidebar-header { padding: 24px 20px 16px; border-bottom: 1px solid #eee; }
+    .map-sidebar-header h2 { font-family: var(--font-heading); font-size: 22px; color: var(--burgundy); margin-bottom: 4px; }
+    .map-sidebar-header p { font-size: 12px; color: #999; }
+    .map-filters { padding: 16px 20px; border-bottom: 1px solid #eee; }
+    .map-filters label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #999; font-weight: 700; margin-bottom: 8px; display: block; }
+    .map-filter-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .map-chip { padding: 4px 12px; border-radius: 9999px; border: 1px solid #ddd; background: var(--white); font-size: 11px; color: #666; cursor: pointer; transition: all 0.2s; }
+    .map-chip.active { background: var(--burgundy); color: var(--white); border-color: var(--burgundy); }
+    .map-location-list { flex: 1; overflow-y: auto; padding: 8px 0; }
+    .map-location-item { padding: 10px 20px; cursor: pointer; transition: background 0.2s; border-left: 3px solid transparent; }
+    .map-location-item:hover, .map-location-item.active { background: #f9f6f0; border-left-color: var(--burgundy); }
+    .map-location-item .loc-name { font-weight: 600; font-size: 13px; color: var(--dark); }
+    .map-location-item .loc-meta { font-size: 11px; color: #999; margin-top: 2px; }
+    .map-container { flex: 1; position: relative; }
+    #map { width: 100%; height: 100%; }
+    .map-info-card { position: absolute; top: 16px; right: 16px; z-index: 999; background: var(--white); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .map-info-card h3 { font-family: var(--font-heading); font-size: 18px; color: var(--burgundy); }
+    .map-info-card p { font-size: 12px; color: #999; }
+
+    /* ─── ABOUT PAGE ─── */
+    .about-hero { background: var(--burgundy); color: var(--white); padding: 100px 48px 60px; text-align: center; }
+    .about-hero .label { color: var(--gold-light); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
+    .about-hero h1 { font-family: var(--font-heading); font-size: 48px; font-weight: 700; margin-bottom: 12px; }
+    .about-hero p { font-size: 16px; color: rgba(255,255,255,0.8); max-width: 560px; margin: 0 auto; }
+    .about-why { max-width: 1100px; margin: 0 auto; padding: 80px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .about-why h2 { font-family: var(--font-heading); font-size: 34px; font-weight: 700; color: var(--burgundy); margin-bottom: 20px; }
+    .about-why p { font-size: 15px; line-height: 1.8; color: #555; margin-bottom: 16px; }
+    .about-why img { border-radius: 12px; width: 100%; height: 400px; object-fit: cover; }
+    .about-values { background: var(--cream); padding: 80px 48px; text-align: center; }
+    .about-values h2 { font-family: var(--font-heading); font-size: 34px; color: var(--burgundy); margin-bottom: 48px; }
+    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; }
+    .value-card { background: var(--white); border-radius: 12px; padding: 32px 24px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
+    .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .value-card i { font-size: 36px; color: var(--gold); margin-bottom: 16px; display: block; }
+    .value-card h3 { font-family: var(--font-heading); font-size: 20px; color: var(--burgundy); margin-bottom: 8px; }
+    .value-card p { font-size: 14px; color: #666; line-height: 1.6; }
+    .about-explore { max-width: 1100px; margin: 0 auto; padding: 80px 48px; text-align: center; }
+    .about-explore h2 { font-family: var(--font-heading); font-size: 34px; color: var(--burgundy); margin-bottom: 48px; }
+    .explore-people { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+    .explore-person { text-align: center; cursor: pointer; transition: transform 0.3s; }
+    .explore-person:hover { transform: translateY(-4px); }
+    .explore-person img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); margin-bottom: 8px; }
+    .explore-person .ep-name { font-family: var(--font-heading); font-size: 16px; font-weight: 600; color: var(--dark); }
+    .about-scripture { background: var(--burgundy); color: var(--white); padding: 60px 48px; text-align: center; }
+    .about-scripture blockquote { font-family: var(--font-heading); font-size: 24px; font-style: italic; max-width: 700px; margin: 0 auto 12px; line-height: 1.5; }
+    .about-scripture cite { font-size: 14px; color: var(--gold-light); font-style: normal; }
+
+    /* ─── PERSON DETAIL PAGE ─── */
+    .person-page { padding-top: 64px; }
+    .person-breadcrumb { padding: 16px 48px; font-size: 13px; color: #999; background: var(--cream); }
+    .person-breadcrumb a { color: var(--gold); }
+    .person-breadcrumb a:hover { text-decoration: underline; }
+    .person-hero { position: relative; height: 400px; overflow: hidden; display: flex; align-items: flex-end; }
+    .person-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .person-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,10,5,0.9) 0%, rgba(20,10,5,0.3) 100%); }
+    .person-hero-content { position: relative; z-index: 2; padding: 40px 48px; color: var(--white); max-width: 800px; }
+    .person-hero-content h1 { font-family: var(--font-heading); font-size: 48px; font-weight: 700; margin-bottom: 8px; }
+    .person-hero-content .person-subtitle { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 12px; }
+    .person-hero-content .person-meta { display: flex; gap: 16px; align-items: center; }
+    .person-badge { padding: 4px 14px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .person-era { font-size: 13px; color: rgba(255,255,255,0.7); }
+    .person-body { max-width: 1100px; margin: 0 auto; padding: 48px; display: grid; grid-template-columns: 2fr 1fr; gap: 48px; }
+    .person-main h2 { font-family: var(--font-heading); font-size: 28px; color: var(--burgundy); margin-bottom: 16px; margin-top: 40px; }
+    .person-main h2:first-child { margin-top: 0; }
+    .person-main p { font-size: 15px; line-height: 1.8; color: #555; margin-bottom: 16px; }
+    .journey-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .journey-card { background: var(--cream); border-radius: 12px; padding: 20px; border-left: 3px solid var(--gold); }
+    .journey-card h4 { font-family: var(--font-heading); font-size: 16px; color: var(--burgundy); margin-bottom: 4px; }
+    .journey-card p { font-size: 13px; color: #666; margin: 0; }
+    .lesson-item { display: flex; gap: 16px; margin-bottom: 20px; }
+    .lesson-num { width: 36px; height: 36px; border-radius: 50%; background: var(--burgundy); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .lesson-text h4 { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .lesson-text p { font-size: 13px; color: #666; margin: 0; }
+    .scripture-block { background: var(--cream); border-left: 3px solid var(--gold); padding: 20px 24px; border-radius: 0 12px 12px 0; margin-bottom: 16px; }
+    .scripture-block blockquote { font-family: var(--font-heading); font-style: italic; font-size: 16px; color: var(--dark); margin-bottom: 4px; }
+    .scripture-block cite { font-size: 13px; color: var(--gold); font-style: normal; }
+    .person-sidebar h3 { font-family: var(--font-heading); font-size: 22px; color: var(--burgundy); margin-bottom: 20px; }
+    .timeline-item { position: relative; padding-left: 24px; padding-bottom: 24px; border-left: 2px solid #e5e0d8; }
+    .timeline-item:last-child { border-left-color: transparent; }
+    .timeline-item::before { content: ''; position: absolute; left: -5px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--burgundy); }
+    .timeline-item .tl-date { font-size: 11px; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .timeline-item .tl-event { font-size: 14px; color: var(--dark); margin-top: 2px; }
+    .related-section { max-width: 1100px; margin: 0 auto; padding: 0 48px 64px; }
+    .related-section h2 { font-family: var(--font-heading); font-size: 28px; color: var(--burgundy); margin-bottom: 24px; }
+    .related-people { display: flex; gap: 24px; flex-wrap: wrap; }
+    .related-person { text-align: center; cursor: pointer; transition: transform 0.3s; }
+    .related-person:hover { transform: translateY(-4px); }
+    .related-person img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); margin-bottom: 8px; }
+    .related-person .rp-name { font-size: 13px; font-weight: 600; }
+    .person-nav { display: flex; justify-content: space-between; max-width: 1100px; margin: 0 auto; padding: 0 48px 48px; }
+    .person-nav a { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--burgundy); font-weight: 600; transition: color 0.2s; }
+    .person-nav a:hover { color: var(--gold); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .person-body { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      header { padding: 0 16px; }
+      nav a:not(.btn-outline-nav) { display: none; }
+      .hero h1 { font-size: 36px; }
+      .people-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-controls { padding: 24px 16px; }
+      .gallery-grid { padding: 0 16px 48px; }
+      .about-why { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .journey-cards { grid-template-columns: 1fr; }
+      .map-page { flex-direction: column; }
+      .map-sidebar { width: 100%; height: auto; max-height: 40vh; }
+      .person-body { padding: 24px 16px; }
+      .person-hero-content { padding: 24px 16px; }
+      .person-hero-content h1 { font-size: 32px; }
+    }
+
+    /* Hide pages */
+    #app > section { display: none; }
+    #app > section.active { display: block; }
+    .map-page.active { display: flex !important; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="#/" class="logo">
+      <i class="ri-book-open-fill"></i>
+      <span>Bible People</span>
+    </a>
+    <nav id="main-nav">
+      <a href="#/" data-route="home">Home</a>
+      <a href="#/gallery" data-route="gallery">People Gallery</a>
+      <a href="#/map" data-route="map">Bible Map</a>
+      <a href="#/about" data-route="about">About</a>
+      <a href="#/gallery" class="btn-outline-nav">Explore Gallery</a>
+    </nav>
+  </header>
+
+  <div id="app">
+
+    <!-- ═══════════ HOME ═══════════ -->
+    <section id="page-home">
+      <div class="hero">
+        <img class="hero-bg" src="https://readdy.ai/api/search-image?query=ancient%20parchment%20scroll%20illuminated%20manuscript%20golden%20decorative%20borders%20sacred%20text%20ancient%20biblical%20artwork%20warm%20amber%20golden%20light%20divine%20rays%20through%20old%20stone%20cathedral%20window%20rich%20deep%20warm%20tones%20aged%20texture%20beautiful%20classical%20religious%20atmosphere&width=1440&height=900&seq=hero01&orientation=landscape" alt="">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="hero-badge"><i class="ri-book-open-line"></i> Sacred Stories from Scripture</div>
+          <h1>Discover the Lives of <em>Biblical Figures</em></h1>
+          <p>Journey through the stories of faith, courage, and redemption that have shaped the course of human history — from the patriarchs of Genesis to the apostles of the early Church.</p>
+          <div class="hero-divider"></div>
+          <div class="hero-buttons">
+            <a href="#/gallery" class="btn-gold">Explore the Gallery</a>
+            <a href="#/about" class="btn-ghost">Learn More</a>
+          </div>
+        </div>
+        <div class="scroll-indicator">Scroll<span></span></div>
+      </div>
+
+      <div class="featured">
+        <div class="section-label">Hall of Faith</div>
+        <h2>Featured Biblical Figures</h2>
+        <div class="section-divider"></div>
+        <div class="people-grid" id="featured-grid"></div>
+        <a href="#/gallery" class="btn-view-all">View All People <i class="ri-arrow-right-line"></i></a>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-item"><i class="ri-group-line"></i><div class="number">49+</div><div class="label">Biblical Figures</div></div>
+          <div class="stat-item"><i class="ri-book-2-line"></i><div class="number">9</div><div class="label">Categories</div></div>
+          <div class="stat-item"><i class="ri-history-line"></i><div class="number">4,000+</div><div class="label">Years of History</div></div>
+          <div class="stat-item"><i class="ri-quill-pen-line"></i><div class="number">66</div><div class="label">Books of the Bible</div></div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <img class="cta-bg" src="https://readdy.ai/api/search-image?query=ancient%20stone%20cathedral%20interior%20warm%20golden%20light%20streaming%20through%20stained%20glass%20windows%20stone%20columns%20arched%20ceiling%20divine%20atmosphere%20peaceful%20and%20majestic%20biblical%20setting%20warm%20amber%20tones&width=1440&height=600&seq=cta01&orientation=landscape" alt="">
+        <div class="cta-overlay"></div>
+        <div class="cta-content">
+          <div class="cta-icon"><i class="ri-lightbulb-flash-line"></i></div>
+          <h2>Every Story Holds a Lesson for Today</h2>
+          <p>From the faith of Abraham to the courage of Esther, from the repentance of David to the devotion of Mary — the lives in Scripture are mirrors for our own.</p>
+          <a href="#/gallery" class="btn-gold">Begin Your Journey</a>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="logo"><i class="ri-book-open-fill"></i><span>Bible People</span></div>
+            <p>Walking with the faithful through scripture — stories of faith, courage, and redemption that have shaped the world.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Explore</h4>
+            <ul>
+              <li><a href="#/">Home</a></li>
+              <li><a href="#/gallery">People Gallery</a></li>
+              <li><a href="#/about">About</a></li>
+            </ul>
+          </div>
+          <div class="footer-quote">
+            <h4>Word of the Day</h4>
+            <blockquote>"Your word is a lamp for my feet, a light on my path."</blockquote>
+            <cite>— Psalm 119:105</cite>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Bible People. All rights reserved.</span>
+          <span class="verse">"In the beginning was the Word" — John 1:1</span>
+        </div>
+      </footer>
+    </section>
+
+    <!-- ═══════════ GALLERY ═══════════ -->
+    <section id="page-gallery">
+      <div class="gallery-hero">
+        <h1>People of the Bible</h1>
+        <p>Explore the lives of men and women whose faith, courage, and obedience shaped the story of salvation.</p>
+        <div class="gallery-mini-stats">
+          <div class="mini-stat"><div class="mini-num">55</div><div class="mini-label">People</div></div>
+          <div class="mini-stat"><div class="mini-num">10</div><div class="mini-label">Categories</div></div>
+          <div class="mini-stat"><div class="mini-num">22</div><div class="mini-label">New Testament</div></div>
+        </div>
+      </div>
+      <div class="gallery-controls">
+        <div class="filter-tabs" id="category-filters"></div>
+        <div class="testament-filters" id="testament-filters"></div>
+        <div class="search-wrap">
+          <i class="ri-search-line"></i>
+          <input type="text" class="search-input" id="gallery-search" placeholder="Search by name...">
+        </div>
+      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <div class="no-results" id="no-results" style="display:none;">No people match your filters.</div>
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand"><div class="logo"><i class="ri-book-open-fill"></i><span>Bible People</span></div><p>Walking with the faithful through scripture.</p></div>
+          <div class="footer-links"><h4>Explore</h4><ul><li><a href="#/">Home</a></li><li><a href="#/gallery">People Gallery</a></li><li><a href="#/about">About</a></li></ul></div>
+          <div class="footer-quote"><h4>Word of the Day</h4><blockquote>"Your word is a lamp for my feet, a light on my path."</blockquote><cite>— Psalm 119:105</cite></div>
+        </div>
+        <div class="footer-bottom"><span>&copy; 2026 Bible People.</span><span class="verse">"In the beginning was the Word" — John 1:1</span></div>
+      </footer>
+    </section>
+
+    <!-- ═══════════ MAP ═══════════ -->
+    <section id="page-map" class="map-page">
+      <div class="map-sidebar">
+        <div class="map-sidebar-header">
+          <h2>Biblical Map</h2>
+          <p>Explore locations from Scripture</p>
+        </div>
+        <div class="map-filters">
+          <label>Period</label>
+          <div class="map-filter-chips" id="map-period-filter"></div>
+          <label>Place Type</label>
+          <div class="map-filter-chips" id="map-type-filter"></div>
+        </div>
+        <div class="map-location-list" id="map-location-list"></div>
+      </div>
+      <div class="map-container">
+        <div id="map"></div>
+        <div class="map-info-card">
+          <h3>Biblical Israel</h3>
+          <p>20 locations &middot; 65 events</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ ABOUT ═══════════ -->
+    <section id="page-about">
+      <div class="about-hero">
+        <div class="label">Our Mission</div>
+        <h1>About Bible People</h1>
+        <p>A journey through Scripture's most remarkable lives — to inspire, educate, and draw hearts closer to God.</p>
+      </div>
+      <div class="about-why">
+        <div>
+          <h2>Stories That Have Shaped the World</h2>
+          <p>The Bible isn't just a book of rules or theology — it's a collection of real people's stories. People who wrestled with doubt, experienced profound joy, made terrible mistakes, and found redemption through faith.</p>
+          <p>We built Bible People because we believe these stories deserve to be told in a way that's accessible, beautiful, and deeply rooted in Scripture. Every profile on this site is carefully researched and presented with reverence for the text.</p>
+          <p>Whether you're a lifelong believer, a curious seeker, or a student of history, we hope these stories will inspire you to dig deeper into the Word and discover the timeless truths woven through every life.</p>
+        </div>
+        <div>
+          <img src="https://readdy.ai/api/search-image?query=ornate%20ancient%20library%20interior%20warm%20golden%20light%20illuminated%20manuscripts%20sacred%20books%20beautiful%20classical%20architecture%20cathedral%20ceiling%20stained%20glass%20warm%20amber%20atmosphere&width=600&height=500&seq=about01&orientation=landscape" alt="Ancient library">
+        </div>
+      </div>
+      <div class="about-values">
+        <h2>What We Stand For</h2>
+        <div class="values-grid">
+          <div class="value-card"><i class="ri-heart-3-line"></i><h3>Faith & Devotion</h3><p>Every story is presented with deep reverence for the biblical text and the God who inspired it.</p></div>
+          <div class="value-card"><i class="ri-history-line"></i><h3>Historical Context</h3><p>We place each person in their historical and cultural setting to bring the text alive.</p></div>
+          <div class="value-card"><i class="ri-book-open-line"></i><h3>Scripture-First</h3><p>The Bible is our primary source. We let the text speak for itself, with careful and faithful interpretation.</p></div>
+          <div class="value-card"><i class="ri-lightbulb-line"></i><h3>Timeless Lessons</h3><p>These ancient stories hold truths that are as relevant today as they were thousands of years ago.</p></div>
+        </div>
+      </div>
+      <div class="about-explore">
+        <h2>Start Exploring</h2>
+        <div class="explore-people" id="about-explore-people"></div>
+      </div>
+      <div class="about-scripture">
+        <blockquote>"All Scripture is God-breathed and is useful for teaching, rebuking, correcting and training in righteousness."</blockquote>
+        <cite>— 2 Timothy 3:16</cite>
+      </div>
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand"><div class="logo"><i class="ri-book-open-fill"></i><span>Bible People</span></div><p>Walking with the faithful through scripture.</p></div>
+          <div class="footer-links"><h4>Explore</h4><ul><li><a href="#/">Home</a></li><li><a href="#/gallery">People Gallery</a></li><li><a href="#/about">About</a></li></ul></div>
+          <div class="footer-quote"><h4>Word of the Day</h4><blockquote>"Your word is a lamp for my feet, a light on my path."</blockquote><cite>— Psalm 119:105</cite></div>
+        </div>
+        <div class="footer-bottom"><span>&copy; 2026 Bible People.</span><span class="verse">"In the beginning was the Word" — John 1:1</span></div>
+      </footer>
+    </section>
+
+    <!-- ═══════════ PERSON DETAIL ═══════════ -->
+    <section id="page-person">
+      <div class="person-page" id="person-content"></div>
+    </section>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+  /* ═══════════════════════════════════════════════════════════════
+     DATA
+     ═══════════════════════════════════════════════════════════════ */
+  const PEOPLE = [
+    {id:'jesus',name:'Jesus Christ',subtitle:'The Son of God, Savior of the World',testament:'new',category:'Messiah',era:'4 BC - 30 AD',
+      image:'https://readdy.ai/api/search-image?query=serene%20compassionate%20figure%20in%20white%20and%20cream%20robes%20with%20gentle%20authority%20warm%20radiant%20golden%20light%20classical%20sacred%20art%20style%20ancient%20Middle%20Eastern%20appearance%20humble%20yet%20majestic&width=400&height=600&seq=jesus01&orientation=portrait',
+      bio:'Jesus of Nazareth is the central figure of Christianity, believed to be the Son of God and the awaited Messiah. Born in Bethlehem to the Virgin Mary, He spent His ministry teaching, healing, and calling people to repentance. His death on the cross and resurrection form the foundation of the Christian faith.',
+      keyVerse:'"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life." — John 3:16',
+      relatedPeople:['mary','peter','john-apostle','paul','james-apostle'],
+      journey:[{title:'Incarnation',desc:'Born in Bethlehem, God made flesh'},{title:'Ministry',desc:'Three years of teaching, healing, and miracles'},{title:'Crucifixion',desc:'Died on the cross for the sins of humanity'},{title:'Resurrection',desc:'Rose from the dead on the third day'}],
+      lessons:[{title:'Sacrificial Love',desc:'Jesus gave everything for those He loved — the ultimate model of selfless love.'},{title:'Servant Leadership',desc:'He washed His disciples\' feet, showing that true greatness is found in serving others.'},{title:'Forgiveness',desc:'Even on the cross, He forgave — teaching us that no wrong is beyond redemption.'}],
+      scriptures:[{text:'I am the way and the truth and the life. No one comes to the Father except through me.',ref:'John 14:6'},{text:'Come to me, all you who are weary and burdened, and I will give you rest.',ref:'Matthew 11:28'}],
+      timeline:[{date:'4 BC',event:'Born in Bethlehem'},{date:'~27 AD',event:'Baptized by John'},{date:'~27-30 AD',event:'Public ministry begins'},{date:'~30 AD',event:'Crucified and resurrected'}]
+    },
+    {id:'moses',name:'Moses',subtitle:'Deliverer of Israel, Lawgiver',testament:'old',category:'Prophet',era:'~1393 - 1273 BC',
+      image:'https://readdy.ai/api/search-image?query=majestic%20ancient%20Hebrew%20prophet%20with%20long%20white%20flowing%20hair%20and%20beard%20wearing%20sandy%20brown%20desert%20robes%20holding%20stone%20tablets%20dramatic%20warm%20desert%20golden%20lighting%20classical%20painting%20style&width=400&height=600&seq=moses01&orientation=portrait',
+      bio:'Moses was chosen by God to lead the Israelites out of Egyptian slavery. He received the Ten Commandments on Mount Sinai and guided the people through 40 years in the wilderness. His life is a profound story of reluctant calling, faithfulness, and divine encounter.',
+      keyVerse:'"The LORD your God will raise up for you a prophet like me from among you." — Deuteronomy 18:15',
+      relatedPeople:['abraham','aaron','joshua','miriam','pharaoh'],
+      journey:[{title:'Early Life',desc:'Rescued from the Nile, raised in Pharaoh\'s court'},{title:'Calling',desc:'Encountered God at the burning bush'},{title:'Exodus',desc:'Led Israel out of Egypt through the Red Sea'},{title:'Wilderness',desc:'Guided Israel for 40 years, received the Law'}],
+      lessons:[{title:'Obedience Despite Fear',desc:'Moses stuttered and doubted, yet obeyed God\'s call to confront Pharaoh.'},{title:'Intercession',desc:'He stood in the gap for Israel repeatedly, pleading with God on their behalf.'},{title:'Humility',desc:'Called the most humble man on earth, Moses served God faithfully despite immense pressure.'}],
+      scriptures:[{text:'The LORD said, "I have indeed seen the misery of my people in Egypt."',ref:'Exodus 3:7'},{text:'Be strong and courageous. Do not be afraid; do not be discouraged.',ref:'Deuteronomy 31:6'}],
+      timeline:[{date:'~1393 BC',event:'Born in Egypt'},{date:'~1313 BC',event:'Burning bush encounter'},{date:'~1313 BC',event:'The Exodus from Egypt'},{date:'~1273 BC',event:'Dies on Mount Nebo'}]
+    },
+    {id:'abraham',name:'Abraham',subtitle:'Father of Faith, Patriarch of Israel',testament:'old',category:'Patriarch',era:'~2166 - 1991 BC',
+      image:'https://readdy.ai/api/search-image?query=elderly%20wise%20patriarch%20with%20long%20flowing%20white%20beard%20kind%20eyes%20ancient%20Near%20Eastern%20robes%20earth%20tones%20serene%20faith%20filled%20expression%20vast%20starry%20night%20sky%20classical%20painting%20style&width=400&height=600&seq=abr01&orientation=portrait',
+      bio:'Abraham is the father of the Jewish nation and a patriarch of faith. God called him to leave his homeland and promised to make him a great nation. His willingness to sacrifice his son Isaac demonstrated an extraordinary depth of trust in God.',
+      keyVerse:'"Abram believed the LORD, and he credited it to him as righteousness." — Genesis 15:6',
+      relatedPeople:['sarah','isaac','lot','hagar','ishmael'],
+      journey:[{title:'The Call',desc:'Left Ur of the Chaldeans at God\'s command'},{title:'The Covenant',desc:'God promised descendants as numerous as the stars'},{title:'The Test',desc:'Willing to sacrifice Isaac on Mount Moriah'},{title:'The Legacy',desc:'Became the father of many nations'}],
+      lessons:[{title:'Faith in the Unknown',desc:'Abraham left everything familiar, trusting a promise he couldn\'t yet see.'},{title:'Patient Waiting',desc:'He waited decades for the promised son, teaching us that God\'s timing is perfect.'},{title:'Radical Obedience',desc:'His willingness to sacrifice Isaac shows the depth of surrender God calls us to.'}],
+      scriptures:[{text:'I will make you into a great nation, and I will bless you.',ref:'Genesis 12:2'},{text:'Is anything too hard for the LORD?',ref:'Genesis 18:14'}],
+      timeline:[{date:'~2166 BC',event:'Born in Ur'},{date:'~2091 BC',event:'Called by God to Canaan'},{date:'~2066 BC',event:'Isaac is born'},{date:'~1991 BC',event:'Dies at age 175'}]
+    },
+    {id:'david',name:'David',subtitle:'Shepherd King, Man After God\'s Own Heart',testament:'old',category:'King',era:'~1040 - 970 BC',
+      image:'https://readdy.ai/api/search-image?query=handsome%20young%20Hebrew%20king%20dark%20curly%20hair%20royal%20robes%20golden%20details%20simple%20crown%20holding%20wooden%20harp%20warm%20golden%20candlelight%20classical%20painting%20style%20dignified%20regal&width=400&height=600&seq=dav01&orientation=portrait',
+      bio:'David rose from humble shepherd to become Israel\'s greatest king. He slew the giant Goliath, wrote many of the Psalms, and established Jerusalem as the capital. Despite serious failings, his repentant heart earned him the title "a man after God\'s own heart."',
+      keyVerse:'"The LORD does not look at the things people look at. People look at the outward appearance, but the LORD looks at the heart." — 1 Samuel 16:7',
+      relatedPeople:['solomon','jonathan','saul','bathsheba','goliath'],
+      journey:[{title:'Shepherd',desc:'Anointed as a boy while tending sheep'},{title:'Warrior',desc:'Defeated Goliath and became a military hero'},{title:'King',desc:'United Israel and established Jerusalem'},{title:'Repentance',desc:'Fell into sin but returned to God with a broken heart'}],
+      lessons:[{title:'Courage Against Giants',desc:'David faced Goliath with nothing but faith and a sling — showing that God fights our battles.'},{title:'True Repentance',desc:'After his sin with Bathsheba, David\'s Psalm 51 became the model for genuine repentance.'},{title:'Worship as Warfare',desc:'David danced before the Lord and wrote psalms in the darkest valleys.'}],
+      scriptures:[{text:'The LORD is my shepherd, I lack nothing.',ref:'Psalm 23:1'},{text:'Create in me a pure heart, O God, and renew a steadfast spirit within me.',ref:'Psalm 51:10'}],
+      timeline:[{date:'~1040 BC',event:'Born in Bethlehem'},{date:'~1024 BC',event:'Defeats Goliath'},{date:'~1010 BC',event:'Becomes King of Israel'},{date:'~970 BC',event:'Dies in Jerusalem'}]
+    },
+    {id:'mary',name:'Mary',subtitle:'Mother of Jesus, Handmaid of the Lord',testament:'new',category:'Women of Faith',era:'~18 BC - ~41 AD',
+      image:'https://readdy.ai/api/search-image?query=serene%20beautiful%20young%20woman%20flowing%20cream%20soft%20rose%20robes%20gentle%20holy%20expression%20warm%20golden%20lighting%20classical%20religious%20art%20modest%20veil%20dark%20hair%20tender%20maternal%20expression&width=400&height=600&seq=mary01&orientation=portrait',
+      bio:'Mary of Nazareth was chosen by God to bear His Son, Jesus Christ. Her humble acceptance — "Let it be to me according to your word" — is one of the greatest acts of faith in Scripture. She stood by Jesus through His ministry and at the foot of the cross.',
+      keyVerse:'"My soul glorifies the Lord and my spirit rejoices in God my Savior." — Luke 1:46-47',
+      relatedPeople:['jesus','joseph','elizabeth','john-apostle'],
+      journey:[{title:'Annunciation',desc:'The angel Gabriel announces she will bear God\'s Son'},{title:'Birth',desc:'Gives birth to Jesus in Bethlehem'},{title:'Witness',desc:'Watches Jesus grow, teach, and perform miracles'},{title:'The Cross',desc:'Stands at the foot of the cross as her Son dies'}],
+      lessons:[{title:'Humble Submission',desc:'Mary said "yes" to God\'s plan even when it meant social scandal and personal risk.'},{title:'Pondering Faith',desc:'She "treasured these things in her heart" — a model of reflective, deepening faith.'},{title:'Faithful Presence',desc:'She was there at the manger, at Cana, and at the cross — faithful through every season.'}],
+      scriptures:[{text:'I am the Lord\'s servant. May your word to me be fulfilled.',ref:'Luke 1:38'},{text:'He has scattered those who are proud... He has lifted up the humble.',ref:'Luke 1:51-52'}],
+      timeline:[{date:'~18 BC',event:'Born in Nazareth'},{date:'~5 BC',event:'Visited by angel Gabriel'},{date:'~4 BC',event:'Gives birth to Jesus'},{date:'~30 AD',event:'At the cross and Pentecost'}]
+    },
+    {id:'peter',name:'Peter',subtitle:'The Rock, Leader of the Apostles',testament:'new',category:'Apostle',era:'~1 AD - ~68 AD',
+      image:'https://readdy.ai/api/search-image?query=rugged%20middle-aged%20fisherman%20apostle%20weathered%20face%20short%20brown%20beard%20humble%20cream%20robes%20holding%20large%20keys%20dramatic%20warm%20candlelight%20dark%20stone%20background%20determined%20faithful%20expression%20classical%20painting&width=400&height=600&seq=pet01&orientation=portrait',
+      bio:'Simon Peter was a fisherman called by Jesus to become a "fisher of men." Bold and impulsive, he both walked on water and denied knowing Jesus three times. After the Resurrection, Peter became the leader of the early Church and preached at Pentecost.',
+      keyVerse:'"You are Peter, and on this rock I will build my church." — Matthew 16:18',
+      relatedPeople:['jesus','paul','john-apostle','james-apostle','andrew'],
+      journey:[{title:'Called',desc:'Left his nets to follow Jesus'},{title:'Confession',desc:'Declared Jesus as the Christ, the Son of God'},{title:'Denial',desc:'Denied Jesus three times before the rooster crowed'},{title:'Restoration',desc:'Restored by Jesus and became leader of the Church'}],
+      lessons:[{title:'Failure Isn\'t Final',desc:'Peter\'s denial was devastating, but Jesus restored him — showing that our worst moments don\'t define us.'},{title:'Bold Faith',desc:'He stepped out of the boat onto the water. Even when he sank, he reached for Jesus.'},{title:'Transformed by Grace',desc:'The same man who fled at the arrest later stood before thousands at Pentecost.'}],
+      scriptures:[{text:'Lord, to whom shall we go? You have the words of eternal life.',ref:'John 6:68'},{text:'Cast all your anxiety on him because he cares for you.',ref:'1 Peter 5:7'}],
+      timeline:[{date:'~1 AD',event:'Born in Bethsaida'},{date:'~27 AD',event:'Called by Jesus'},{date:'~30 AD',event:'Denies and is restored'},{date:'~68 AD',event:'Martyred in Rome'}]
+    },
+    {id:'paul',name:'Paul',subtitle:'Apostle to the Gentiles',testament:'new',category:'Apostle',era:'~5 AD - ~67 AD',
+      image:'https://readdy.ai/api/search-image?query=intense%20scholarly%20man%20with%20dark%20beard%20balding%20head%20wearing%20simple%20Roman%20era%20robes%20holding%20scrolls%20warm%20lamp%20light%20stone%20room%20determined%20passionate%20expression%20classical%20painting%20style&width=400&height=600&seq=paul01&orientation=portrait',
+      bio:'Saul of Tarsus was a fierce persecutor of Christians until a blinding encounter with the risen Christ on the road to Damascus transformed him into Paul, the greatest missionary of the early Church. He wrote 13 epistles that form a major portion of the New Testament.',
+      keyVerse:'"For to me, to live is Christ and to die is gain." — Philippians 1:21',
+      relatedPeople:['peter','barnabas','timothy','luke','silas'],
+      journey:[{title:'Persecutor',desc:'Zealously persecuted the early Church'},{title:'Conversion',desc:'Encountered Christ on the road to Damascus'},{title:'Missionary',desc:'Three missionary journeys across the Roman Empire'},{title:'Martyr',desc:'Imprisoned and ultimately executed for his faith'}],
+      lessons:[{title:'Radical Transformation',desc:'If God can change Saul the persecutor into Paul the apostle, He can transform anyone.'},{title:'Perseverance',desc:'Shipwrecked, beaten, imprisoned — yet Paul never stopped preaching.'},{title:'Grace Theology',desc:'His letters reveal that salvation is by grace through faith, not by works.'}],
+      scriptures:[{text:'I have been crucified with Christ and I no longer live, but Christ lives in me.',ref:'Galatians 2:20'},{text:'I can do all this through him who gives me strength.',ref:'Philippians 4:13'}],
+      timeline:[{date:'~5 AD',event:'Born in Tarsus'},{date:'~33 AD',event:'Damascus road conversion'},{date:'~47-57 AD',event:'Missionary journeys'},{date:'~67 AD',event:'Martyred in Rome'}]
+    },
+    {id:'noah',name:'Noah',subtitle:'Builder of the Ark',testament:'old',category:'Patriarch',era:'Pre-Flood',
+      image:'https://readdy.ai/api/search-image?query=weathered%20elderly%20man%20long%20gray%20beard%20ancient%20robes%20standing%20near%20massive%20wooden%20ark%20construction%20stormy%20sky%20dramatic%20lighting%20classical%20biblical%20art%20style&width=400&height=600&seq=noah01&orientation=portrait',
+      bio:'Noah was a righteous man in a corrupt generation. God instructed him to build an ark to survive the great flood. His obedience preserved humanity and all living creatures, and God established a covenant with him, symbolized by the rainbow.',
+      keyVerse:'"Noah found favor in the eyes of the LORD." — Genesis 6:8',
+      relatedPeople:['abraham','adam','seth'],
+      journey:[{title:'Righteous Life',desc:'Walked faithfully with God in a wicked age'},{title:'The Commission',desc:'Commanded to build the ark'},{title:'The Flood',desc:'Survived the great deluge with his family'},{title:'The Covenant',desc:'God promised never to flood the earth again'}],
+      lessons:[{title:'Faithful Obedience',desc:'Noah built for decades with no rain in sight — true faith obeys before seeing results.'},{title:'Standing Alone',desc:'He was the only righteous man in his generation.'},{title:'New Beginnings',desc:'After judgment came grace — a fresh start for all creation.'}],
+      scriptures:[{text:'Noah did everything just as God commanded him.',ref:'Genesis 6:22'},{text:'I have set my rainbow in the clouds, and it will be the sign of the covenant.',ref:'Genesis 9:13'}],
+      timeline:[{date:'Pre-Flood',event:'Born into Seth\'s line'},{date:'Pre-Flood',event:'Begins building the ark'},{date:'Pre-Flood',event:'The great flood'},{date:'Post-Flood',event:'God\'s rainbow covenant'}]
+    },
+    {id:'sarah',name:'Sarah',subtitle:'Mother of Nations',testament:'old',category:'Women of Faith',era:'~2156 - 2029 BC',
+      image:'https://readdy.ai/api/search-image?query=elegant%20elderly%20woman%20flowing%20cream%20robes%20warm%20gentle%20expression%20silver%20hair%20desert%20tent%20background%20warm%20golden%20light%20classical%20biblical%20art%20style%20dignified%20matriarch&width=400&height=600&seq=sarah01&orientation=portrait',
+      bio:'Sarah, wife of Abraham, waited decades for God\'s promise of a son. When Isaac was finally born in her old age, her laughter of doubt became laughter of joy. She is honored in Scripture as a woman of great beauty and faith.',
+      keyVerse:'"Is anything too hard for the LORD?" — Genesis 18:14',
+      relatedPeople:['abraham','isaac','hagar','ishmael'],
+      journey:[{title:'The Journey',desc:'Left Ur with Abraham at God\'s call'},{title:'The Wait',desc:'Endured decades of barrenness'},{title:'The Promise',desc:'Laughed when told she would have a son'},{title:'The Fulfillment',desc:'Gave birth to Isaac at age 90'}],
+      lessons:[{title:'Waiting on God',desc:'Sarah\'s decades of waiting teach us patience in God\'s promises.'},{title:'Laughter Redeemed',desc:'Her doubt-filled laugh became a name — Isaac means "he laughs."'},{title:'Partner in Faith',desc:'She journeyed with Abraham through every trial.'}],
+      scriptures:[{text:'Sarah herself received power to conceive because she judged Him faithful who had promised.',ref:'Hebrews 11:11'}],
+      timeline:[{date:'~2156 BC',event:'Born'},{date:'~2091 BC',event:'Journeys to Canaan'},{date:'~2066 BC',event:'Isaac born'},{date:'~2029 BC',event:'Dies at age 127'}]
+    },
+    {id:'joseph-ot',name:'Joseph',subtitle:'Dreamer, Ruler of Egypt',testament:'old',category:'Patriarch',era:'~1915 - 1805 BC',
+      image:'https://readdy.ai/api/search-image?query=young%20handsome%20man%20colorful%20ornate%20robe%20Egyptian%20palace%20setting%20golden%20jewelry%20dignified%20wise%20expression%20warm%20amber%20lighting%20classical%20biblical%20art%20style&width=400&height=600&seq=josephot01&orientation=portrait',
+      bio:'Joseph, son of Jacob, was sold into slavery by his jealous brothers but rose to become the second most powerful man in Egypt. His ability to interpret dreams saved Egypt and his own family from famine, and his forgiveness of his brothers is one of Scripture\'s most moving moments.',
+      keyVerse:'"You intended to harm me, but God intended it for good." — Genesis 50:20',
+      relatedPeople:['jacob','benjamin','pharaoh','potiphar'],
+      journey:[{title:'Beloved Son',desc:'Jacob\'s favorite, given the coat of many colors'},{title:'Slavery & Prison',desc:'Sold by brothers, falsely accused, imprisoned'},{title:'Rise to Power',desc:'Interpreted Pharaoh\'s dreams, made ruler of Egypt'},{title:'Reconciliation',desc:'Forgave his brothers and saved his family'}],
+      lessons:[{title:'Providence in Pain',desc:'Every setback positioned Joseph for God\'s greater plan.'},{title:'Integrity Under Pressure',desc:'He resisted Potiphar\'s wife and served faithfully in prison.'},{title:'Radical Forgiveness',desc:'He wept and forgave the brothers who had betrayed him.'}],
+      scriptures:[{text:'You intended to harm me, but God intended it for good.',ref:'Genesis 50:20'},{text:'The LORD was with Joseph so that he prospered.',ref:'Genesis 39:2'}],
+      timeline:[{date:'~1915 BC',event:'Born to Jacob and Rachel'},{date:'~1898 BC',event:'Sold into slavery'},{date:'~1885 BC',event:'Made ruler of Egypt'},{date:'~1805 BC',event:'Dies in Egypt at 110'}]
+    },
+    {id:'ruth',name:'Ruth',subtitle:'Loyal Daughter-in-Law, Ancestor of Christ',testament:'old',category:'Women of Faith',era:'~1100 BC',
+      image:'https://readdy.ai/api/search-image?query=beautiful%20young%20Moabite%20woman%20humble%20wheat%20field%20gleaning%20grain%20warm%20sunset%20light%20simple%20modest%20robes%20devoted%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=ruth01&orientation=portrait',
+      bio:'Ruth was a Moabite woman who chose to stay with her mother-in-law Naomi after her husband died. Her famous declaration of loyalty — "Where you go I will go" — led her to Bethlehem, where she married Boaz and became an ancestor of King David and Jesus Christ.',
+      keyVerse:'"Where you go I will go, and where you stay I will stay. Your people will be my people and your God my God." — Ruth 1:16',
+      relatedPeople:['naomi','boaz','david'],
+      journey:[{title:'Loss',desc:'Lost her husband in Moab'},{title:'Loyalty',desc:'Chose to follow Naomi to Bethlehem'},{title:'Labor',desc:'Gleaned in the fields of Boaz'},{title:'Love',desc:'Married Boaz and bore Obed, grandfather of David'}],
+      lessons:[{title:'Covenant Loyalty',desc:'Ruth\'s devotion to Naomi models the kind of steadfast love (hesed) God shows us.'},{title:'God Uses Outsiders',desc:'A Moabite woman became part of the Messiah\'s lineage.'},{title:'Humble Work',desc:'She gleaned in the fields without complaint — faithfulness in small things.'}],
+      scriptures:[{text:'Where you go I will go, and where you stay I will stay.',ref:'Ruth 1:16'}],
+      timeline:[{date:'~1100 BC',event:'Marries Naomi\'s son in Moab'},{date:'~1100 BC',event:'Returns to Bethlehem with Naomi'},{date:'~1100 BC',event:'Meets and marries Boaz'},{date:'~1100 BC',event:'Gives birth to Obed'}]
+    },
+    {id:'elijah',name:'Elijah',subtitle:'Prophet of Fire',testament:'old',category:'Prophet',era:'~900 BC',
+      image:'https://readdy.ai/api/search-image?query=fierce%20wild-haired%20prophet%20rough%20animal%20skin%20garment%20leather%20belt%20dramatic%20stormy%20sky%20fire%20falling%20from%20heaven%20intense%20eyes%20mountain%20top%20classical%20biblical%20painting%20style&width=400&height=600&seq=elijah01&orientation=portrait',
+      bio:'Elijah was a prophet who confronted the prophets of Baal on Mount Carmel, calling down fire from heaven. He boldly challenged King Ahab and Queen Jezebel\'s idolatry. Despite moments of despair, God sustained him, and he was taken to heaven in a chariot of fire.',
+      keyVerse:'"The LORD — he is God! The LORD — he is God!" — 1 Kings 18:39',
+      relatedPeople:['elisha','ahab','jezebel'],
+      journey:[{title:'Drought',desc:'Declared a drought as judgment on Israel\'s idolatry'},{title:'Mount Carmel',desc:'Confronted 450 prophets of Baal, fire fell from heaven'},{title:'Despair',desc:'Fled to the wilderness, wanting to die'},{title:'Ascension',desc:'Taken to heaven in a whirlwind with a chariot of fire'}],
+      lessons:[{title:'Boldness for Truth',desc:'Elijah stood alone against an entire nation\'s false worship.'},{title:'God in the Whisper',desc:'After the dramatic fire, God spoke in a still small voice.'},{title:'Even Prophets Struggle',desc:'Elijah\'s depression reminds us that spiritual giants also falter.'}],
+      scriptures:[{text:'How long will you waver between two opinions? If the LORD is God, follow him.',ref:'1 Kings 18:21'}],
+      timeline:[{date:'~900 BC',event:'Ministry begins during Ahab\'s reign'},{date:'~900 BC',event:'Contest on Mount Carmel'},{date:'~900 BC',event:'Flees to Horeb'},{date:'~850 BC',event:'Taken up in a chariot of fire'}]
+    },
+    {id:'esther',name:'Esther',subtitle:'Queen of Persia, Savior of Her People',testament:'old',category:'Women of Faith',era:'~480 BC',
+      image:'https://readdy.ai/api/search-image?query=beautiful%20young%20Persian%20queen%20elegant%20royal%20robes%20gold%20crown%20ornate%20palace%20setting%20warm%20candlelight%20courageous%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=esther01&orientation=portrait',
+      bio:'Esther, a Jewish orphan raised by her cousin Mordecai, became queen of Persia. When the evil Haman plotted to destroy all the Jews, Esther risked her life by approaching the king uninvited to plead for her people. Her courage saved an entire nation.',
+      keyVerse:'"Who knows but that you have come to your royal position for such a time as this?" — Esther 4:14',
+      relatedPeople:['mordecai','haman'],
+      journey:[{title:'Orphan',desc:'Raised by cousin Mordecai in exile'},{title:'Queen',desc:'Chosen as queen of Persia'},{title:'Crisis',desc:'Haman plots to destroy the Jews'},{title:'Courage',desc:'Risked her life to save her people'}],
+      lessons:[{title:'Courage in Crisis',desc:'Esther risked death to do what was right — "If I perish, I perish."'},{title:'Divine Positioning',desc:'God placed her in the palace for exactly this moment.'},{title:'Strategic Wisdom',desc:'She didn\'t rush in — she fasted, prayed, and planned carefully.'}],
+      scriptures:[{text:'If I perish, I perish.',ref:'Esther 4:16'},{text:'Who knows but that you have come to your royal position for such a time as this?',ref:'Esther 4:14'}],
+      timeline:[{date:'~483 BC',event:'Becomes queen of Persia'},{date:'~480 BC',event:'Haman\'s plot revealed'},{date:'~480 BC',event:'Approaches the king'},{date:'~480 BC',event:'Jews saved, Purim established'}]
+    },
+    {id:'solomon',name:'Solomon',subtitle:'Wisest King, Builder of the Temple',testament:'old',category:'King',era:'~990 - 931 BC',
+      image:'https://readdy.ai/api/search-image?query=regal%20king%20ornate%20golden%20crown%20rich%20purple%20robes%20grand%20throne%20room%20temple%20pillars%20wise%20expression%20classical%20biblical%20art%20warm%20golden%20light&width=400&height=600&seq=solomon01&orientation=portrait',
+      bio:'Solomon, son of David, asked God for wisdom and received it in abundance. He built the magnificent Temple in Jerusalem and authored Proverbs, Ecclesiastes, and Song of Solomon. Yet his many foreign wives led his heart astray in his later years.',
+      keyVerse:'"The fear of the LORD is the beginning of wisdom." — Proverbs 9:10',
+      relatedPeople:['david','bathsheba','rehoboam'],
+      journey:[{title:'Anointed',desc:'Chosen as king despite palace intrigue'},{title:'Wisdom',desc:'Asked God for wisdom, granted unparalleled insight'},{title:'The Temple',desc:'Built the first Temple in Jerusalem'},{title:'Decline',desc:'Foreign wives turned his heart from God'}],
+      lessons:[{title:'Ask for Wisdom',desc:'When offered anything, Solomon chose wisdom — the most valuable gift.'},{title:'Knowledge Without Obedience',desc:'Even the wisest man can fall when he stops following God.'},{title:'Legacy Matters',desc:'His choices led to the kingdom\'s division after his death.'}],
+      scriptures:[{text:'Give your servant a discerning heart to govern your people.',ref:'1 Kings 3:9'},{text:'Vanity of vanities, all is vanity.',ref:'Ecclesiastes 1:2'}],
+      timeline:[{date:'~970 BC',event:'Becomes king of Israel'},{date:'~966 BC',event:'Begins building the Temple'},{date:'~959 BC',event:'Temple completed'},{date:'~931 BC',event:'Dies, kingdom divides'}]
+    },
+    {id:'isaac',name:'Isaac',subtitle:'Child of Promise',testament:'old',category:'Patriarch',era:'~2066 - 1886 BC',
+      image:'https://readdy.ai/api/search-image?query=gentle%20middle-aged%20Hebrew%20man%20quiet%20contemplative%20expression%20simple%20robes%20desert%20well%20background%20warm%20sunset%20light%20classical%20biblical%20painting%20style&width=400&height=600&seq=isaac01&orientation=portrait',
+      bio:'Isaac was the long-awaited son of Abraham and Sarah, born when they were both very old. He was nearly sacrificed on Mount Moriah, married Rebekah, and fathered Jacob and Esau. His life is a quiet testimony of faith passed from one generation to the next.',
+      keyVerse:'"God himself will provide the lamb for the burnt offering, my son." — Genesis 22:8',
+      relatedPeople:['abraham','sarah','rebekah','jacob','esau'],
+      journey:[{title:'Miracle Birth',desc:'Born to Abraham and Sarah in their old age'},{title:'The Binding',desc:'Nearly sacrificed on Mount Moriah'},{title:'Marriage',desc:'Married Rebekah, chosen by God\'s providence'},{title:'Father',desc:'Blessed Jacob, fulfilling God\'s plan'}],
+      lessons:[{title:'Trust in the Father',desc:'Isaac carried the wood up the mountain, trusting his father — foreshadowing Christ.'},{title:'Quiet Faithfulness',desc:'Isaac\'s life was less dramatic but no less faithful.'},{title:'Passing the Torch',desc:'He faithfully passed the covenant blessing to the next generation.'}],
+      scriptures:[{text:'God himself will provide the lamb.',ref:'Genesis 22:8'}],
+      timeline:[{date:'~2066 BC',event:'Born to Abraham and Sarah'},{date:'~2050 BC',event:'The binding on Mount Moriah'},{date:'~2026 BC',event:'Marries Rebekah'},{date:'~1886 BC',event:'Dies at age 180'}]
+    },
+    {id:'jacob',name:'Jacob',subtitle:'Wrestler with God, Father of the Twelve Tribes',testament:'old',category:'Patriarch',era:'~2006 - 1859 BC',
+      image:'https://readdy.ai/api/search-image?query=weathered%20determined%20man%20wrestling%20at%20night%20riverside%20torn%20robes%20moonlight%20intense%20struggle%20expression%20classical%20biblical%20art%20warm%20dramatic%20lighting&width=400&height=600&seq=jacob01&orientation=portrait',
+      bio:'Jacob, twin brother of Esau, obtained the birthright through deception but was transformed by an encounter with God. After wrestling with the angel, he was renamed Israel. His twelve sons became the twelve tribes of Israel.',
+      keyVerse:'"I will not let you go unless you bless me." — Genesis 32:26',
+      relatedPeople:['esau','isaac','rebekah','joseph-ot','rachel','leah'],
+      journey:[{title:'The Birthright',desc:'Obtained Esau\'s birthright and blessing through deception'},{title:'Exile',desc:'Fled to Laban, worked 14 years for Rachel'},{title:'Wrestling',desc:'Wrestled with God at Peniel, renamed Israel'},{title:'Reconciliation',desc:'Reconciled with Esau, settled in Canaan'}],
+      lessons:[{title:'God Transforms Deceivers',desc:'Jacob the deceiver became Israel the prince with God.'},{title:'Wrestling with God',desc:'Sometimes blessing comes through struggle, not ease.'},{title:'Reaping What You Sow',desc:'Jacob deceived his father and was himself deceived by Laban.'}],
+      scriptures:[{text:'I will not let you go unless you bless me.',ref:'Genesis 32:26'},{text:'Your name will no longer be Jacob, but Israel.',ref:'Genesis 32:28'}],
+      timeline:[{date:'~2006 BC',event:'Born to Isaac and Rebekah'},{date:'~1929 BC',event:'Flees to Laban'},{date:'~1909 BC',event:'Wrestles with God'},{date:'~1859 BC',event:'Dies in Egypt at 147'}]
+    },
+    {id:'joshua',name:'Joshua',subtitle:'Conqueror of Canaan',testament:'old',category:'Hero of Faith',era:'~1490 - 1380 BC',
+      image:'https://readdy.ai/api/search-image?query=strong%20warrior%20leader%20ancient%20Hebrew%20armor%20sword%20raised%20overlooking%20promised%20land%20dramatic%20sunrise%20classical%20biblical%20painting%20style%20determined%20expression&width=400&height=600&seq=josh01&orientation=portrait',
+      bio:'Joshua served as Moses\' aide and was chosen to lead Israel into the Promised Land. His faith was demonstrated at Jericho, where the walls fell at God\'s command. He led the conquest of Canaan and divided the land among the twelve tribes.',
+      keyVerse:'"Be strong and courageous. Do not be afraid... for the LORD your God will be with you wherever you go." — Joshua 1:9',
+      relatedPeople:['moses','caleb','rahab'],
+      journey:[{title:'Apprentice',desc:'Served faithfully as Moses\' aide for decades'},{title:'Spy',desc:'One of two faithful spies who trusted God\'s promise'},{title:'Commander',desc:'Led Israel across the Jordan into Canaan'},{title:'Conqueror',desc:'Defeated the kings of Canaan, divided the land'}],
+      lessons:[{title:'Faithful in Second Place',desc:'Joshua served Moses for years before his own moment came.'},{title:'Obedience Over Strategy',desc:'Marching around Jericho made no military sense, but God\'s plan prevailed.'},{title:'Choose This Day',desc:'"As for me and my household, we will serve the LORD."'}],
+      scriptures:[{text:'Be strong and courageous. Do not be afraid.',ref:'Joshua 1:9'},{text:'Choose for yourselves this day whom you will serve.',ref:'Joshua 24:15'}],
+      timeline:[{date:'~1490 BC',event:'Born in Egypt'},{date:'~1406 BC',event:'Leads Israel into Canaan'},{date:'~1400 BC',event:'Conquest of Jericho'},{date:'~1380 BC',event:'Dies at 110'}]
+    },
+    {id:'samson',name:'Samson',subtitle:'Strongest Man, Flawed Judge',testament:'old',category:'Judge',era:'~1100 BC',
+      image:'https://readdy.ai/api/search-image?query=muscular%20long-haired%20Hebrew%20warrior%20breaking%20chains%20dramatic%20lighting%20ancient%20setting%20powerful%20fierce%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=samson01&orientation=portrait',
+      bio:'Samson was a Nazirite judge gifted with supernatural strength. His exploits against the Philistines were legendary, but his weakness for Delilah led to his downfall. Blinded and imprisoned, he made a final stand, bringing down the Philistine temple.',
+      keyVerse:'"Sovereign Lord, remember me. Please, God, strengthen me just once more." — Judges 16:28',
+      relatedPeople:['delilah','samuel'],
+      journey:[{title:'Birth',desc:'Born as a Nazirite, set apart from the womb'},{title:'Exploits',desc:'Performed mighty deeds against the Philistines'},{title:'Downfall',desc:'Betrayed by Delilah, lost his strength'},{title:'Final Act',desc:'Destroyed the Philistine temple in his death'}],
+      lessons:[{title:'Strength Without Discipline',desc:'Great gifts without self-control lead to destruction.'},{title:'God Uses the Broken',desc:'Even in his failure, God used Samson for His purposes.'},{title:'The Cost of Compromise',desc:'Small compromises with sin led to devastating consequences.'}],
+      scriptures:[{text:'The Spirit of the LORD came powerfully upon him.',ref:'Judges 14:6'}],
+      timeline:[{date:'~1100 BC',event:'Born as a Nazirite'},{date:'~1080 BC',event:'Begins judging Israel'},{date:'~1060 BC',event:'Betrayed by Delilah'},{date:'~1060 BC',event:'Destroys Philistine temple'}]
+    },
+    {id:'samuel',name:'Samuel',subtitle:'Last Judge, Kingmaker Prophet',testament:'old',category:'Prophet',era:'~1100 - 1020 BC',
+      image:'https://readdy.ai/api/search-image?query=wise%20elderly%20prophet%20white%20robes%20anointing%20oil%20horn%20solemn%20expression%20temple%20interior%20warm%20lamp%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=samuel01&orientation=portrait',
+      bio:'Samuel was dedicated to God before birth and raised in the temple under Eli. He became the last judge of Israel and the prophet who anointed both Saul and David as kings. His life bridged the era of judges and the monarchy.',
+      keyVerse:'"Speak, LORD, for your servant is listening." — 1 Samuel 3:10',
+      relatedPeople:['saul','david','eli','hannah'],
+      journey:[{title:'Dedication',desc:'Given to God by his mother Hannah'},{title:'Calling',desc:'Heard God\'s voice as a boy in the temple'},{title:'Judge',desc:'Led Israel as the last judge'},{title:'Kingmaker',desc:'Anointed Saul and David as kings'}],
+      lessons:[{title:'Listening to God',desc:'Samuel\'s childhood shows the importance of learning to hear God\'s voice.'},{title:'Faithful Service',desc:'He served God from childhood to old age without wavering.'},{title:'Hard Obedience',desc:'He anointed Saul knowing the pain it would bring Israel.'}],
+      scriptures:[{text:'Speak, LORD, for your servant is listening.',ref:'1 Samuel 3:10'},{text:'To obey is better than sacrifice.',ref:'1 Samuel 15:22'}],
+      timeline:[{date:'~1100 BC',event:'Born, dedicated to God'},{date:'~1090 BC',event:'Called by God in the temple'},{date:'~1050 BC',event:'Anoints Saul as king'},{date:'~1020 BC',event:'Dies, mourned by Israel'}]
+    },
+    {id:'daniel',name:'Daniel',subtitle:'Prophet in Exile, Interpreter of Dreams',testament:'old',category:'Prophet',era:'~620 - 530 BC',
+      image:'https://readdy.ai/api/search-image?query=dignified%20young%20Hebrew%20man%20in%20Babylonian%20court%20robes%20standing%20before%20great%20lion%20peaceful%20expression%20golden%20torchlight%20stone%20den%20classical%20biblical%20art%20style&width=400&height=600&seq=daniel01&orientation=portrait',
+      bio:'Daniel was taken captive to Babylon as a youth but rose to prominence through his God-given ability to interpret dreams. He survived the lion\'s den, served multiple kings, and received apocalyptic visions about the future. His integrity never wavered.',
+      keyVerse:'"My God sent his angel, and he shut the mouths of the lions." — Daniel 6:22',
+      relatedPeople:['shadrach','meshach','abednego','nebuchadnezzar'],
+      journey:[{title:'Exile',desc:'Taken captive to Babylon as a youth'},{title:'Interpreter',desc:'Interpreted Nebuchadnezzar\'s dreams'},{title:'Lion\'s Den',desc:'Thrown in for praying, delivered by God'},{title:'Visions',desc:'Received visions of the end times'}],
+      lessons:[{title:'Integrity in Babylon',desc:'Daniel thrived in a pagan culture without compromising his faith.'},{title:'Prayer as Priority',desc:'He prayed three times daily, even when it meant death.'},{title:'God Controls History',desc:'His visions show that God is sovereign over all kingdoms.'}],
+      scriptures:[{text:'My God sent his angel, and he shut the mouths of the lions.',ref:'Daniel 6:22'},{text:'In the time of those kings, the God of heaven will set up a kingdom that will never be destroyed.',ref:'Daniel 2:44'}],
+      timeline:[{date:'~605 BC',event:'Taken captive to Babylon'},{date:'~603 BC',event:'Interprets Nebuchadnezzar\'s dream'},{date:'~539 BC',event:'Survives the lion\'s den'},{date:'~530 BC',event:'Receives final visions'}]
+    },
+    {id:'john-apostle',name:'John',subtitle:'The Beloved Disciple',testament:'new',category:'Apostle',era:'~6 AD - ~100 AD',
+      image:'https://readdy.ai/api/search-image?query=young%20gentle-faced%20man%20writing%20on%20scroll%20warm%20lamp%20light%20simple%20robes%20peaceful%20expression%20island%20cave%20setting%20classical%20biblical%20art%20style&width=400&height=600&seq=john01&orientation=portrait',
+      bio:'John, son of Zebedee, was the disciple "whom Jesus loved." He was present at the Transfiguration, the Last Supper, and the cross. He wrote the Gospel of John, three epistles, and Revelation — the last book of the Bible.',
+      keyVerse:'"God is love. Whoever lives in love lives in God, and God in them." — 1 John 4:16',
+      relatedPeople:['jesus','peter','james-apostle','mary'],
+      journey:[{title:'Called',desc:'Left fishing to follow Jesus with his brother James'},{title:'Inner Circle',desc:'Witnessed the Transfiguration, Gethsemane, and more'},{title:'At the Cross',desc:'Only apostle present at the crucifixion'},{title:'Revelation',desc:'Received apocalyptic visions on Patmos'}],
+      lessons:[{title:'Love as Identity',desc:'John defined himself by being loved by Jesus — our identity comes from Him.'},{title:'From Thunder to Love',desc:'Once called "Son of Thunder," John became the apostle of love.'},{title:'Faithful to the End',desc:'The only apostle not martyred, he served into extreme old age.'}],
+      scriptures:[{text:'For God so loved the world that he gave his one and only Son.',ref:'John 3:16'},{text:'Dear friends, let us love one another, for love comes from God.',ref:'1 John 4:7'}],
+      timeline:[{date:'~6 AD',event:'Born in Galilee'},{date:'~27 AD',event:'Called by Jesus'},{date:'~30 AD',event:'At the cross and empty tomb'},{date:'~95 AD',event:'Writes Revelation on Patmos'}]
+    },
+    {id:'james-apostle',name:'James',subtitle:'Son of Zebedee, First Apostle Martyred',testament:'new',category:'Apostle',era:'~3 AD - ~44 AD',
+      image:'https://readdy.ai/api/search-image?query=strong%20fisherman%20turned%20apostle%20weathered%20face%20dark%20beard%20simple%20rough%20robes%20determined%20courageous%20expression%20warm%20sunrise%20background%20classical%20biblical%20art%20style&width=400&height=600&seq=james01&orientation=portrait',
+      bio:'James, brother of John and son of Zebedee, was one of Jesus\' closest disciples. Part of the inner circle, he witnessed key moments including the Transfiguration. He was the first apostle to be martyred, executed by King Herod Agrippa.',
+      keyVerse:'"He had James, the brother of John, put to death with the sword." — Acts 12:2',
+      relatedPeople:['jesus','john-apostle','peter'],
+      journey:[{title:'Called',desc:'Left fishing with his brother John'},{title:'Inner Circle',desc:'One of three closest to Jesus'},{title:'Witness',desc:'Present at the Transfiguration and Gethsemane'},{title:'Martyr',desc:'First apostle killed for his faith'}],
+      lessons:[{title:'Costly Discipleship',desc:'Following Jesus can cost everything — even your life.'},{title:'Faithfulness to the End',desc:'James never wavered, even facing execution.'},{title:'Transformation',desc:'The "Son of Thunder" became a pillar of the church.'}],
+      scriptures:[{text:'He had James, the brother of John, put to death with the sword.',ref:'Acts 12:2'}],
+      timeline:[{date:'~3 AD',event:'Born in Galilee'},{date:'~27 AD',event:'Called by Jesus'},{date:'~30 AD',event:'Witnesses the Resurrection'},{date:'~44 AD',event:'Martyred by Herod Agrippa'}]
+    },
+    {id:'andrew',name:'Andrew',subtitle:'The First Called',testament:'new',category:'Apostle',era:'~5 AD - ~60 AD',
+      image:'https://readdy.ai/api/search-image?query=humble%20fisherman%20simple%20robes%20kind%20expression%20bringing%20others%20to%20meet%20someone%20seaside%20setting%20warm%20golden%20morning%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=andrew01&orientation=portrait',
+      bio:'Andrew, brother of Peter, was the first disciple called by Jesus. A former follower of John the Baptist, Andrew immediately brought his brother Simon to Jesus. He is remembered for consistently bringing people to Christ, including the boy with five loaves and two fish.',
+      keyVerse:'"The first thing Andrew did was to find his brother Simon and tell him, \'We have found the Messiah.\'" — John 1:41',
+      relatedPeople:['peter','jesus','john-baptist','philip'],
+      journey:[{title:'Baptist\'s Disciple',desc:'First followed John the Baptist'},{title:'First Called',desc:'The first to follow Jesus'},{title:'Bridge Builder',desc:'Brought Peter, the boy with loaves, and Greeks to Jesus'},{title:'Missionary',desc:'Preached the gospel widely after Pentecost'}],
+      lessons:[{title:'Bringing Others to Jesus',desc:'Andrew\'s ministry was about introducing people to Christ.'},{title:'Quiet Faithfulness',desc:'He worked behind the scenes without seeking the spotlight.'},{title:'Small Things Matter',desc:'He brought the boy\'s lunch that fed 5,000.'}],
+      scriptures:[{text:'We have found the Messiah.',ref:'John 1:41'}],
+      timeline:[{date:'~5 AD',event:'Born in Bethsaida'},{date:'~27 AD',event:'First called by Jesus'},{date:'~30 AD',event:'At Pentecost'},{date:'~60 AD',event:'Martyred in Patras'}]
+    },
+    {id:'john-baptist',name:'John the Baptist',subtitle:'Voice in the Wilderness',testament:'new',category:'Prophet',era:'~6 BC - ~29 AD',
+      image:'https://readdy.ai/api/search-image?query=wild%20ascetic%20prophet%20camel%20hair%20garment%20leather%20belt%20desert%20wilderness%20river%20baptizing%20intense%20eyes%20classical%20biblical%20art%20style%20dramatic%20sky&width=400&height=600&seq=johnb01&orientation=portrait',
+      bio:'John the Baptist was the prophesied forerunner of the Messiah. Living as an ascetic in the wilderness, he preached repentance and baptized in the Jordan River. He baptized Jesus himself and was later beheaded by Herod Antipas at the request of Herodias.',
+      keyVerse:'"He must become greater; I must become less." — John 3:30',
+      relatedPeople:['jesus','elizabeth','herod-antipas'],
+      journey:[{title:'Birth',desc:'Miraculous birth to elderly Zechariah and Elizabeth'},{title:'Wilderness',desc:'Lived as an ascetic, preaching repentance'},{title:'Baptizer',desc:'Baptized multitudes, including Jesus'},{title:'Martyr',desc:'Beheaded by Herod Antipas'}],
+      lessons:[{title:'Humility of Purpose',desc:'"He must increase, I must decrease" — true ministry points to Christ.'},{title:'Courage to Confront',desc:'He rebuked Herod\'s sin knowing the cost.'},{title:'Preparing the Way',desc:'Sometimes our role is to prepare, not to be the main event.'}],
+      scriptures:[{text:'He must become greater; I must become less.',ref:'John 3:30'},{text:'Prepare the way for the Lord, make straight paths for him.',ref:'Mark 1:3'}],
+      timeline:[{date:'~6 BC',event:'Miraculous birth'},{date:'~26 AD',event:'Begins preaching in the wilderness'},{date:'~27 AD',event:'Baptizes Jesus'},{date:'~29 AD',event:'Beheaded by Herod'}]
+    },
+    {id:'timothy',name:'Timothy',subtitle:'Young Pastor, Paul\'s Spiritual Son',testament:'new',category:'Apostle',era:'~17 AD - ~80 AD',
+      image:'https://readdy.ai/api/search-image?query=young%20earnest%20man%20scholarly%20appearance%20holding%20letter%20scrolls%20warm%20interior%20light%20gentle%20faithful%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=tim01&orientation=portrait',
+      bio:'Timothy was a young believer from Lystra who became Paul\'s most trusted companion and spiritual son. Despite his youth and natural timidity, he pastored the church at Ephesus. Paul\'s two letters to him contain some of Scripture\'s richest pastoral guidance.',
+      keyVerse:'"Don\'t let anyone look down on you because you are young." — 1 Timothy 4:12',
+      relatedPeople:['paul','lois','eunice'],
+      journey:[{title:'Upbringing',desc:'Raised in faith by grandmother Lois and mother Eunice'},{title:'Commissioned',desc:'Joined Paul on his missionary journeys'},{title:'Pastor',desc:'Led the church at Ephesus'},{title:'Encouragement',desc:'Received Paul\'s final letters of guidance'}],
+      lessons:[{title:'Youth Is No Barrier',desc:'Timothy was young but called to lead — God uses people of every age.'},{title:'Mentorship Matters',desc:'Paul\'s investment in Timothy shaped the early church.'},{title:'Guard the Deposit',desc:'Protect the faith entrusted to you.'}],
+      scriptures:[{text:'Don\'t let anyone look down on you because you are young.',ref:'1 Timothy 4:12'},{text:'Fan into flame the gift of God, which is in you.',ref:'2 Timothy 1:6'}],
+      timeline:[{date:'~17 AD',event:'Born in Lystra'},{date:'~49 AD',event:'Joins Paul\'s mission'},{date:'~62 AD',event:'Pastors Ephesus'},{date:'~67 AD',event:'Receives Paul\'s final letter'}]
+    },
+    {id:'barnabas',name:'Barnabas',subtitle:'Son of Encouragement',testament:'new',category:'Apostle',era:'~5 AD - ~61 AD',
+      image:'https://readdy.ai/api/search-image?query=warm%20friendly%20middle-aged%20man%20welcoming%20gesture%20simple%20robes%20generous%20kind%20expression%20sunny%20courtyard%20setting%20classical%20biblical%20art%20style&width=400&height=600&seq=barn01&orientation=portrait',
+      bio:'Barnabas, originally Joseph of Cyprus, earned his nickname "Son of Encouragement" for his generous spirit. He vouched for the newly converted Paul when others were afraid, and together they embarked on the first missionary journey. His gift was seeing potential in others.',
+      keyVerse:'"He was a good man, full of the Holy Spirit and faith." — Acts 11:24',
+      relatedPeople:['paul','john-mark','peter'],
+      journey:[{title:'Generosity',desc:'Sold his field and gave the money to the apostles'},{title:'Advocate',desc:'Vouched for Paul when others feared him'},{title:'Missionary',desc:'First missionary journey with Paul'},{title:'Mentor',desc:'Gave John Mark a second chance'}],
+      lessons:[{title:'The Power of Encouragement',desc:'Barnabas saw the best in people and called it out.'},{title:'Second Chances',desc:'He gave John Mark another opportunity when Paul wouldn\'t.'},{title:'Generous Living',desc:'His giving funded the early church\'s mission.'}],
+      scriptures:[{text:'He was a good man, full of the Holy Spirit and faith.',ref:'Acts 11:24'}],
+      timeline:[{date:'~5 AD',event:'Born in Cyprus'},{date:'~36 AD',event:'Introduces Paul to the apostles'},{date:'~47 AD',event:'First missionary journey'},{date:'~50 AD',event:'Parts with Paul over John Mark'}]
+    },
+    {id:'luke',name:'Luke',subtitle:'The Beloved Physician, Historian',testament:'new',category:'Apostle',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=educated%20Greek%20physician%20writing%20carefully%20on%20scroll%20desk%20with%20medical%20instruments%20warm%20oil%20lamp%20light%20thoughtful%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=luke01&orientation=portrait',
+      bio:'Luke was a Gentile physician and companion of Paul who wrote both the Gospel of Luke and the book of Acts. His meticulous research and elegant writing gave us the most detailed accounts of Jesus\' birth and the early church\'s expansion.',
+      keyVerse:'"It seemed good also to me to write an orderly account for you." — Luke 1:3',
+      relatedPeople:['paul','theophilus'],
+      journey:[{title:'Physician',desc:'Practiced medicine, possibly in Antioch'},{title:'Companion',desc:'Joined Paul on missionary journeys'},{title:'Historian',desc:'Wrote Luke and Acts with careful research'},{title:'Faithful Friend',desc:'Only one with Paul at the end'}],
+      lessons:[{title:'Excellence in Calling',desc:'Luke brought his medical precision to recording the gospel.'},{title:'Faithful Companionship',desc:'He stayed with Paul through imprisonment and hardship.'},{title:'Every Gift Serves God',desc:'A physician\'s careful eye became the church\'s greatest historical record.'}],
+      scriptures:[{text:'Only Luke is with me.',ref:'2 Timothy 4:11'}],
+      timeline:[{date:'1st century',event:'Born, likely in Antioch'},{date:'~49 AD',event:'Joins Paul\'s journeys'},{date:'~60 AD',event:'Writes Gospel of Luke'},{date:'~62 AD',event:'Writes Acts'}]
+    },
+    {id:'silas',name:'Silas',subtitle:'Paul\'s Fellow Prisoner, Worship Warrior',testament:'new',category:'Apostle',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=sturdy%20man%20chains%20on%20wrists%20singing%20praise%20dark%20prison%20cell%20joyful%20defiant%20expression%20moonlight%20through%20bars%20classical%20biblical%20art%20style&width=400&height=600&seq=silas01&orientation=portrait',
+      bio:'Silas (Silvanus) was a leader in the Jerusalem church who became Paul\'s companion on his second missionary journey. Together they were imprisoned in Philippi, where they famously sang hymns at midnight — and God sent an earthquake to free them.',
+      keyVerse:'"About midnight Paul and Silas were praying and singing hymns to God." — Acts 16:25',
+      relatedPeople:['paul','timothy','peter'],
+      journey:[{title:'Leader',desc:'Respected leader in the Jerusalem church'},{title:'Missionary',desc:'Joined Paul\'s second missionary journey'},{title:'Prisoner',desc:'Imprisoned in Philippi, sang at midnight'},{title:'Writer',desc:'Helped Peter write his first epistle'}],
+      lessons:[{title:'Worship in Chains',desc:'Silas sang praises in prison — worship isn\'t about circumstances.'},{title:'Willing Service',desc:'He left a prominent position to serve on the road.'},{title:'Partnership',desc:'Ministry is best done in teams, not alone.'}],
+      scriptures:[{text:'About midnight Paul and Silas were praying and singing hymns to God.',ref:'Acts 16:25'}],
+      timeline:[{date:'1st century',event:'Leader in Jerusalem church'},{date:'~49 AD',event:'Joins Paul\'s second journey'},{date:'~50 AD',event:'Imprisoned in Philippi'},{date:'~63 AD',event:'Assists Peter\'s writing'}]
+    },
+    {id:'adam',name:'Adam',subtitle:'The First Man',testament:'old',category:'Patriarch',era:'Creation',
+      image:'https://readdy.ai/api/search-image?query=first%20man%20beautiful%20garden%20paradise%20setting%20innocent%20expression%20surrounded%20by%20lush%20vegetation%20warm%20golden%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=adam01&orientation=portrait',
+      bio:'Adam was the first human being, created by God from the dust of the ground and given the breath of life. Placed in the Garden of Eden, he and Eve were given dominion over creation. Their disobedience brought sin and death into the world.',
+      keyVerse:'"The LORD God formed a man from the dust of the ground and breathed into his nostrils the breath of life." — Genesis 2:7',
+      relatedPeople:['eve','seth','cain','abel'],
+      journey:[{title:'Creation',desc:'Formed from dust, given the breath of life'},{title:'Eden',desc:'Named the animals, given Eve as partner'},{title:'The Fall',desc:'Ate the forbidden fruit, sin entered the world'},{title:'Exile',desc:'Banished from Eden, began toiling the ground'}],
+      lessons:[{title:'Created for Relationship',desc:'God made Adam for fellowship — we are designed for communion with Him.'},{title:'Consequence of Sin',desc:'One act of disobedience changed the course of all history.'},{title:'Hope Remains',desc:'Even in the curse, God promised a Redeemer.'}],
+      scriptures:[{text:'The LORD God formed a man from the dust of the ground.',ref:'Genesis 2:7'}],
+      timeline:[{date:'Creation',event:'Formed by God'},{date:'Creation',event:'Placed in Eden'},{date:'The Fall',event:'Ate the forbidden fruit'},{date:'After the Fall',event:'Banished from Eden'}]
+    },
+    {id:'eve',name:'Eve',subtitle:'Mother of All Living',testament:'old',category:'Women of Faith',era:'Creation',
+      image:'https://readdy.ai/api/search-image?query=beautiful%20first%20woman%20garden%20paradise%20flowing%20hair%20innocent%20expression%20lush%20flowers%20warm%20golden%20light%20classical%20biblical%20art%20modest%20natural%20covering&width=400&height=600&seq=eve01&orientation=portrait',
+      bio:'Eve was the first woman, created from Adam\'s rib as his partner and equal. She was deceived by the serpent and ate the forbidden fruit, leading to humanity\'s fall. Yet through her line would come the promised Redeemer who would crush the serpent\'s head.',
+      keyVerse:'"I will put enmity between you and the woman, and between your offspring and hers." — Genesis 3:15',
+      relatedPeople:['adam','cain','abel','seth'],
+      journey:[{title:'Creation',desc:'Made from Adam\'s side as his partner'},{title:'Eden',desc:'Lived in paradise with Adam'},{title:'Temptation',desc:'Deceived by the serpent'},{title:'Promise',desc:'God promised her offspring would defeat evil'}],
+      lessons:[{title:'Guard Against Deception',desc:'Eve was deceived by twisting God\'s words — know the truth.'},{title:'Partnership',desc:'She was created as Adam\'s equal partner, not subordinate.'},{title:'Hope in the Promise',desc:'Even in the fall, God gave a promise of redemption through her line.'}],
+      scriptures:[{text:'I will put enmity between you and the woman, and between your offspring and hers.',ref:'Genesis 3:15'}],
+      timeline:[{date:'Creation',event:'Created from Adam\'s rib'},{date:'Creation',event:'Life in Eden'},{date:'The Fall',event:'Ate the forbidden fruit'},{date:'After the Fall',event:'Mother of Cain, Abel, Seth'}]
+    },
+    {id:'rebekah',name:'Rebekah',subtitle:'Wife of Isaac, Mother of Nations',testament:'old',category:'Women of Faith',era:'~2026 BC',
+      image:'https://readdy.ai/api/search-image?query=beautiful%20young%20woman%20at%20ancient%20well%20water%20jar%20hospitable%20expression%20desert%20sunset%20elegant%20robes%20classical%20biblical%20art%20style&width=400&height=600&seq=rebekah01&orientation=portrait',
+      bio:'Rebekah was chosen as Isaac\'s wife through divine providence at a well. She was bold and decisive, but her favoritism toward Jacob over Esau led her to orchestrate deception that fractured the family. Her story is a complex portrait of faith and human weakness.',
+      keyVerse:'"Two nations are in your womb, and two peoples from within you will be separated." — Genesis 25:23',
+      relatedPeople:['isaac','jacob','esau','abraham'],
+      journey:[{title:'Chosen',desc:'Met Abraham\'s servant at the well'},{title:'Wife',desc:'Married Isaac, became matriarch'},{title:'Mother',desc:'Bore twins Jacob and Esau'},{title:'Schemer',desc:'Helped Jacob steal Esau\'s blessing'}],
+      lessons:[{title:'God\'s Providence',desc:'God orchestrated her meeting with Abraham\'s servant.'},{title:'Favoritism Destroys',desc:'Her preference for Jacob created lasting family division.'},{title:'Complex Faith',desc:'Even flawed people play crucial roles in God\'s plan.'}],
+      scriptures:[{text:'Two nations are in your womb.',ref:'Genesis 25:23'}],
+      timeline:[{date:'~2026 BC',event:'Meets Abraham\'s servant'},{date:'~2026 BC',event:'Marries Isaac'},{date:'~2006 BC',event:'Twins Jacob and Esau born'}]
+    },
+    {id:'rachel',name:'Rachel',subtitle:'Beloved Wife of Jacob',testament:'old',category:'Women of Faith',era:'~1990 BC',
+      image:'https://readdy.ai/api/search-image?query=beautiful%20shepherdess%20young%20woman%20gentle%20expression%20sheep%20nearby%20pastoral%20hillside%20sunset%20warm%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=rachel01&orientation=portrait',
+      bio:'Rachel was the beautiful younger daughter of Laban whom Jacob loved so deeply he worked fourteen years to marry her. She struggled with barrenness before finally bearing Joseph and Benjamin. She died giving birth to Benjamin and was buried near Bethlehem.',
+      keyVerse:'"So Jacob served seven years to get Rachel, but they seemed like only a few days because of his love for her." — Genesis 29:20',
+      relatedPeople:['jacob','leah','joseph-ot','benjamin'],
+      journey:[{title:'Meeting',desc:'Met Jacob at the well'},{title:'Waiting',desc:'Jacob worked 14 years for her hand'},{title:'Barrenness',desc:'Struggled with infertility for years'},{title:'Motherhood',desc:'Bore Joseph and died giving birth to Benjamin'}],
+      lessons:[{title:'Patient Love',desc:'Jacob\'s love for Rachel endured years of deception.'},{title:'Suffering and Faith',desc:'Rachel\'s barrenness taught her dependence on God.'},{title:'Life\'s Cost',desc:'She gave her life bringing Benjamin into the world.'}],
+      scriptures:[{text:'Jacob served seven years to get Rachel, but they seemed like only a few days.',ref:'Genesis 29:20'}],
+      timeline:[{date:'~1929 BC',event:'Meets Jacob'},{date:'~1922 BC',event:'Marries Jacob'},{date:'~1915 BC',event:'Joseph born'},{date:'~1899 BC',event:'Dies giving birth to Benjamin'}]
+    },
+    {id:'leah',name:'Leah',subtitle:'Unloved Wife, Mother of Judah',testament:'old',category:'Women of Faith',era:'~1990 BC',
+      image:'https://readdy.ai/api/search-image?query=modest%20woman%20gentle%20sad%20eyes%20tender%20expression%20holding%20infant%20simple%20robes%20warm%20domestic%20interior%20lamp%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=leah01&orientation=portrait',
+      bio:'Leah was the older daughter of Laban, given to Jacob through deception. Though unloved by her husband compared to Rachel, God saw her suffering and blessed her with many sons, including Judah — through whose line the Messiah would come.',
+      keyVerse:'"When the LORD saw that Leah was not loved, he enabled her to conceive." — Genesis 29:31',
+      relatedPeople:['jacob','rachel','judah'],
+      journey:[{title:'Marriage',desc:'Given to Jacob through Laban\'s deception'},{title:'Unloved',desc:'Lived in her sister\'s shadow'},{title:'Blessed',desc:'God gave her many sons'},{title:'Legacy',desc:'Mother of Judah, ancestor of Christ'}],
+      lessons:[{title:'God Sees the Unseen',desc:'Leah was overlooked by Jacob but never by God.'},{title:'Worth Beyond Appearance',desc:'Her "weak eyes" didn\'t diminish her value to God.'},{title:'Hidden Glory',desc:'The Messiah came through her son Judah, not Rachel\'s line.'}],
+      scriptures:[{text:'When the LORD saw that Leah was not loved, he enabled her to conceive.',ref:'Genesis 29:31'}],
+      timeline:[{date:'~1929 BC',event:'Married to Jacob by deception'},{date:'~1928 BC',event:'Begins bearing sons'},{date:'~1920 BC',event:'Judah born'}]
+    },
+    {id:'hannah',name:'Hannah',subtitle:'Mother of Samuel, Woman of Prayer',testament:'old',category:'Women of Faith',era:'~1100 BC',
+      image:'https://readdy.ai/api/search-image?query=devout%20woman%20kneeling%20in%20prayer%20tears%20on%20face%20temple%20interior%20candlelight%20passionate%20sincere%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=hannah01&orientation=portrait',
+      bio:'Hannah was a barren woman who poured out her heart to God in the temple at Shiloh. Her desperate prayer was answered with a son, Samuel, whom she dedicated back to God. Her prayer of thanksgiving is one of the most beautiful songs in Scripture.',
+      keyVerse:'"I prayed for this child, and the LORD has granted me what I asked of him." — 1 Samuel 1:27',
+      relatedPeople:['samuel','eli','elkanah'],
+      journey:[{title:'Suffering',desc:'Endured years of barrenness and ridicule'},{title:'Prayer',desc:'Poured out her soul at Shiloh'},{title:'Answered',desc:'God gave her Samuel'},{title:'Dedication',desc:'Gave Samuel back to serve God in the temple'}],
+      lessons:[{title:'Persistent Prayer',desc:'Hannah didn\'t give up — she prayed with her whole heart.'},{title:'Surrender',desc:'She gave back to God the very thing she wanted most.'},{title:'Joy After Sorrow',desc:'Her song of praise came from the depths of answered prayer.'}],
+      scriptures:[{text:'I prayed for this child, and the LORD has granted me what I asked.',ref:'1 Samuel 1:27'},{text:'My heart rejoices in the LORD; in the LORD my horn is lifted high.',ref:'1 Samuel 2:1'}],
+      timeline:[{date:'~1110 BC',event:'Prays at Shiloh'},{date:'~1105 BC',event:'Samuel is born'},{date:'~1100 BC',event:'Dedicates Samuel to God'}]
+    },
+    {id:'deborah',name:'Deborah',subtitle:'Judge and Prophetess',testament:'old',category:'Judge',era:'~1200 BC',
+      image:'https://readdy.ai/api/search-image?query=commanding%20woman%20judge%20sitting%20under%20palm%20tree%20wise%20authoritative%20expression%20people%20gathered%20around%20warm%20sunlight%20classical%20biblical%20art%20style&width=400&height=600&seq=deborah01&orientation=portrait',
+      bio:'Deborah was the only female judge of Israel, holding court under the Palm of Deborah. She summoned Barak to lead the army against the Canaanite general Sisera and accompanied him into battle. Her Song of Deborah is one of the oldest poems in the Bible.',
+      keyVerse:'"Village life in Israel ceased until I, Deborah, arose, arose a mother in Israel." — Judges 5:7',
+      relatedPeople:['barak','jael'],
+      journey:[{title:'Prophetess',desc:'Spoke God\'s word to Israel'},{title:'Judge',desc:'Settled disputes under the palm tree'},{title:'Commander',desc:'Called Barak to battle Sisera'},{title:'Victory',desc:'Israel defeated the Canaanites, sang in triumph'}],
+      lessons:[{title:'Women in Leadership',desc:'God calls and empowers women to lead His people.'},{title:'Faith in Action',desc:'She didn\'t just speak — she went to the battlefield.'},{title:'Worship After Victory',desc:'Her song teaches us to praise God after He delivers us.'}],
+      scriptures:[{text:'Village life in Israel ceased until I, Deborah, arose.',ref:'Judges 5:7'}],
+      timeline:[{date:'~1200 BC',event:'Becomes judge of Israel'},{date:'~1200 BC',event:'Calls Barak to battle'},{date:'~1200 BC',event:'Victory over Sisera'}]
+    },
+    {id:'gideon',name:'Gideon',subtitle:'Mighty Warrior, Reluctant Judge',testament:'old',category:'Judge',era:'~1200 BC',
+      image:'https://readdy.ai/api/search-image?query=young%20man%20holding%20torch%20and%20clay%20jar%20night%20battle%20scene%20determined%20nervous%20expression%20moonlight%20classical%20biblical%20art%20style&width=400&height=600&seq=gideon01&orientation=portrait',
+      bio:'Gideon was threshing wheat in a winepress — hiding from the Midianites — when the angel of the Lord called him "mighty warrior." With just 300 men armed with torches and jars, he routed the massive Midianite army, proving that God fights with the few.',
+      keyVerse:'"The LORD is with you, mighty warrior." — Judges 6:12',
+      relatedPeople:['deborah','samson'],
+      journey:[{title:'Calling',desc:'An angel called him mighty warrior while he hid in a winepress'},{title:'Testing',desc:'Put out the fleece twice to confirm God\'s call'},{title:'Reduction',desc:'God reduced his army from 32,000 to 300'},{title:'Victory',desc:'Defeated Midian with torches, jars, and trumpets'}],
+      lessons:[{title:'God Sees Potential',desc:'God called Gideon "mighty" before he\'d done anything mighty.'},{title:'Less Is More',desc:'God reduced the army so Israel would know the victory was His.'},{title:'Testing God vs. Trusting God',desc:'Gideon\'s fleece shows that doubt can become faith through dialogue.'}],
+      scriptures:[{text:'The LORD is with you, mighty warrior.',ref:'Judges 6:12'},{text:'The sword of the LORD and of Gideon!',ref:'Judges 7:20'}],
+      timeline:[{date:'~1200 BC',event:'Called by the angel of the Lord'},{date:'~1200 BC',event:'The fleece test'},{date:'~1200 BC',event:'300 men defeat Midian'}]
+    },
+    {id:'elisha',name:'Elisha',subtitle:'Successor of Elijah, Double Portion Prophet',testament:'old',category:'Prophet',era:'~850 - 800 BC',
+      image:'https://readdy.ai/api/search-image?query=bald%20prophet%20calm%20powerful%20expression%20mantle%20cloak%20river%20crossing%20dramatic%20sky%20classical%20biblical%20art%20style%20warm%20light&width=400&height=600&seq=elisha01&orientation=portrait',
+      bio:'Elisha received a double portion of Elijah\'s spirit and performed twice as many miracles. He healed Naaman\'s leprosy, multiplied oil for a widow, raised a boy from the dead, and served as God\'s prophet through the reigns of several kings of Israel.',
+      keyVerse:'"Let me inherit a double portion of your spirit." — 2 Kings 2:9',
+      relatedPeople:['elijah','naaman','gehazi'],
+      journey:[{title:'Called',desc:'Plowing with twelve yoke of oxen when Elijah called him'},{title:'Successor',desc:'Received Elijah\'s mantle and double portion'},{title:'Miracles',desc:'Performed numerous miracles of provision and healing'},{title:'Counsel',desc:'Advised kings and guided Israel'}],
+      lessons:[{title:'Ask Big',desc:'Elisha asked for a double portion — God honors bold faith.'},{title:'Everyday Miracles',desc:'Many of his miracles met ordinary needs — oil, food, water.'},{title:'Succession',desc:'Good leaders raise up successors who surpass them.'}],
+      scriptures:[{text:'Let me inherit a double portion of your spirit.',ref:'2 Kings 2:9'}],
+      timeline:[{date:'~860 BC',event:'Called by Elijah'},{date:'~850 BC',event:'Receives Elijah\'s mantle'},{date:'~850-800 BC',event:'Extensive prophetic ministry'},{date:'~800 BC',event:'Dies'}]
+    },
+    {id:'isaiah',name:'Isaiah',subtitle:'The Messianic Prophet',testament:'old',category:'Prophet',era:'~740 - 680 BC',
+      image:'https://readdy.ai/api/search-image?query=majestic%20prophet%20robes%20scroll%20unfurled%20temple%20vision%20seraphim%20smoke%20filling%20room%20awestruck%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=isaiah01&orientation=portrait',
+      bio:'Isaiah had a dramatic calling when he saw the Lord "high and lifted up" in the temple. He prophesied for over 60 years, delivering both judgment and hope. His prophecies of the Suffering Servant are the most detailed predictions of Christ in the Old Testament.',
+      keyVerse:'"Here am I. Send me!" — Isaiah 6:8',
+      relatedPeople:['hezekiah','jeremiah'],
+      journey:[{title:'Vision',desc:'Saw the Lord in the temple, lips cleansed with coal'},{title:'Commission',desc:'Volunteered: "Here am I. Send me!"'},{title:'Prophecy',desc:'60+ years of prophetic ministry'},{title:'Suffering Servant',desc:'Wrote the most detailed Messianic prophecies'}],
+      lessons:[{title:'Encounter Transforms',desc:'Isaiah\'s vision of God\'s holiness changed him forever.'},{title:'Willing Obedience',desc:'He volunteered before knowing the cost.'},{title:'Long-Range Vision',desc:'He saw centuries ahead to Christ\'s suffering and glory.'}],
+      scriptures:[{text:'Here am I. Send me!',ref:'Isaiah 6:8'},{text:'He was pierced for our transgressions, he was crushed for our iniquities.',ref:'Isaiah 53:5'}],
+      timeline:[{date:'~740 BC',event:'Called in the temple vision'},{date:'~740-680 BC',event:'Prophetic ministry'},{date:'~680 BC',event:'According to tradition, martyred under Manasseh'}]
+    },
+    {id:'jeremiah',name:'Jeremiah',subtitle:'The Weeping Prophet',testament:'old',category:'Prophet',era:'~650 - 570 BC',
+      image:'https://readdy.ai/api/search-image?query=sorrowful%20prophet%20tears%20streaming%20down%20face%20crumbling%20city%20walls%20background%20dramatic%20cloudy%20sky%20worn%20robes%20classical%20biblical%20art%20style&width=400&height=600&seq=jer01&orientation=portrait',
+      bio:'Jeremiah was called as a prophet while still young, tasked with delivering God\'s message of judgment to Judah. His warnings went unheeded, and he wept as Jerusalem fell to Babylon. Despite constant persecution, he faithfully proclaimed God\'s word for over 40 years.',
+      keyVerse:'"Before I formed you in the womb I knew you, before you were born I set you apart." — Jeremiah 1:5',
+      relatedPeople:['isaiah','daniel','ezekiel'],
+      journey:[{title:'Called Young',desc:'Appointed as prophet before birth'},{title:'Faithful',desc:'Prophesied for 40+ years despite rejection'},{title:'Weeping',desc:'Mourned Jerusalem\'s coming destruction'},{title:'Hope',desc:'Promised a new covenant written on hearts'}],
+      lessons:[{title:'Faithfulness Without Success',desc:'Jeremiah preached his whole life and no one listened.'},{title:'God Knows Us Before Birth',desc:'He was set apart before he was formed in the womb.'},{title:'New Covenant Promise',desc:'He foretold the covenant of grace that Christ would fulfill.'}],
+      scriptures:[{text:'Before I formed you in the womb I knew you.',ref:'Jeremiah 1:5'},{text:'I will put my law in their minds and write it on their hearts.',ref:'Jeremiah 31:33'}],
+      timeline:[{date:'~626 BC',event:'Called as a prophet'},{date:'~609 BC',event:'Begins public ministry'},{date:'~586 BC',event:'Jerusalem falls'},{date:'~570 BC',event:'Dies in Egypt'}]
+    },
+    {id:'ezekiel',name:'Ezekiel',subtitle:'Prophet of Visions',testament:'old',category:'Prophet',era:'~622 - 570 BC',
+      image:'https://readdy.ai/api/search-image?query=intense%20prophet%20dramatic%20vision%20of%20wheels%20within%20wheels%20glowing%20creatures%20river%20Chebar%20exile%20setting%20awestruck%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=ezek01&orientation=portrait',
+      bio:'Ezekiel was a priest who became a prophet in Babylonian exile. His visions — the valley of dry bones, the wheel within a wheel, the new temple — are among the most dramatic in Scripture. He proclaimed both judgment and the hope of restoration to the exiles.',
+      keyVerse:'"I will give you a new heart and put a new spirit in you." — Ezekiel 36:26',
+      relatedPeople:['jeremiah','daniel'],
+      journey:[{title:'Exile',desc:'Taken to Babylon with the first deportation'},{title:'Calling',desc:'Saw the vision of God\'s throne-chariot'},{title:'Watchman',desc:'Appointed as watchman over Israel'},{title:'Hope',desc:'Prophesied the valley of dry bones coming alive'}],
+      lessons:[{title:'God Is Present in Exile',desc:'Even in Babylon, God revealed His glory.'},{title:'Dramatic Obedience',desc:'Ezekiel acted out prophecies — lying on his side, shaving his head.'},{title:'Resurrection Hope',desc:'The dry bones vision promises God can revive what seems dead.'}],
+      scriptures:[{text:'I will give you a new heart and put a new spirit in you.',ref:'Ezekiel 36:26'},{text:'Can these bones live?',ref:'Ezekiel 37:3'}],
+      timeline:[{date:'~597 BC',event:'Exiled to Babylon'},{date:'~593 BC',event:'Called as prophet'},{date:'~586 BC',event:'Hears of Jerusalem\'s fall'},{date:'~570 BC',event:'Final recorded prophecy'}]
+    },
+    {id:'jonah',name:'Jonah',subtitle:'The Reluctant Prophet',testament:'old',category:'Prophet',era:'~800 BC',
+      image:'https://readdy.ai/api/search-image?query=frightened%20man%20inside%20great%20fish%20belly%20dark%20water%20praying%20desperately%20dramatic%20underwater%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=jonah01&orientation=portrait',
+      bio:'Jonah was commanded to preach to Nineveh but fled in the opposite direction. Swallowed by a great fish, he spent three days in its belly before being vomited out. He finally preached to Nineveh, which repented — but Jonah was angry that God showed mercy.',
+      keyVerse:'"From inside the fish Jonah prayed to the LORD his God." — Jonah 2:1',
+      relatedPeople:['elijah','elisha'],
+      journey:[{title:'The Call',desc:'Commanded to preach to Nineveh'},{title:'The Flight',desc:'Ran to Tarshish, thrown overboard'},{title:'The Fish',desc:'Three days in the belly of a great fish'},{title:'The Mission',desc:'Preached to Nineveh, which repented'}],
+      lessons:[{title:'You Can\'t Outrun God',desc:'Jonah tried to flee God\'s call and ended up in a fish.'},{title:'God\'s Mercy Is Wider Than Ours',desc:'Jonah was angry at Nineveh\'s forgiveness — God\'s grace offends our sense of justice.'},{title:'Second Chances',desc:'God gave Jonah another opportunity to obey.'}],
+      scriptures:[{text:'From inside the fish Jonah prayed to the LORD his God.',ref:'Jonah 2:1'},{text:'Should I not have concern for the great city of Nineveh?',ref:'Jonah 4:11'}],
+      timeline:[{date:'~800 BC',event:'Called to preach to Nineveh'},{date:'~800 BC',event:'Flees, swallowed by fish'},{date:'~800 BC',event:'Preaches to Nineveh'},{date:'~800 BC',event:'Angry at God\'s mercy'}]
+    },
+    {id:'nehemiah',name:'Nehemiah',subtitle:'Cupbearer Turned Wall Builder',testament:'old',category:'Hero of Faith',era:'~445 BC',
+      image:'https://readdy.ai/api/search-image?query=determined%20man%20overseeing%20wall%20construction%20Jerusalem%20rubble%20workers%20building%20leadership%20expression%20warm%20sunrise%20classical%20biblical%20art%20style&width=400&height=600&seq=neh01&orientation=portrait',
+      bio:'Nehemiah was a cupbearer to the Persian king who wept when he heard Jerusalem\'s walls lay in ruins. He obtained permission to rebuild them and completed the project in just 52 days despite fierce opposition. He combined prayer, planning, and perseverance.',
+      keyVerse:'"The God of heaven will give us success. We his servants will start rebuilding." — Nehemiah 2:20',
+      relatedPeople:['ezra','daniel'],
+      journey:[{title:'Burden',desc:'Wept over Jerusalem\'s broken walls'},{title:'Petition',desc:'Asked the king for permission to rebuild'},{title:'Leadership',desc:'Organized the people despite threats'},{title:'Completion',desc:'Walls rebuilt in just 52 days'}],
+      lessons:[{title:'Prayer Then Action',desc:'Nehemiah prayed first, then planned strategically.'},{title:'Work Despite Opposition',desc:'He held a sword in one hand and a trowel in the other.'},{title:'Godly Leadership',desc:'He motivated people, shared the burden, and finished the work.'}],
+      scriptures:[{text:'The God of heaven will give us success.',ref:'Nehemiah 2:20'},{text:'The joy of the LORD is your strength.',ref:'Nehemiah 8:10'}],
+      timeline:[{date:'~445 BC',event:'Hears about Jerusalem\'s condition'},{date:'~444 BC',event:'Returns to rebuild the walls'},{date:'~444 BC',event:'Walls completed in 52 days'}]
+    },
+    {id:'caleb',name:'Caleb',subtitle:'Wholehearted Spy',testament:'old',category:'Hero of Faith',era:'~1450 - 1370 BC',
+      image:'https://readdy.ai/api/search-image?query=bold%20elderly%20warrior%20strong%20for%20his%20age%20mountain%20background%20confident%20faithful%20expression%20ancient%20Hebrew%20armor%20classical%20biblical%20art%20style&width=400&height=600&seq=caleb01&orientation=portrait',
+      bio:'Caleb was one of only two spies (with Joshua) who trusted that God could give Israel the Promised Land. For his faith, he was allowed to enter Canaan. At age 85, he asked for the hill country with its giants — still ready to fight for God\'s promises.',
+      keyVerse:'"Give me this hill country that the LORD promised me that day." — Joshua 14:12',
+      relatedPeople:['joshua','moses'],
+      journey:[{title:'Spy',desc:'Explored Canaan and gave a faithful report'},{title:'Minority',desc:'Stood with Joshua against the fearful majority'},{title:'Waiting',desc:'Wandered 40 years, but never lost faith'},{title:'Inheritance',desc:'At 85, claimed Hebron and drove out the giants'}],
+      lessons:[{title:'Wholehearted Faith',desc:'Caleb followed God "wholeheartedly" — no reservations, no compromise.'},{title:'Age Is No Limit',desc:'At 85 he was still ready to conquer mountains.'},{title:'Claim Your Promises',desc:'Don\'t settle for less than what God has promised you.'}],
+      scriptures:[{text:'Give me this hill country that the LORD promised me.',ref:'Joshua 14:12'}],
+      timeline:[{date:'~1450 BC',event:'Spies out Canaan'},{date:'~1450-1410 BC',event:'40 years in the wilderness'},{date:'~1400 BC',event:'Claims Hebron at age 85'}]
+    },
+    {id:'rahab',name:'Rahab',subtitle:'From Prostitute to Ancestor of Christ',testament:'old',category:'Women of Faith',era:'~1400 BC',
+      image:'https://readdy.ai/api/search-image?query=brave%20woman%20at%20city%20wall%20window%20scarlet%20rope%20hanging%20courageous%20expression%20ancient%20Jericho%20setting%20warm%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=rahab01&orientation=portrait',
+      bio:'Rahab was a prostitute in Jericho who hid the Israelite spies and confessed faith in their God. For her courage, she and her family were spared when Jericho fell. She married into Israel and became an ancestor of King David and Jesus Christ.',
+      keyVerse:'"I know that the LORD has given you this land." — Joshua 2:9',
+      relatedPeople:['joshua','boaz','david'],
+      journey:[{title:'Faith',desc:'Believed in God before seeing His power'},{title:'Courage',desc:'Hid the spies at great personal risk'},{title:'Salvation',desc:'Saved by the scarlet cord when Jericho fell'},{title:'Redemption',desc:'Married into Israel, ancestor of Christ'}],
+      lessons:[{title:'Past Doesn\'t Define You',desc:'Rahab\'s profession didn\'t prevent God from using her.'},{title:'Faith in Action',desc:'She acted on her belief at great risk.'},{title:'Grace Beyond Boundaries',desc:'A Canaanite prostitute in the lineage of Christ — grace knows no limits.'}],
+      scriptures:[{text:'I know that the LORD has given you this land.',ref:'Joshua 2:9'}],
+      timeline:[{date:'~1400 BC',event:'Hides the Israelite spies'},{date:'~1400 BC',event:'Jericho falls, Rahab saved'},{date:'After 1400 BC',event:'Marries Salmon, bears Boaz'}]
+    },
+    {id:'naomi',name:'Naomi',subtitle:'Mother-in-Law of Ruth',testament:'old',category:'Women of Faith',era:'~1100 BC',
+      image:'https://readdy.ai/api/search-image?query=sorrowful%20elderly%20woman%20walking%20dusty%20road%20back%20to%20Bethlehem%20grief%20stricken%20but%20resilient%20expression%20warm%20sunset%20classical%20biblical%20art%20style&width=400&height=600&seq=naomi01&orientation=portrait',
+      bio:'Naomi lost her husband and both sons in Moab, leaving her destitute and bitter. She returned to Bethlehem with her loyal daughter-in-law Ruth. Through Ruth\'s marriage to Boaz, Naomi\'s grief was transformed into joy as she held her grandson Obed.',
+      keyVerse:'"Don\'t call me Naomi. Call me Mara, because the Almighty has made my life very bitter." — Ruth 1:20',
+      relatedPeople:['ruth','boaz'],
+      journey:[{title:'Loss',desc:'Lost husband and both sons in Moab'},{title:'Bitterness',desc:'Returned to Bethlehem empty and grieving'},{title:'Hope',desc:'Guided Ruth to Boaz\'s field'},{title:'Restoration',desc:'Held grandson Obed, joy restored'}],
+      lessons:[{title:'God Redeems Bitterness',desc:'Naomi went from "bitter" to blessed grandmother.'},{title:'Wise Counsel',desc:'Her guidance led Ruth to Boaz and redemption.'},{title:'Faith Through Loss',desc:'Even in the darkest valley, God was working.'}],
+      scriptures:[{text:'The Almighty has made my life very bitter.',ref:'Ruth 1:20'},{text:'Naomi took the child and laid him in her lap.',ref:'Ruth 4:16'}],
+      timeline:[{date:'~1100 BC',event:'Family moves to Moab'},{date:'~1090 BC',event:'Loses husband and sons'},{date:'~1090 BC',event:'Returns to Bethlehem'},{date:'~1090 BC',event:'Becomes grandmother to Obed'}]
+    },
+    {id:'boaz',name:'Boaz',subtitle:'Kinsman-Redeemer',testament:'old',category:'Hero of Faith',era:'~1100 BC',
+      image:'https://readdy.ai/api/search-image?query=strong%20noble%20landowner%20wheat%20harvest%20field%20kind%20generous%20expression%20wealthy%20robes%20warm%20golden%20harvest%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=boaz01&orientation=portrait',
+      bio:'Boaz was a wealthy landowner in Bethlehem who showed extraordinary kindness to Ruth, a foreign gleaner in his fields. As a kinsman-redeemer, he married Ruth and redeemed Naomi\'s family land. He is a beautiful picture of Christ our Redeemer.',
+      keyVerse:'"The LORD bless you, my daughter... You have not run after the younger men." — Ruth 3:10',
+      relatedPeople:['ruth','naomi','david'],
+      journey:[{title:'Notice',desc:'Noticed Ruth gleaning and showed her favor'},{title:'Protection',desc:'Instructed his workers to leave extra grain for her'},{title:'Redemption',desc:'Redeemed Naomi\'s land and married Ruth'},{title:'Legacy',desc:'Great-grandfather of King David'}],
+      lessons:[{title:'Kindness to Strangers',desc:'Boaz treated the foreign Ruth with honor and generosity.'},{title:'Type of Christ',desc:'As kinsman-redeemer, he pictures Christ who redeems us.'},{title:'Integrity',desc:'He followed the law properly, conducting business at the city gate.'}],
+      scriptures:[{text:'The LORD bless you, my daughter.',ref:'Ruth 3:10'}],
+      timeline:[{date:'~1100 BC',event:'Ruth gleans in his field'},{date:'~1100 BC',event:'Redeems land, marries Ruth'},{date:'~1100 BC',event:'Obed is born'}]
+    },
+    {id:'saul',name:'Saul',subtitle:'First King of Israel',testament:'old',category:'King',era:'~1080 - 1010 BC',
+      image:'https://readdy.ai/api/search-image?query=tall%20imposing%20king%20dark%20moody%20expression%20heavy%20crown%20royal%20robes%20torchlit%20throne%20room%20shadows%20brooding%20classical%20biblical%20art%20style&width=400&height=600&seq=saul01&orientation=portrait',
+      bio:'Saul was Israel\'s first king, chosen for his impressive stature. He began well but gradually disobeyed God, growing jealous of David and consulting a medium. His reign ended in tragedy on Mount Gilboa, a cautionary tale about the cost of partial obedience.',
+      keyVerse:'"To obey is better than sacrifice." — 1 Samuel 15:22',
+      relatedPeople:['david','samuel','jonathan'],
+      journey:[{title:'Anointed',desc:'Chosen as Israel\'s first king'},{title:'Victory',desc:'Won early battles against the Philistines'},{title:'Disobedience',desc:'Offered unauthorized sacrifice, spared Agag'},{title:'Downfall',desc:'Jealousy, madness, and death on Gilboa'}],
+      lessons:[{title:'Partial Obedience Is Disobedience',desc:'Saul obeyed mostly — but "mostly" wasn\'t enough.'},{title:'Jealousy Destroys',desc:'His jealousy of David consumed him.'},{title:'Position Without Character',desc:'A crown without a surrendered heart leads to ruin.'}],
+      scriptures:[{text:'To obey is better than sacrifice.',ref:'1 Samuel 15:22'}],
+      timeline:[{date:'~1050 BC',event:'Anointed as king'},{date:'~1040 BC',event:'Disobeys God at Gilgal'},{date:'~1020 BC',event:'Pursues David'},{date:'~1010 BC',event:'Dies on Mount Gilboa'}]
+    },
+    {id:'jonathan',name:'Jonathan',subtitle:'Loyal Friend of David',testament:'old',category:'Hero of Faith',era:'~1050 - 1010 BC',
+      image:'https://readdy.ai/api/search-image?query=noble%20young%20prince%20warrior%20bow%20and%20arrows%20loyal%20brave%20expression%20friendship%20bond%20warm%20golden%20light%20battlefield%20classical%20biblical%20art%20style&width=400&height=600&seq=jon01&orientation=portrait',
+      bio:'Jonathan, son of King Saul, was David\'s closest friend. Despite being heir to the throne, he recognized God\'s hand on David and supported him. Their covenant friendship is one of the most beautiful relationships in Scripture. He died fighting beside his father.',
+      keyVerse:'"Jonathan said to David, \'Go in peace... The LORD is witness between you and me.\'" — 1 Samuel 20:42',
+      relatedPeople:['david','saul','samuel'],
+      journey:[{title:'Warrior',desc:'Bold military exploits against the Philistines'},{title:'Friendship',desc:'Made a covenant of friendship with David'},{title:'Loyalty',desc:'Protected David from Saul\'s jealousy'},{title:'Death',desc:'Fell in battle on Mount Gilboa'}],
+      lessons:[{title:'Selfless Friendship',desc:'Jonathan gave up the throne for his friend.'},{title:'Loyalty Over Ambition',desc:'He chose friendship over power.'},{title:'Courage',desc:'He attacked a Philistine garrison with just his armor-bearer.'}],
+      scriptures:[{text:'The soul of Jonathan was knit to the soul of David.',ref:'1 Samuel 18:1'}],
+      timeline:[{date:'~1050 BC',event:'Military victories'},{date:'~1024 BC',event:'Befriends David'},{date:'~1015 BC',event:'Warns David of Saul\'s plot'},{date:'~1010 BC',event:'Dies at Mount Gilboa'}]
+    },
+    {id:'bathsheba',name:'Bathsheba',subtitle:'Queen Mother of Solomon',testament:'old',category:'Women of Faith',era:'~1030 BC',
+      image:'https://readdy.ai/api/search-image?query=beautiful%20royal%20woman%20elegant%20queen%20robes%20dignified%20resilient%20expression%20palace%20setting%20warm%20candlelight%20classical%20biblical%20art%20style&width=400&height=600&seq=bath01&orientation=portrait',
+      bio:'Bathsheba\'s story begins with tragedy — David\'s sin. But she became queen and the mother of Solomon, the wisest king. She showed political wisdom in securing Solomon\'s succession and is listed in the genealogy of Jesus Christ.',
+      keyVerse:'"King Solomon rose to meet her... and sat her on a throne at his right hand." — 1 Kings 2:19',
+      relatedPeople:['david','solomon','nathan-prophet'],
+      journey:[{title:'Tragedy',desc:'Taken by David, lost her first husband Uriah'},{title:'Grief',desc:'Lost her first son with David'},{title:'Queen',desc:'Became queen and bore Solomon'},{title:'Influence',desc:'Secured Solomon\'s succession to the throne'}],
+      lessons:[{title:'Redemption After Tragedy',desc:'God brought beauty from the ashes of David\'s sin.'},{title:'Quiet Strength',desc:'She navigated palace politics with wisdom.'},{title:'In Christ\'s Line',desc:'Despite the scandal, she\'s in Jesus\' genealogy.'}],
+      scriptures:[{text:'King Solomon rose to meet her.',ref:'1 Kings 2:19'}],
+      timeline:[{date:'~1030 BC',event:'David\'s sin'},{date:'~990 BC',event:'Solomon born'},{date:'~970 BC',event:'Secures Solomon\'s succession'}]
+    },
+    {id:'mary-magdalene',name:'Mary Magdalene',subtitle:'First Witness of the Resurrection',testament:'new',category:'Women of Faith',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=devoted%20woman%20weeping%20at%20empty%20tomb%20sunrise%20garden%20astonished%20joyful%20expression%20simple%20robes%20warm%20morning%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=magd01&orientation=portrait',
+      bio:'Mary Magdalene was healed by Jesus of seven demons and became one of His most devoted followers. She stood at the cross when most disciples fled, and she was the first person to see the risen Christ. Jesus chose her to announce the Resurrection.',
+      keyVerse:'"Mary!" She turned toward him and cried out, "Rabboni!" — John 20:16',
+      relatedPeople:['jesus','mary','peter','john-apostle'],
+      journey:[{title:'Delivered',desc:'Healed of seven demons by Jesus'},{title:'Follower',desc:'Traveled with and supported Jesus\' ministry'},{title:'Faithful',desc:'Stood at the cross when others fled'},{title:'Witness',desc:'First to see the risen Christ'}],
+      lessons:[{title:'Gratitude Drives Devotion',desc:'Her deliverance made her the most devoted follower.'},{title:'Faithful to the End',desc:'She was at the cross and at the tomb.'},{title:'God Honors the Faithful',desc:'Jesus appeared first to her — honoring her loyalty.'}],
+      scriptures:[{text:'Mary! — Rabboni!',ref:'John 20:16'},{text:'I have seen the Lord!',ref:'John 20:18'}],
+      timeline:[{date:'~28 AD',event:'Healed by Jesus'},{date:'~28-30 AD',event:'Follows Jesus\' ministry'},{date:'~30 AD',event:'At the cross'},{date:'~30 AD',event:'First to see the risen Christ'}]
+    },
+    {id:'martha',name:'Martha',subtitle:'Sister of Lazarus, Woman of Service',testament:'new',category:'Women of Faith',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=busy%20woman%20domestic%20setting%20preparing%20food%20determined%20hospitable%20expression%20warm%20home%20interior%20classical%20biblical%20art%20style&width=400&height=600&seq=martha01&orientation=portrait',
+      bio:'Martha of Bethany was a close friend of Jesus who hosted Him in her home. Known for her practical service, she famously complained that her sister Mary wasn\'t helping. Yet she also made one of the greatest confessions of faith: "You are the Messiah."',
+      keyVerse:'"I believe that you are the Messiah, the Son of God, who is to come into the world." — John 11:27',
+      relatedPeople:['jesus','mary-bethany','lazarus'],
+      journey:[{title:'Hostess',desc:'Welcomed Jesus into her home'},{title:'Complaint',desc:'Asked Jesus to tell Mary to help'},{title:'Grief',desc:'Mourned Lazarus, met Jesus at the road'},{title:'Confession',desc:'Declared Jesus as the Messiah'}],
+      lessons:[{title:'Service vs. Presence',desc:'Jesus taught Martha that being with Him matters more than doing for Him.'},{title:'Bold Confession',desc:'Her declaration rivals Peter\'s — "You are the Messiah."'},{title:'Real Relationship',desc:'She was honest with Jesus about her frustrations.'}],
+      scriptures:[{text:'I believe that you are the Messiah, the Son of God.',ref:'John 11:27'}],
+      timeline:[{date:'~29 AD',event:'Hosts Jesus in Bethany'},{date:'~30 AD',event:'Lazarus dies and is raised'}]
+    },
+    {id:'lazarus',name:'Lazarus',subtitle:'Raised from the Dead',testament:'new',category:'Hero of Faith',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=man%20emerging%20from%20tomb%20wrapped%20in%20burial%20cloths%20astonished%20crowd%20dramatic%20light%20from%20tomb%20entrance%20classical%20biblical%20art%20style&width=400&height=600&seq=laz01&orientation=portrait',
+      bio:'Lazarus of Bethany was a close friend of Jesus, brother to Martha and Mary. When he died, Jesus wept — then called him out of the tomb after four days. His resurrection was the most dramatic miracle of Jesus\' ministry and a foreshadowing of Christ\'s own.',
+      keyVerse:'"Lazarus, come out!" — John 11:43',
+      relatedPeople:['jesus','martha','mary-bethany'],
+      journey:[{title:'Friendship',desc:'A close friend of Jesus in Bethany'},{title:'Death',desc:'Fell ill and died while Jesus was away'},{title:'Resurrection',desc:'Raised from the dead after four days'},{title:'Witness',desc:'His life became a living testimony'}],
+      lessons:[{title:'Jesus Weeps',desc:'Even knowing He would raise Lazarus, Jesus wept — He enters our grief.'},{title:'God\'s Timing',desc:'Jesus delayed intentionally — sometimes God waits to show greater glory.'},{title:'Death Is Not Final',desc:'Lazarus\' resurrection proves that Jesus has power over death.'}],
+      scriptures:[{text:'Lazarus, come out!',ref:'John 11:43'},{text:'Jesus wept.',ref:'John 11:35'}],
+      timeline:[{date:'~30 AD',event:'Falls ill and dies'},{date:'~30 AD',event:'Raised by Jesus after 4 days'}]
+    },
+    {id:'philip',name:'Philip',subtitle:'Apostle and Evangelist',testament:'new',category:'Apostle',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=thoughtful%20man%20inviting%20gesture%20bringing%20someone%20along%20road%20dusty%20path%20warm%20afternoon%20light%20simple%20robes%20classical%20biblical%20art%20style&width=400&height=600&seq=philip01&orientation=portrait',
+      bio:'Philip was one of the first disciples called by Jesus. He immediately found Nathanael and brought him to Christ. He appears at the feeding of the 5,000 and when Greeks came seeking Jesus. His practical, sometimes doubtful nature made him relatable.',
+      keyVerse:'"Come and see." — John 1:46',
+      relatedPeople:['jesus','nathanael','andrew'],
+      journey:[{title:'Called',desc:'One of the first disciples called by Jesus'},{title:'Evangelist',desc:'Brought Nathanael to Jesus'},{title:'Tested',desc:'Jesus tested him at the feeding of the 5,000'},{title:'Bridge',desc:'Greeks came to him seeking Jesus'}],
+      lessons:[{title:'Come and See',desc:'Philip\'s evangelism was simple — "come and see for yourself."'},{title:'Honest Questions',desc:'He asked genuine questions, and Jesus met him there.'},{title:'Bridge Building',desc:'He connected seekers with Jesus.'}],
+      scriptures:[{text:'Come and see.',ref:'John 1:46'}],
+      timeline:[{date:'1st century',event:'Called by Jesus'},{date:'~29 AD',event:'Brings Nathanael to Jesus'},{date:'~30 AD',event:'Greeks seek Jesus through Philip'}]
+    },
+    {id:'nathanael',name:'Nathanael',subtitle:'The Israelite Without Guile',testament:'new',category:'Apostle',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=sincere%20man%20under%20fig%20tree%20surprised%20expression%20honest%20face%20warm%20dappled%20sunlight%20garden%20setting%20classical%20biblical%20art%20style&width=400&height=600&seq=nath01&orientation=portrait',
+      bio:'Nathanael (also called Bartholomew) was skeptical when Philip told him about Jesus of Nazareth. But when Jesus revealed that He had seen Nathanael under the fig tree before Philip called him, Nathanael immediately declared Jesus to be the Son of God and King of Israel.',
+      keyVerse:'"Here truly is an Israelite in whom there is no deceit." — John 1:47',
+      relatedPeople:['jesus','philip'],
+      journey:[{title:'Skeptic',desc:'"Can anything good come from Nazareth?"'},{title:'Seen',desc:'Jesus saw him under the fig tree before they met'},{title:'Believer',desc:'Declared Jesus as Son of God and King of Israel'},{title:'Apostle',desc:'Served faithfully among the Twelve'}],
+      lessons:[{title:'Honest Doubt Is OK',desc:'Nathanael expressed doubt openly, and Jesus honored his honesty.'},{title:'God Sees You',desc:'Jesus knew Nathanael before they met — He knows us completely.'},{title:'Quick Response',desc:'When convinced, Nathanael didn\'t hesitate to believe.'}],
+      scriptures:[{text:'Here truly is an Israelite in whom there is no deceit.',ref:'John 1:47'},{text:'Rabbi, you are the Son of God!',ref:'John 1:49'}],
+      timeline:[{date:'1st century',event:'Sitting under the fig tree'},{date:'1st century',event:'Called by Philip, meets Jesus'},{date:'1st century',event:'Serves as one of the Twelve'}]
+    },
+    {id:'matthew',name:'Matthew',subtitle:'Tax Collector Turned Apostle',testament:'new',category:'Apostle',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=man%20at%20tax%20collection%20booth%20coins%20scrolls%20looking%20up%20surprised%20by%20invitation%20warm%20market%20setting%20classical%20biblical%20art%20style&width=400&height=600&seq=matt01&orientation=portrait',
+      bio:'Matthew (Levi) was a tax collector — despised by his fellow Jews — when Jesus walked by and simply said, "Follow me." He immediately left his lucrative career and followed. He wrote the Gospel of Matthew, presenting Jesus as the long-awaited Jewish Messiah.',
+      keyVerse:'"Follow me." — Matthew 9:9',
+      relatedPeople:['jesus','peter','john-apostle'],
+      journey:[{title:'Tax Collector',desc:'Collected taxes for Rome, despised by Jews'},{title:'Called',desc:'Jesus said "Follow me" and he left everything'},{title:'Host',desc:'Threw a banquet introducing Jesus to sinners'},{title:'Author',desc:'Wrote the Gospel of Matthew'}],
+      lessons:[{title:'No One Is Beyond Calling',desc:'Jesus called the most hated profession into His inner circle.'},{title:'Immediate Response',desc:'Matthew left everything immediately — no negotiation.'},{title:'Using Your Skills',desc:'His record-keeping skills became the first Gospel.'}],
+      scriptures:[{text:'Follow me.',ref:'Matthew 9:9'},{text:'It is not the healthy who need a doctor, but the sick.',ref:'Matthew 9:12'}],
+      timeline:[{date:'1st century',event:'Tax collector in Capernaum'},{date:'~27 AD',event:'Called by Jesus'},{date:'~50-60 AD',event:'Writes the Gospel of Matthew'}]
+    },
+    {id:'thomas',name:'Thomas',subtitle:'Doubting Thomas, Believing Apostle',testament:'new',category:'Apostle',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=skeptical%20man%20reaching%20out%20to%20touch%20wounds%20awestruck%20expression%20dim%20upper%20room%20dramatic%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=thomas01&orientation=portrait',
+      bio:'Thomas refused to believe in the Resurrection until he could see and touch Jesus\' wounds. When Jesus appeared and invited him to touch, Thomas made the greatest confession in the Gospels: "My Lord and my God!" His doubt led to the deepest faith.',
+      keyVerse:'"My Lord and my God!" — John 20:28',
+      relatedPeople:['jesus','peter','john-apostle'],
+      journey:[{title:'Follower',desc:'A loyal disciple willing to die with Jesus'},{title:'Doubt',desc:'Refused to believe without seeing'},{title:'Encounter',desc:'Jesus appeared and invited him to touch the wounds'},{title:'Confession',desc:'Declared "My Lord and my God!"'}],
+      lessons:[{title:'Doubt Can Lead to Faith',desc:'Thomas\' doubt produced the strongest confession.'},{title:'Jesus Meets Us in Doubt',desc:'He didn\'t scold Thomas — He showed up.'},{title:'Blessed Are Those Who Believe',desc:'Believing without seeing is the faith we are called to.'}],
+      scriptures:[{text:'My Lord and my God!',ref:'John 20:28'},{text:'Blessed are those who have not seen and yet have believed.',ref:'John 20:29'}],
+      timeline:[{date:'1st century',event:'Called as one of the Twelve'},{date:'~30 AD',event:'Doubts the Resurrection'},{date:'~30 AD',event:'Sees Jesus, believes'},{date:'Tradition',event:'Missionary to India'}]
+    },
+    {id:'hagar',name:'Hagar',subtitle:'The God Who Sees Me',testament:'old',category:'Women of Faith',era:'~2080 BC',
+      image:'https://readdy.ai/api/search-image?query=desperate%20Egyptian%20woman%20desert%20wilderness%20with%20young%20child%20water%20skin%20empty%20tearful%20but%20hopeful%20expression%20warm%20desert%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=hagar01&orientation=portrait',
+      bio:'Hagar was Sarah\'s Egyptian servant given to Abraham as a wife. Pregnant and mistreated, she fled into the wilderness where God met her at a spring. She named Him "El Roi" — the God who sees me. She is the first person in Scripture to give God a name.',
+      keyVerse:'"You are the God who sees me." — Genesis 16:13',
+      relatedPeople:['abraham','sarah','ishmael'],
+      journey:[{title:'Servant',desc:'Egyptian servant in Abraham\'s household'},{title:'Used',desc:'Given to Abraham by Sarah'},{title:'Outcast',desc:'Fled into the wilderness, met by God'},{title:'Seen',desc:'Named God "El Roi" — the God who sees'}],
+      lessons:[{title:'God Sees the Invisible',desc:'Hagar was overlooked by everyone — but not by God.'},{title:'Grace for the Outsider',desc:'An Egyptian slave received one of the most intimate revelations of God.'},{title:'Naming God',desc:'She is the first person to give God a name — born from personal encounter.'}],
+      scriptures:[{text:'You are the God who sees me.',ref:'Genesis 16:13'}],
+      timeline:[{date:'~2080 BC',event:'Given to Abraham'},{date:'~2080 BC',event:'Flees, meets God in wilderness'},{date:'~2080 BC',event:'Ishmael born'}]
+    },
+    {id:'aaron',name:'Aaron',subtitle:'First High Priest of Israel',testament:'old',category:'Priest',era:'~1396 - 1273 BC',
+      image:'https://readdy.ai/api/search-image?query=priestly%20man%20ornate%20high%20priest%20garments%20breastplate%20gems%20turban%20sacred%20expression%20tabernacle%20interior%20golden%20candlelight%20classical%20biblical%20art%20style&width=400&height=600&seq=aaron01&orientation=portrait',
+      bio:'Aaron was Moses\' brother and spokesman before Pharaoh. He became Israel\'s first high priest, establishing the Levitical priesthood. Though he failed badly with the golden calf, he served faithfully in the tabernacle and his priesthood foreshadowed Christ\'s.',
+      keyVerse:'"Aaron shall burn fragrant incense on it. Every morning when he tends the lamps, he shall burn incense on it." — Exodus 30:7',
+      relatedPeople:['moses','miriam','pharaoh'],
+      journey:[{title:'Spokesman',desc:'Spoke for Moses before Pharaoh'},{title:'Failure',desc:'Made the golden calf at Sinai'},{title:'High Priest',desc:'Consecrated as Israel\'s first high priest'},{title:'Service',desc:'Served faithfully in the tabernacle'}],
+      lessons:[{title:'Supporting Others\' Calling',desc:'Aaron supported Moses\' leadership selflessly.'},{title:'Priesthood as Service',desc:'The priestly role was about serving God and the people.'},{title:'Failure and Restoration',desc:'Despite the golden calf, God restored Aaron to service.'}],
+      scriptures:[{text:'Aaron shall burn fragrant incense.',ref:'Exodus 30:7'}],
+      timeline:[{date:'~1396 BC',event:'Born in Egypt'},{date:'~1313 BC',event:'Spokesman before Pharaoh'},{date:'~1312 BC',event:'The golden calf incident'},{date:'~1273 BC',event:'Dies on Mount Hor'}]
+    },
+    {id:'miriam',name:'Miriam',subtitle:'Prophetess, Sister of Moses',testament:'old',category:'Women of Faith',era:'~1400 BC',
+      image:'https://readdy.ai/api/search-image?query=joyful%20woman%20with%20tambourine%20dancing%20celebrating%20by%20the%20sea%20flowing%20robes%20triumphant%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=miriam01&orientation=portrait',
+      bio:'Miriam watched over baby Moses in the Nile, led worship after the Red Sea crossing with tambourine and dancing, and served as a prophetess. She challenged Moses\' authority once and was struck with leprosy, but was healed after Moses interceded for her.',
+      keyVerse:'"Miriam the prophet, Aaron\'s sister, took a timbrel in her hand." — Exodus 15:20',
+      relatedPeople:['moses','aaron'],
+      journey:[{title:'Protector',desc:'Watched over baby Moses in the Nile'},{title:'Worship Leader',desc:'Led celebration after the Red Sea crossing'},{title:'Challenge',desc:'Challenged Moses\' authority, struck with leprosy'},{title:'Healed',desc:'Restored after Moses interceded'}],
+      lessons:[{title:'Courage from Childhood',desc:'As a young girl, she had the courage to approach Pharaoh\'s daughter.'},{title:'Worship After Deliverance',desc:'She led the nation in spontaneous worship.'},{title:'Jealousy\'s Cost',desc:'Even leaders aren\'t immune to envy.'}],
+      scriptures:[{text:'Miriam the prophet took a timbrel in her hand.',ref:'Exodus 15:20'}],
+      timeline:[{date:'~1400 BC',event:'Watches over baby Moses'},{date:'~1313 BC',event:'Leads worship at the Red Sea'},{date:'~1310 BC',event:'Struck with leprosy, healed'}]
+    },
+    {id:'elizabeth',name:'Elizabeth',subtitle:'Mother of John the Baptist',testament:'new',category:'Women of Faith',era:'1st century BC',
+      image:'https://readdy.ai/api/search-image?query=elderly%20pregnant%20woman%20joyful%20surprised%20expression%20greeting%20younger%20woman%20warm%20doorway%20light%20gentle%20atmosphere%20classical%20biblical%20art%20style&width=400&height=600&seq=eliz01&orientation=portrait',
+      bio:'Elizabeth, wife of the priest Zechariah, was barren until old age when God gave her a son — John the Baptist. When pregnant Mary visited, the baby leaped in Elizabeth\'s womb and she was filled with the Holy Spirit, pronouncing a blessing over Mary.',
+      keyVerse:'"Blessed are you among women, and blessed is the child you will bear!" — Luke 1:42',
+      relatedPeople:['mary','john-baptist','zechariah'],
+      journey:[{title:'Barrenness',desc:'Endured years of childlessness'},{title:'Promise',desc:'Angel Gabriel announced John\'s birth'},{title:'Visitation',desc:'Mary visited; John leaped in her womb'},{title:'Fulfillment',desc:'Gave birth to John the Baptist'}],
+      lessons:[{title:'Late Blessings',desc:'God\'s timing isn\'t our timing — Elizabeth\'s wait was purposeful.'},{title:'Recognizing God\'s Work',desc:'She immediately recognized what God was doing in Mary.'},{title:'Spirit-Filled Response',desc:'Her blessing over Mary was prophetic and Spirit-led.'}],
+      scriptures:[{text:'Blessed are you among women, and blessed is the child you will bear!',ref:'Luke 1:42'}],
+      timeline:[{date:'~7 BC',event:'Angel appears to Zechariah'},{date:'~6 BC',event:'Mary visits Elizabeth'},{date:'~6 BC',event:'John the Baptist born'}]
+    },
+    {id:'joseph',name:'Joseph (NT)',subtitle:'Earthly Father of Jesus',testament:'new',category:'Hero of Faith',era:'1st century BC',
+      image:'https://readdy.ai/api/search-image?query=humble%20carpenter%20strong%20gentle%20man%20woodworking%20tools%20protective%20expression%20warm%20workshop%20light%20simple%20robes%20classical%20biblical%20art%20style&width=400&height=600&seq=josephnt01&orientation=portrait',
+      bio:'Joseph was a righteous carpenter from Nazareth who was engaged to Mary. When he learned she was pregnant, he planned to divorce her quietly — until an angel revealed the truth. He faithfully protected Mary and Jesus, fleeing to Egypt and back.',
+      keyVerse:'"Joseph son of David, do not be afraid to take Mary home as your wife." — Matthew 1:20',
+      relatedPeople:['mary','jesus'],
+      journey:[{title:'Discovery',desc:'Learned of Mary\'s pregnancy, planned quiet divorce'},{title:'Obedience',desc:'Angel appeared; he took Mary as his wife'},{title:'Protector',desc:'Fled to Egypt to protect Jesus from Herod'},{title:'Father',desc:'Raised Jesus in Nazareth as a carpenter'}],
+      lessons:[{title:'Quiet Obedience',desc:'Joseph never speaks in Scripture — he just acts faithfully.'},{title:'Righteousness and Mercy',desc:'He was righteous but also merciful, planning a quiet divorce.'},{title:'Faithful Father',desc:'He raised the Son of God with humble devotion.'}],
+      scriptures:[{text:'Do not be afraid to take Mary home as your wife.',ref:'Matthew 1:20'}],
+      timeline:[{date:'~5 BC',event:'Angel appears in a dream'},{date:'~4 BC',event:'Jesus born in Bethlehem'},{date:'~4 BC',event:'Flees to Egypt'},{date:'~2 BC',event:'Returns to Nazareth'}]
+    },
+    {id:'john-mark',name:'John Mark',subtitle:'Author of the Gospel of Mark',testament:'new',category:'Hero of Faith',era:'1st century AD',
+      image:'https://readdy.ai/api/search-image?query=young%20man%20writing%20intently%20on%20papyrus%20scroll%20oil%20lamp%20focused%20expression%20simple%20room%20warm%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=mark01&orientation=portrait',
+      bio:'John Mark abandoned Paul and Barnabas on their first missionary journey, causing a sharp disagreement between them. But Barnabas gave him a second chance, and Mark was restored. He later wrote the Gospel of Mark, based largely on Peter\'s eyewitness testimony.',
+      keyVerse:'"Get Mark and bring him with you, because he is helpful to me in my ministry." — 2 Timothy 4:11',
+      relatedPeople:['paul','barnabas','peter'],
+      journey:[{title:'Failure',desc:'Deserted Paul and Barnabas mid-mission'},{title:'Division',desc:'Caused a split between Paul and Barnabas'},{title:'Restoration',desc:'Barnabas mentored him; Paul later praised him'},{title:'Author',desc:'Wrote the Gospel of Mark'}],
+      lessons:[{title:'Second Chances',desc:'Mark\'s failure wasn\'t final — Barnabas believed in him.'},{title:'Restored for Greater Service',desc:'The man who quit the mission wrote a Gospel.'},{title:'Mentorship',desc:'Both Barnabas and Peter invested in Mark\'s development.'}],
+      scriptures:[{text:'Get Mark and bring him with you, because he is helpful to me in my ministry.',ref:'2 Timothy 4:11'}],
+      timeline:[{date:'~47 AD',event:'Joins first missionary journey'},{date:'~47 AD',event:'Deserts the mission'},{date:'~50 AD',event:'Barnabas takes him on another journey'},{date:'~65 AD',event:'Writes the Gospel of Mark'}]
+    },
+    {id:'mordecai',name:'Mordecai',subtitle:'Guardian of Esther, Defender of the Jews',testament:'old',category:'Hero of Faith',era:'~480 BC',
+      image:'https://readdy.ai/api/search-image?query=dignified%20Jewish%20man%20in%20exile%20sitting%20at%20palace%20gate%20watchful%20protective%20expression%20Persian%20court%20setting%20warm%20light%20classical%20biblical%20art%20style&width=400&height=600&seq=mord01&orientation=portrait',
+      bio:'Mordecai raised his orphaned cousin Esther and refused to bow to the arrogant Haman. When Haman plotted to destroy all Jews, Mordecai urged Esther to act. His faithfulness was rewarded when Haman fell and Mordecai rose to second in the kingdom.',
+      keyVerse:'"Who knows but that you have come to your royal position for such a time as this?" — Esther 4:14',
+      relatedPeople:['esther','haman'],
+      journey:[{title:'Guardian',desc:'Raised orphaned Esther as his own'},{title:'Defiant',desc:'Refused to bow to Haman'},{title:'Advocate',desc:'Urged Esther to speak to the king'},{title:'Exalted',desc:'Rose to second in the Persian kingdom'}],
+      lessons:[{title:'Stand Your Ground',desc:'Mordecai refused to compromise his faith, even at great risk.'},{title:'See the Bigger Picture',desc:'He recognized God\'s hand in Esther\'s position.'},{title:'Faithful in Exile',desc:'He lived with integrity in a foreign land.'}],
+      scriptures:[{text:'Who knows but that you have come to your royal position for such a time as this?',ref:'Esther 4:14'}],
+      timeline:[{date:'~483 BC',event:'Esther becomes queen'},{date:'~480 BC',event:'Uncovers assassination plot'},{date:'~480 BC',event:'Haman\'s plot, urges Esther'},{date:'~480 BC',event:'Honored by the king'}]
+    },
+    {id:'ezra',name:'Ezra',subtitle:'Scribe and Reformer',testament:'old',category:'Priest',era:'~480 - 440 BC',
+      image:'https://readdy.ai/api/search-image?query=scholarly%20priest%20holding%20Torah%20scroll%20reading%20aloud%20to%20gathered%20crowd%20Jerusalem%20setting%20solemn%20passionate%20expression%20classical%20biblical%20art%20style&width=400&height=600&seq=ezra01&orientation=portrait',
+      bio:'Ezra was a priest and scribe who led the second return of exiles from Babylon to Jerusalem. He was grieved to find the people had intermarried with surrounding nations and led a great revival, reading the Law publicly and calling the people to repentance.',
+      keyVerse:'"Ezra had devoted himself to the study and observance of the Law of the LORD." — Ezra 7:10',
+      relatedPeople:['nehemiah','daniel'],
+      journey:[{title:'Scholar',desc:'Devoted himself to studying God\'s Law'},{title:'Leader',desc:'Led exiles back to Jerusalem'},{title:'Grief',desc:'Wept over Israel\'s unfaithfulness'},{title:'Revival',desc:'Read the Law publicly, people repented'}],
+      lessons:[{title:'Study Before Teaching',desc:'Ezra studied, practiced, then taught — in that order.'},{title:'Holy Grief',desc:'His tears over sin moved the nation to repent.'},{title:'Word-Centered Reform',desc:'True revival starts with returning to God\'s Word.'}],
+      scriptures:[{text:'Ezra had devoted himself to the study and observance of the Law of the LORD.',ref:'Ezra 7:10'}],
+      timeline:[{date:'~458 BC',event:'Leads return to Jerusalem'},{date:'~457 BC',event:'Discovers intermarriage crisis'},{date:'~444 BC',event:'Reads the Law publicly with Nehemiah'}]
+    },
+    {id:'job',name:'Job',subtitle:'The Suffering Righteous Man',testament:'old',category:'Hero of Faith',era:'Patriarchal era',
+      image:'https://readdy.ai/api/search-image?query=suffering%20man%20ash%20heap%20torn%20robes%20sores%20but%20looking%20upward%20with%20defiant%20faith%20dramatic%20sky%20classical%20biblical%20art%20style&width=400&height=600&seq=job01&orientation=portrait',
+      bio:'Job was a righteous and wealthy man who lost everything — children, possessions, health. His friends insisted he must have sinned, but Job maintained his innocence. When God finally spoke from the whirlwind, Job was humbled — and fully restored.',
+      keyVerse:'"Though he slay me, yet will I hope in him." — Job 13:15',
+      relatedPeople:['abraham','moses'],
+      journey:[{title:'Prosperity',desc:'The greatest man in the East, blameless and upright'},{title:'Loss',desc:'Lost everything — children, wealth, health'},{title:'Debate',desc:'Argued with friends about the meaning of suffering'},{title:'Encounter',desc:'God spoke from the whirlwind; Job was humbled and restored'}],
+      lessons:[{title:'Suffering Isn\'t Always Punishment',desc:'Job\'s friends were wrong — sometimes the righteous suffer.'},{title:'Wrestling with God',desc:'Job questioned God honestly — and God answered.'},{title:'Restoration',desc:'God restored Job twofold — but the real treasure was the encounter.'}],
+      scriptures:[{text:'Though he slay me, yet will I hope in him.',ref:'Job 13:15'},{text:'My ears had heard of you but now my eyes have seen you.',ref:'Job 42:5'}],
+      timeline:[{date:'Patriarchal era',event:'Prosperous and righteous'},{date:'Patriarchal era',event:'Loses everything'},{date:'Patriarchal era',event:'God speaks from whirlwind'},{date:'Patriarchal era',event:'Restored twofold'}]
+    }
+  ];
+
+  // Remaining people (compact data — id, name, subtitle, testament, category, era, keyVerse, bio, relatedPeople)
+  const MORE_PEOPLE = [
+    {id:'haman',name:'Haman',subtitle:'The Agagite, Enemy of the Jews',testament:'old',category:'Antagonist',era:'~480 BC',bio:'Haman was a high official in the Persian court who plotted the genocide of the Jewish people. His pride and hatred were his undoing when Esther exposed his scheme, and he was hanged on the very gallows he had built for Mordecai.',keyVerse:'"The king and Haman sat down to drink, but the city of Susa was bewildered." — Esther 3:15',relatedPeople:['esther','mordecai']},
+    {id:'goliath',name:'Goliath',subtitle:'Philistine Giant',testament:'old',category:'Antagonist',era:'~1024 BC',bio:'Goliath was a Philistine champion who stood over nine feet tall and terrorized the Israelite army for 40 days. His arrogance was his downfall when the young shepherd David faced him with nothing but a sling and faith in God.',keyVerse:'"You come against me with sword and spear, but I come against you in the name of the LORD." — 1 Samuel 17:45',relatedPeople:['david','saul']},
+    {id:'pharaoh',name:'Pharaoh (Exodus)',subtitle:'Ruler of Egypt, Hardened Heart',testament:'old',category:'Antagonist',era:'~1313 BC',bio:'The Pharaoh of the Exodus stubbornly refused to release the Israelites despite ten devastating plagues. His hardened heart became a warning about the danger of resisting God\'s will. He finally relented after the death of the firstborn, only to pursue and perish.',keyVerse:'"Let my people go." — Exodus 5:1',relatedPeople:['moses','aaron']},
+    {id:'jezebel',name:'Jezebel',subtitle:'Wicked Queen of Israel',testament:'old',category:'Antagonist',era:'~874 - 841 BC',bio:'Jezebel was a Phoenician princess who married King Ahab and introduced Baal worship to Israel. She persecuted God\'s prophets, orchestrated Naboth\'s murder for his vineyard, and threatened Elijah\'s life. Her name became synonymous with evil and idolatry.',keyVerse:'"Have you not murdered a man and seized his property?" — 1 Kings 21:19',relatedPeople:['ahab','elijah']},
+    {id:'ahab',name:'Ahab',subtitle:'Wicked King of Israel',testament:'old',category:'Antagonist',era:'~874 - 853 BC',bio:'Ahab was one of Israel\'s most wicked kings, led astray by his wife Jezebel into Baal worship. He did more to provoke God\'s anger than any king before him. Yet even Ahab humbled himself briefly, showing that God responds to any genuine repentance.',keyVerse:'"There was never anyone like Ahab, who sold himself to do evil." — 1 Kings 21:25',relatedPeople:['jezebel','elijah']},
+    {id:'delilah',name:'Delilah',subtitle:'Betrayer of Samson',testament:'old',category:'Antagonist',era:'~1060 BC',bio:'Delilah was a woman in the Valley of Sorek who was bribed by the Philistines to discover the secret of Samson\'s strength. Through persistent manipulation, she wore him down until he revealed his Nazirite vow, leading to his capture and blinding.',keyVerse:'"How can you say, \'I love you,\' when you won\'t confide in me?" — Judges 16:15',relatedPeople:['samson']},
+    {id:'herod-antipas',name:'Herod Antipas',subtitle:'Killer of John the Baptist',testament:'new',category:'Antagonist',era:'4 BC - 39 AD',bio:'Herod Antipas was the tetrarch who imprisoned and beheaded John the Baptist at the request of his stepdaughter Salome. He also played a role in Jesus\' trial, mocking Him before sending Him back to Pilate. He feared John but succumbed to his own pride.',keyVerse:'"The king was greatly distressed, but because of his oaths and his dinner guests, he did not want to refuse her." — Mark 6:26',relatedPeople:['john-baptist','jesus']},
+    {id:'nebuchadnezzar',name:'Nebuchadnezzar',subtitle:'King of Babylon',testament:'old',category:'Antagonist',era:'~634 - 562 BC',bio:'Nebuchadnezzar was the great king of Babylon who conquered Jerusalem and exiled the Jews. His pride led to seven years of madness living like an animal. When his sanity returned, he praised the God of Daniel, acknowledging His sovereign power over all kingdoms.',keyVerse:'"Now I, Nebuchadnezzar, praise and exalt and glorify the King of heaven." — Daniel 4:37',relatedPeople:['daniel','shadrach','meshach','abednego']},
+    {id:'lot',name:'Lot',subtitle:'Abraham\'s Nephew',testament:'old',category:'Patriarch',era:'~2100 BC',bio:'Lot was Abraham\'s nephew who chose the fertile plain near Sodom. Despite living among the wicked, he was called righteous. When God destroyed Sodom, angels rescued Lot and his daughters, but his wife looked back and became a pillar of salt.',keyVerse:'"Flee for your lives! Don\'t look back!" — Genesis 19:17',relatedPeople:['abraham','sarah']},
+    {id:'ishmael',name:'Ishmael',subtitle:'Son of Abraham and Hagar',testament:'old',category:'Patriarch',era:'~2080 BC',bio:'Ishmael was the son of Abraham and Hagar, born when Sarah was barren. Though not the child of promise, God blessed him and promised to make him a great nation. He became the father of twelve tribal rulers and is considered the ancestor of the Arab peoples.',keyVerse:'"I will make him into a great nation." — Genesis 21:18',relatedPeople:['abraham','hagar','sarah','isaac']},
+    {id:'esau',name:'Esau',subtitle:'The Elder Twin Who Sold His Birthright',testament:'old',category:'Patriarch',era:'~2006 BC',bio:'Esau was Isaac\'s firstborn and Jacob\'s twin brother. A skilled hunter, he impulsively sold his birthright for a bowl of stew and lost his father\'s blessing to Jacob\'s deception. Though he initially planned revenge, he later forgave Jacob in a moving reconciliation.',keyVerse:'"Look, I am about to die. What good is the birthright to me?" — Genesis 25:32',relatedPeople:['jacob','isaac','rebekah']},
+  ];
+
+  // Merge and generate images for compact people
+  MORE_PEOPLE.forEach(p => {
+    if (!p.image) {
+      const q = encodeURIComponent(p.name + ' biblical figure classical art style portrait warm light');
+      p.image = `https://readdy.ai/api/search-image?query=${q}&width=400&height=600&seq=${p.id}01&orientation=portrait`;
+    }
+    if (!p.journey) p.journey = [{title:'Life',desc:p.bio.split('.')[0]}];
+    if (!p.lessons) p.lessons = [{title:'Key Lesson',desc:'Their story teaches us about God\'s sovereignty and grace.'}];
+    if (!p.scriptures) p.scriptures = [{text:p.keyVerse.replace(/^"|"$/g,'').split('—')[0].trim(),ref:p.keyVerse.split('—')[1]?.trim()||''}];
+    if (!p.timeline) p.timeline = [{date:p.era,event:'Lived and served God\'s purposes'}];
+  });
+
+  const ALL_PEOPLE = [...PEOPLE, ...MORE_PEOPLE];
+
+  const FEATURED_IDS = ['jesus','moses','abraham','david','mary','peter'];
+  const CATEGORIES = ['All','Messiah','Patriarch','Women of Faith','Prophet','Apostle','King','Judge','Priest','Hero of Faith','Antagonist'];
+  const TESTAMENTS = ['All','Old Testament','New Testament'];
+
+  const MAP_LOCATIONS = [
+    {name:'Jerusalem',lat:31.7683,lng:35.2137,type:'City',period:'Both',events:9},
+    {name:'Bethlehem',lat:31.7054,lng:35.2024,type:'City',period:'Both',events:4},
+    {name:'Nazareth',lat:32.6996,lng:35.3035,type:'City',period:'NT',events:3},
+    {name:'Sea of Galilee',lat:32.8231,lng:35.5831,type:'Sea/Lake',period:'NT',events:5},
+    {name:'Capernaum',lat:32.8812,lng:35.5725,type:'City',period:'NT',events:4},
+    {name:'Jordan River',lat:31.7594,lng:35.5223,type:'River',period:'Both',events:4},
+    {name:'Jericho',lat:31.871,lng:35.444,type:'City',period:'Both',events:4},
+    {name:'Hebron',lat:31.5326,lng:35.0998,type:'City',period:'Both',events:3},
+    {name:'Beersheba',lat:31.2518,lng:34.7913,type:'City',period:'OT',events:3},
+    {name:'Mount Carmel',lat:32.7356,lng:35.0468,type:'Mountain',period:'OT',events:2},
+    {name:'Samaria',lat:32.2747,lng:35.1904,type:'City',period:'Both',events:4},
+    {name:'Mount Tabor',lat:32.6866,lng:35.3942,type:'Mountain',period:'Both',events:2},
+    {name:'Garden of Gethsemane',lat:31.7792,lng:35.2397,type:'Garden',period:'NT',events:2},
+    {name:'Mount Sinai',lat:28.5396,lng:33.9757,type:'Mountain',period:'OT',events:4},
+    {name:'Shiloh',lat:32.0553,lng:35.2886,type:'City',period:'OT',events:3},
+    {name:'Masada',lat:31.3156,lng:35.3536,type:'Fortress',period:'Both',events:3},
+    {name:'Bethany',lat:31.7688,lng:35.2556,type:'City',period:'NT',events:3},
+    {name:'Caesarea Philippi',lat:33.2484,lng:35.6936,type:'City',period:'NT',events:1},
+    {name:'En Gedi',lat:31.4533,lng:35.3894,type:'City',period:'OT',events:1},
+    {name:'Road to Emmaus',lat:31.8389,lng:35.0153,type:'Region',period:'NT',events:1}
+  ];
+
+  const TYPE_COLORS = {City:'#6b1f3d',Mountain:'#8B4513',River:'#2196F3','Sea/Lake':'#0077B6',Temple:'#b8860b',Garden:'#2E7D32',Fortress:'#555',Region:'#9C27B0'};
+  const PLACE_TYPES = ['All Types','City','Mountain','River','Sea/Lake','Temple','Garden','Fortress','Region'];
+  const PERIODS = ['All','OT','NT','Both'];
+
+  /* ═══════════════════════════════════════════════════════════════
+     ROUTER
+     ═══════════════════════════════════════════════════════════════ */
+  function getRoute() {
+    const hash = location.hash || '#/';
+    if (hash === '#/' || hash === '#') return {page:'home'};
+    if (hash === '#/gallery') return {page:'gallery'};
+    if (hash === '#/map') return {page:'map'};
+    if (hash === '#/about') return {page:'about'};
+    const m = hash.match(/^#\/person\/(.+)$/);
+    if (m) return {page:'person',id:m[1]};
+    return {page:'home'};
+  }
+
+  let mapInstance = null;
+  let mapMarkers = [];
+
+  function navigate() {
+    const route = getRoute();
+    document.querySelectorAll('#app > section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('page-' + route.page);
+    if (target) target.classList.add('active');
+
+    // Nav highlighting
+    document.querySelectorAll('#main-nav a[data-route]').forEach(a => {
+      a.classList.toggle('active', a.dataset.route === route.page);
+    });
+
+    window.scrollTo(0, 0);
+
+    if (route.page === 'person') renderPerson(route.id);
+    if (route.page === 'map') setTimeout(initMap, 100);
+  }
+
+  window.addEventListener('hashchange', navigate);
+
+  /* ═══════════════════════════════════════════════════════════════
+     RENDER — HOME FEATURED
+     ═══════════════════════════════════════════════════════════════ */
+  function renderFeatured() {
+    const grid = document.getElementById('featured-grid');
+    grid.innerHTML = FEATURED_IDS.map(id => {
+      const p = ALL_PEOPLE.find(x => x.id === id);
+      if (!p) return '';
+      const tc = p.testament === 'old' ? 'testament-old' : 'testament-new';
+      const tl = p.testament === 'old' ? 'Old Testament' : 'New Testament';
+      return `<a href="#/person/${p.id}" class="person-card">
+        <img src="${p.image}" alt="${p.name}" loading="lazy">
+        <div class="overlay">
+          <div class="name">${p.name}</div>
+          <div class="testament ${tc}">${tl}</div>
+        </div>
+      </a>`;
+    }).join('');
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     RENDER — GALLERY
+     ═══════════════════════════════════════════════════════════════ */
+  let activeCategory = 'All';
+  let activeTestament = 'All';
+
+  function renderGalleryFilters() {
+    const cf = document.getElementById('category-filters');
+    cf.innerHTML = CATEGORIES.map(c =>
+      `<button class="filter-tab${c === activeCategory ? ' active' : ''}" data-cat="${c}">${c}</button>`
+    ).join('');
+    cf.addEventListener('click', e => {
+      if (!e.target.dataset.cat) return;
+      activeCategory = e.target.dataset.cat;
+      cf.querySelectorAll('.filter-tab').forEach(b => b.classList.toggle('active', b.dataset.cat === activeCategory));
+      filterGallery();
+    });
+
+    const tf = document.getElementById('testament-filters');
+    tf.innerHTML = TESTAMENTS.map(t =>
+      `<button class="testament-btn${t === activeTestament ? ' active' : ''}" data-test="${t}">${t}</button>`
+    ).join('');
+    tf.addEventListener('click', e => {
+      if (!e.target.dataset.test) return;
+      activeTestament = e.target.dataset.test;
+      tf.querySelectorAll('.testament-btn').forEach(b => b.classList.toggle('active', b.dataset.test === activeTestament));
+      filterGallery();
+    });
+
+    document.getElementById('gallery-search').addEventListener('input', filterGallery);
+  }
+
+  function filterGallery() {
+    const search = document.getElementById('gallery-search').value.toLowerCase();
+    const filtered = ALL_PEOPLE.filter(p => {
+      if (activeCategory !== 'All' && p.category !== activeCategory) return false;
+      if (activeTestament === 'Old Testament' && p.testament !== 'old') return false;
+      if (activeTestament === 'New Testament' && p.testament !== 'new') return false;
+      if (search && !p.name.toLowerCase().includes(search)) return false;
+      return true;
+    });
+    renderGalleryGrid(filtered);
+  }
+
+  function renderGalleryGrid(people) {
+    const grid = document.getElementById('gallery-grid');
+    const noResults = document.getElementById('no-results');
+    if (people.length === 0) {
+      grid.innerHTML = '';
+      noResults.style.display = 'block';
+      return;
+    }
+    noResults.style.display = 'none';
+    grid.innerHTML = people.map(p => {
+      const bc = p.testament === 'old' ? 'badge-old' : 'badge-new';
+      const bl = p.testament === 'old' ? 'Old Testament' : 'New Testament';
+      return `<a href="#/person/${p.id}" class="gallery-card">
+        <img src="${p.image}" alt="${p.name}" loading="lazy">
+        <div class="card-badge ${bc}">${bl}</div>
+        <div class="card-overlay">
+          <div class="card-name">${p.name}</div>
+          <div class="card-subtitle">${p.subtitle}</div>
+        </div>
+      </a>`;
+    }).join('');
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     RENDER — MAP
+     ═══════════════════════════════════════════════════════════════ */
+  let mapPeriodFilter = 'All';
+  let mapTypeFilter = 'All Types';
+
+  function initMap() {
+    if (!mapInstance) {
+      mapInstance = L.map('map').setView([31.5, 35.0], 8);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 18
+      }).addTo(mapInstance);
+    }
+    setTimeout(() => mapInstance.invalidateSize(), 200);
+    renderMapFilters();
+    renderMapLocations();
+  }
+
+  function renderMapFilters() {
+    const pf = document.getElementById('map-period-filter');
+    pf.innerHTML = PERIODS.map(p =>
+      `<button class="map-chip${p === mapPeriodFilter ? ' active' : ''}" data-period="${p}">${p}</button>`
+    ).join('');
+    pf.addEventListener('click', e => {
+      if (!e.target.dataset.period) return;
+      mapPeriodFilter = e.target.dataset.period;
+      pf.querySelectorAll('.map-chip').forEach(b => b.classList.toggle('active', b.dataset.period === mapPeriodFilter));
+      renderMapLocations();
+    });
+
+    const tf = document.getElementById('map-type-filter');
+    tf.innerHTML = PLACE_TYPES.map(t =>
+      `<button class="map-chip${t === mapTypeFilter ? ' active' : ''}" data-type="${t}">${t}</button>`
+    ).join('');
+    tf.addEventListener('click', e => {
+      if (!e.target.dataset.type) return;
+      mapTypeFilter = e.target.dataset.type;
+      tf.querySelectorAll('.map-chip').forEach(b => b.classList.toggle('active', b.dataset.type === mapTypeFilter));
+      renderMapLocations();
+    });
+  }
+
+  function getFilteredLocations() {
+    return MAP_LOCATIONS.filter(loc => {
+      if (mapPeriodFilter !== 'All' && loc.period !== mapPeriodFilter && loc.period !== 'Both') return false;
+      if (mapTypeFilter !== 'All Types' && loc.type !== mapTypeFilter) return false;
+      return true;
+    });
+  }
+
+  function renderMapLocations() {
+    const locs = getFilteredLocations();
+    // List
+    const list = document.getElementById('map-location-list');
+    list.innerHTML = locs.map((loc, i) =>
+      `<div class="map-location-item" data-idx="${i}" onclick="focusLocation(${loc.lat},${loc.lng},'${loc.name.replace(/'/g,"\\'")}')">
+        <div class="loc-name">${loc.name}</div>
+        <div class="loc-meta">${loc.type} &middot; ${loc.period} &middot; ${loc.events} events</div>
+      </div>`
+    ).join('');
+
+    // Markers
+    mapMarkers.forEach(m => mapInstance.removeLayer(m));
+    mapMarkers = [];
+    locs.forEach(loc => {
+      const color = TYPE_COLORS[loc.type] || '#6b1f3d';
+      const marker = L.circleMarker([loc.lat, loc.lng], {
+        radius: 8, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.9
+      }).addTo(mapInstance);
+      marker.bindPopup(`<strong>${loc.name}</strong><br><span style="font-size:11px;color:#999;">${loc.type} &middot; ${loc.period}</span><br><span style="font-size:12px;">${loc.events} biblical events</span>`);
+      mapMarkers.push(marker);
+    });
+  }
+
+  window.focusLocation = function(lat, lng, name) {
+    mapInstance.setView([lat, lng], 12);
+    mapMarkers.forEach(m => {
+      if (m.getLatLng().lat === lat && m.getLatLng().lng === lng) m.openPopup();
+    });
+  };
+
+  /* ═══════════════════════════════════════════════════════════════
+     RENDER — ABOUT
+     ═══════════════════════════════════════════════════════════════ */
+  function renderAboutExplore() {
+    const ids = ['moses','david','mary','paul'];
+    const el = document.getElementById('about-explore-people');
+    el.innerHTML = ids.map(id => {
+      const p = ALL_PEOPLE.find(x => x.id === id);
+      if (!p) return '';
+      return `<a href="#/person/${p.id}" class="explore-person">
+        <img src="${p.image}" alt="${p.name}">
+        <div class="ep-name">${p.name}</div>
+      </a>`;
+    }).join('');
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     RENDER — PERSON DETAIL
+     ═══════════════════════════════════════════════════════════════ */
+  function renderPerson(id) {
+    const idx = ALL_PEOPLE.findIndex(p => p.id === id);
+    const person = ALL_PEOPLE[idx];
+    if (!person) { location.hash = '#/gallery'; return; }
+
+    const tc = person.testament === 'old' ? 'badge-old' : 'badge-new';
+    const tl = person.testament === 'old' ? 'Old Testament' : 'New Testament';
+
+    const prevPerson = idx > 0 ? ALL_PEOPLE[idx - 1] : null;
+    const nextPerson = idx < ALL_PEOPLE.length - 1 ? ALL_PEOPLE[idx + 1] : null;
+
+    const related = (person.relatedPeople || []).map(rid => ALL_PEOPLE.find(p => p.id === rid)).filter(Boolean);
+
+    const journeyHTML = (person.journey || []).map(j =>
+      `<div class="journey-card"><h4>${j.title}</h4><p>${j.desc}</p></div>`
+    ).join('');
+
+    const lessonsHTML = (person.lessons || []).map((l, i) =>
+      `<div class="lesson-item">
+        <div class="lesson-num">${i + 1}</div>
+        <div class="lesson-text"><h4>${l.title}</h4><p>${l.desc}</p></div>
+      </div>`
+    ).join('');
+
+    const scripturesHTML = (person.scriptures || []).map(s =>
+      `<div class="scripture-block">
+        <blockquote>"${s.text}"</blockquote>
+        <cite>— ${s.ref}</cite>
+      </div>`
+    ).join('');
+
+    const timelineHTML = (person.timeline || []).map(t =>
+      `<div class="timeline-item">
+        <div class="tl-date">${t.date}</div>
+        <div class="tl-event">${t.event}</div>
+      </div>`
+    ).join('');
+
+    const relatedHTML = related.map(r =>
+      `<a href="#/person/${r.id}" class="related-person">
+        <img src="${r.image}" alt="${r.name}" loading="lazy">
+        <div class="rp-name">${r.name}</div>
+      </a>`
+    ).join('');
+
+    document.getElementById('person-content').innerHTML = `
+      <div class="person-breadcrumb">
+        <a href="#/">Home</a> &gt; <a href="#/gallery">Gallery</a> &gt; ${person.name}
+      </div>
+      <div class="person-hero">
+        <img class="person-hero-bg" src="${person.image}" alt="${person.name}">
+        <div class="person-hero-overlay"></div>
+        <div class="person-hero-content">
+          <h1>${person.name}</h1>
+          <div class="person-subtitle">${person.subtitle}</div>
+          <div class="person-meta">
+            <span class="person-badge ${tc}">${tl}</span>
+            <span class="person-era"><i class="ri-time-line"></i> ${person.era}</span>
+          </div>
+        </div>
+      </div>
+      <div class="person-body">
+        <div class="person-main">
+          <h2>The Story</h2>
+          <p>${person.bio}</p>
+
+          ${person.journey && person.journey.length > 1 ? `<h2>Spiritual Journey</h2><div class="journey-cards">${journeyHTML}</div>` : ''}
+
+          ${person.lessons && person.lessons.length > 0 ? `<h2>Learning to Walk with God</h2>${lessonsHTML}` : ''}
+
+          ${person.scriptures && person.scriptures.length > 0 ? `<h2>Key Scriptures</h2>${scripturesHTML}` : ''}
+        </div>
+        <div class="person-sidebar">
+          <h3>Timeline</h3>
+          ${timelineHTML}
+        </div>
+      </div>
+      ${related.length > 0 ? `<div class="related-section"><h2>Related People</h2><div class="related-people">${relatedHTML}</div></div>` : ''}
+      <div class="person-nav">
+        ${prevPerson ? `<a href="#/person/${prevPerson.id}"><i class="ri-arrow-left-line"></i> ${prevPerson.name}</a>` : '<span></span>'}
+        ${nextPerson ? `<a href="#/person/${nextPerson.id}">${nextPerson.name} <i class="ri-arrow-right-line"></i></a>` : '<span></span>'}
+      </div>
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand"><div class="logo"><i class="ri-book-open-fill"></i><span>Bible People</span></div><p>Walking with the faithful through scripture.</p></div>
+          <div class="footer-links"><h4>Explore</h4><ul><li><a href="#/">Home</a></li><li><a href="#/gallery">People Gallery</a></li><li><a href="#/about">About</a></li></ul></div>
+          <div class="footer-quote"><h4>Word of the Day</h4><blockquote>"Your word is a lamp for my feet, a light on my path."</blockquote><cite>— Psalm 119:105</cite></div>
+        </div>
+        <div class="footer-bottom"><span>&copy; 2026 Bible People.</span><span class="verse">"In the beginning was the Word" — John 1:1</span></div>
+      </footer>
+    `;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     INIT
+     ═══════════════════════════════════════════════════════════════ */
+  renderFeatured();
+  renderGalleryFilters();
+  renderGalleryGrid(ALL_PEOPLE);
+  renderAboutExplore();
+  navigate();
+  </script>
+</body>
+</html>
