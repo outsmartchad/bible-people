@@ -244,6 +244,77 @@ footer{background:var(--footer-bg);padding:60px 48px 24px}
 .scripture-link:hover{color:var(--burgundy)}
 .scripture-link i{font-size:14px}
 
+/* Share Button */
+.share-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(184,134,11,.3);border:1px solid rgba(184,134,11,.5);color:var(--gold-light);padding:4px 14px;border-radius:9999px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-body);transition:all .2s}
+.share-btn:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+/* Discussion Questions */
+.discussion-questions{margin-top:48px;padding:32px;background:var(--cream);border-radius:12px;border:1px solid rgba(107,31,61,.1)}
+.dq-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.dq-header h3{font-family:var(--font-heading);font-size:22px;color:var(--burgundy);display:flex;align-items:center;gap:8px;margin:0}
+.dq-header h3 i{color:var(--gold-light)}
+.dq-print-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--burgundy);color:var(--burgundy);padding:6px 16px;border-radius:8px;font-size:13px;cursor:pointer;font-family:var(--font-body);transition:all .2s}
+.dq-print-btn:hover{background:var(--burgundy);color:var(--white)}
+.dq-desc{font-size:13px;color:#888;margin:8px 0 16px}
+.dq-list{padding-left:20px;counter-reset:dq}
+.dq-list li{font-size:15px;color:#555;line-height:1.8;margin-bottom:12px;padding-left:4px}
+.dq-list li::marker{color:var(--burgundy);font-weight:700}
+
+/* Weekly Banner */
+.weekly-banner{background:linear-gradient(135deg,rgba(107,31,61,.08),rgba(184,134,11,.08));border-bottom:2px solid rgba(184,134,11,.2);padding:16px 48px;margin-top:64px}
+.weekly-inner{display:flex;align-items:center;gap:20px;max-width:1100px;margin:0 auto}
+.weekly-thumb{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex-shrink:0}
+.weekly-text{flex:1;min-width:0}
+.weekly-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:700;display:flex;align-items:center;gap:4px}
+.weekly-text h3{font-family:var(--font-heading);font-size:20px;color:var(--burgundy);margin:2px 0}
+.weekly-text p{font-size:13px;color:#666;margin:0}
+.weekly-btn{padding:10px 24px !important;font-size:12px !important;white-space:nowrap}
+
+/* Quiz Page */
+.quiz-page{padding:80px 24px 48px;max-width:700px;margin:0 auto}
+.quiz-header{text-align:center;margin-bottom:32px}
+.quiz-header h1{font-family:var(--font-heading);font-size:36px;color:var(--burgundy);display:flex;align-items:center;justify-content:center;gap:8px}
+.quiz-header h1 i{color:var(--gold-light)}
+.quiz-meta{display:flex;justify-content:center;gap:24px;margin:12px 0;font-size:14px;color:#666}
+.quiz-score i{color:var(--gold)}
+.quiz-progress{height:6px;background:#eee;border-radius:3px;overflow:hidden;margin-top:12px}
+.quiz-progress-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .3s}
+.quiz-clues{margin-bottom:32px}
+.quiz-clue{background:var(--cream);border-radius:12px;padding:16px 20px;margin-bottom:12px;border-left:3px solid var(--burgundy);transition:opacity .5s,transform .5s}
+.quiz-clue.hidden{opacity:0;transform:translateY(10px)}
+.clue-num{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700}
+.quiz-clue p{font-size:15px;color:#555;margin-top:4px;line-height:1.6}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.quiz-option{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--white);border:2px solid #eee;border-radius:12px;cursor:pointer;font-family:var(--font-body);font-size:15px;color:var(--dark);transition:all .2s;text-align:left}
+.quiz-option:hover{border-color:var(--gold);background:rgba(184,134,11,.05)}
+.quiz-option img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.quiz-option.correct{border-color:#22c55e;background:rgba(34,197,94,.1)}
+.quiz-option.wrong{border-color:#ef4444;background:rgba(239,68,68,.1)}
+.quiz-option:disabled{cursor:default;opacity:.8}
+.quiz-reveal{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;background:var(--cream);border-radius:12px;flex-wrap:wrap}
+.quiz-reveal-content{display:flex;align-items:center;gap:8px;font-size:16px;color:var(--dark)}
+.quiz-end{display:flex;align-items:center;justify-content:center;min-height:70vh}
+.quiz-end-card{text-align:center;max-width:500px}
+.quiz-end-emoji{font-size:72px;margin-bottom:16px}
+.quiz-end-card h2{font-family:var(--font-heading);font-size:36px;color:var(--burgundy)}
+.quiz-end-score{font-family:var(--font-heading);font-size:72px;color:var(--gold);font-weight:700;margin:16px 0}
+.quiz-end-pct{font-size:18px;color:#666;margin-bottom:32px}
+.quiz-end-actions{display:flex;flex-direction:column;gap:12px;align-items:center}
+.quiz-end-actions .btn-gold,.quiz-end-actions .btn-ghost{min-width:200px;text-align:center}
+
+/* Print Styles */
+@media print{
+  *{color:#000 !important;background:transparent !important;box-shadow:none !important;text-shadow:none !important}
+  header,footer,.breadcrumb,.person-hero,.timeline-sidebar,.related-section,.person-nav,.how-saw-god,.share-btn,.dq-print-btn,.scriptures-section,.journey-grid,.lessons-list,.bio-text{display:none !important}
+  .person-layout{display:block !important;padding:0 !important}
+  .discussion-questions{display:block !important;border:2px solid #333;padding:24px;margin:0}
+  .discussion-questions::before{content:attr(data-person-name);display:block;font-family:var(--font-heading);font-size:28px;font-weight:700;margin-bottom:8px;border-bottom:2px solid #333;padding-bottom:8px}
+  .dq-header h3{font-size:24px;color:#000}
+  .dq-list li{font-size:14px;line-height:2;color:#000}
+  .main-content h2{display:none !important}
+  @page{margin:2cm}
+}
+
 /* Responsive */
 @media(max-width:1024px){
   .gallery-grid{grid-template-columns:repeat(3,1fr)}
@@ -287,4 +358,11 @@ footer{background:var(--footer-bg);padding:60px 48px 24px}
   .stats{grid-template-columns:repeat(4,1fr);padding:40px 16px;gap:16px}
   .stat-item .number{font-size:28px}
   .cta h2{font-size:28px}
+  .weekly-banner{padding:12px 16px;margin-top:64px}
+  .weekly-inner{flex-wrap:wrap}
+  .weekly-btn{width:100%;text-align:center;margin-top:8px}
+  .quiz-options{grid-template-columns:1fr}
+  .quiz-header h1{font-size:28px}
+  .quiz-end-score{font-size:56px}
+  .dq-header{flex-direction:column;align-items:flex-start}
 }

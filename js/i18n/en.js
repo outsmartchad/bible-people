@@ -75,5 +75,18 @@ export const en = {
   footerBrandDesc: 'Walking with the faithful through scripture — stories of faith, courage, and redemption that have shaped the world.',
   mapInfoDesc: 'Click any marker to explore events and history.',
   lesson: 'Lesson',
+  // Quiz
+  quiz: 'Quiz',
+  quizTitle: 'Who Am I?',
+  // Discussion Questions
+  discussionQuestions: 'Discussion Questions',
+  discussionQuestionsDesc: 'Questions for personal reflection and group discussion',
+  printQuestions: 'Print Questions',
+  // Weekly Figure
+  weeklyFigure: "This Week's Figure",
+  readNow: 'Read Now',
+  // Share
+  shareCard: 'Share',
+
   personNames: {}, personSubtitles: {}, locationNames: {},
 };

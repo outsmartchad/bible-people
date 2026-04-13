@@ -1,6 +1,6 @@
 import { PEOPLE } from '../data.js';
-import { getPersonImage } from '../app.js';
-import { t, tName, tSubtitle } from '../i18n/i18n.js';
+import { getPersonImage, getPersonById } from '../app.js';
+import { t, tName, tSubtitle, getLang } from '../i18n/i18n.js';
 
 const HERO_BG = 'https://readdy.ai/api/search-image?query=ancient%20parchment%20scroll%20illuminated%20manuscript%20golden%20decorative%20borders%20sacred%20text%20ancient%20biblical%20artwork%20warm%20amber%20golden%20light%20divine%20rays%20through%20old%20stone%20cathedral%20window%20rich%20deep%20warm%20tones%20aged%20texture%20beautiful%20classical%20religious%20atmosphere&width=1440&height=900&seq=hero01&orientation=landscape';
 const CTA_BG = 'https://readdy.ai/api/search-image?query=ancient%20stone%20cathedral%20interior%20warm%20golden%20light%20streaming%20through%20stained%20glass%20windows%20stone%20columns%20arched%20ceiling%20divine%20atmosphere%20peaceful%20and%20majestic%20biblical%20setting%20warm%20amber%20tones&width=1440&height=600&seq=cta01&orientation=landscape';
@@ -20,9 +20,42 @@ function personCard(p) {
   </a>`;
 }
 
-export function renderHome(container) {
+async function fetchWeeklyFigure() {
+  try {
+    const res = await fetch('weekly.json', { cache: 'no-cache' });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch { return null; }
+}
+
+function renderWeeklyBanner(weekly) {
+  if (!weekly?.personId) return '';
+  const person = getPersonById(weekly.personId);
+  if (!person) return '';
+  const isZh = getLang() === 'zh-TW';
+  const name = tName(person.id) || person.name;
+  const note = isZh ? weekly.note : weekly.noteEn;
+  const label = isZh ? '本週人物' : "This Week's Figure";
+  const btnText = isZh ? '立即閱讀' : 'Read Now';
+  return `
+    <section class="weekly-banner">
+      <div class="weekly-inner">
+        <img class="weekly-thumb" src="${getPersonImage(person)}" alt="${name}">
+        <div class="weekly-text">
+          <span class="weekly-label"><i class="ri-calendar-event-line"></i> ${label}</span>
+          <h3>${name}</h3>
+          <p>${note || ''}</p>
+        </div>
+        <a href="#/person/${person.id}" class="btn-gold weekly-btn">${btnText} <i class="ri-arrow-right-line"></i></a>
+      </div>
+    </section>`;
+}
+
+export async function renderHome(container) {
   const featured = PEOPLE.slice(0, 6);
+  const weekly = await fetchWeeklyFigure();
   container.innerHTML = `
+    ${renderWeeklyBanner(weekly)}
     <section class="hero">
       <img class="hero-bg" src="${HERO_BG}" alt="Biblical background">
       <div class="hero-overlay"></div>

@@ -4,6 +4,7 @@ import { renderGallery } from './pages/gallery.js';
 import { renderMap } from './pages/map.js';
 import { renderAbout } from './pages/about.js';
 import { renderPerson } from './pages/person.js';
+import { renderQuiz } from './pages/quiz.js';
 import { setLang, getLang, updateStaticText, updateLangSwitcher } from './i18n/i18n.js';
 
 export function getPersonImage(person) {
@@ -29,7 +30,7 @@ function updateNav(hash) {
   });
 }
 
-function route() {
+async function route() {
   const hash = location.hash.slice(1) || '/';
   updateNav(hash);
   document.querySelector('nav')?.classList.remove('open');
@@ -38,12 +39,13 @@ function route() {
   app.style.animation = 'none';
   app.offsetHeight; // force reflow
   app.style.animation = 'fadeIn .3s ease-out';
-  if (hash === '/' || hash === '') renderHome(app);
+  if (hash === '/' || hash === '') await renderHome(app);
   else if (hash.startsWith('/gallery')) renderGallery(app);
   else if (hash === '/map') renderMap(app);
   else if (hash === '/about') renderAbout(app);
+  else if (hash === '/quiz') renderQuiz(app);
   else if (hash.startsWith('/person/')) renderPerson(app, hash.split('/person/')[1]);
-  else renderHome(app);
+  else await renderHome(app);
   updateStaticText();
   updateLangSwitcher();
 }

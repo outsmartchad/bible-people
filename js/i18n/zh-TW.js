@@ -124,6 +124,19 @@ export const zhTW = {
   copyright: '© 2026 聖經人物。版權所有。',
   footerVerse: '「太初有道」— 約翰福音 1:1',
 
+  // Quiz
+  quiz: '測驗',
+  quizTitle: '我是誰？',
+  // Discussion Questions
+  discussionQuestions: '討論問題',
+  discussionQuestionsDesc: '個人反思與小組討論問題',
+  printQuestions: '列印問題',
+  // Weekly Figure
+  weeklyFigure: '本週人物',
+  readNow: '立即閱讀',
+  // Share
+  shareCard: '分享',
+
   // Person names (Chinese translations)
   personNames: {
     'jesus': '耶穌基督',

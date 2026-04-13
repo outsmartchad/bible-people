@@ -66,6 +66,12 @@ export function updateStaticText() {
     else if (route === '/gallery') a.textContent = t('peopleGallery');
     else if (route === '/map') a.textContent = t('bibleMap');
     else if (route === '/about') a.textContent = t('about');
+    else if (route === '/quiz') {
+      // Preserve icon + update text
+      const icon = a.querySelector('i');
+      a.textContent = ' ' + t('quiz');
+      if (icon) a.prepend(icon);
+    }
   });
   const outlineBtn = document.querySelector('.btn-outline-nav');
   if (outlineBtn) outlineBtn.textContent = t('exploreGallery');

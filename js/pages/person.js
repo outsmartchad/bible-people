@@ -1,7 +1,10 @@
 import { PEOPLE } from '../data.js';
 import { getPersonImage, getPersonById } from '../app.js';
 import * as i18n from '../i18n/i18n.js';
-const { t, tName, tSubtitle } = i18n;
+import { DISCUSSION_QUESTIONS } from '../discussion-questions.js';
+import { DISCUSSION_QUESTIONS_ZH } from '../discussion-questions-zh.js';
+import { sharePersonCard } from '../share-card.js';
+const { t, tName, tSubtitle, getLang } = i18n;
 const tPersonContent = i18n.tPersonContent || (() => null);
 
 export function renderPerson(container, id) {
@@ -46,6 +49,22 @@ export function renderPerson(container, id) {
     `<div class="timeline-item"><div class="timeline-date">${t.date}</div><div class="timeline-event">${t.event}</div></div>`
   ).join('');
 
+  // Discussion questions
+  const isZh = getLang() === 'zh-TW';
+  const questionsSource = isZh ? DISCUSSION_QUESTIONS_ZH : DISCUSSION_QUESTIONS;
+  const questions = questionsSource?.[person.id] || DISCUSSION_QUESTIONS?.[person.id] || [];
+  const questionsHtml = questions.length ? `
+    <div class="discussion-questions" id="discussion-questions" data-person-name="${displayName}"
+      <div class="dq-header">
+        <h3><i class="ri-discuss-line"></i> ${t('discussionQuestions')}</h3>
+        <button class="dq-print-btn" onclick="window.print()"><i class="ri-printer-line"></i> ${t('printQuestions')}</button>
+      </div>
+      <p class="dq-desc">${t('discussionQuestionsDesc')}</p>
+      <ol class="dq-list">
+        ${questions.map(q => `<li>${q}</li>`).join('')}
+      </ol>
+    </div>` : '';
+
   const relatedHtml = (person.relatedPeople || []).map(rid => {
     const rp = getPersonById(rid);
     if (!rp) return '';
@@ -64,6 +83,7 @@ export function renderPerson(container, id) {
           <div class="badges">
             <span class="badge ${tClass}">${tLabel}</span>
             <span class="badge era">${person.era}</span>
+            <button class="share-btn" id="share-person-btn"><i class="ri-share-line"></i> ${t('shareCard')}</button>
           </div>
         </div>
       </div>
@@ -85,6 +105,7 @@ export function renderPerson(container, id) {
             }).join('')}
           </div>
         </div>
+        ${questionsHtml}
       </div>
       <div class="timeline-sidebar">
         <h3>${t('timeline')}</h3>
@@ -100,4 +121,13 @@ export function renderPerson(container, id) {
       ${prev ? `<a href="#/person/${prev.id}"><i class="ri-arrow-left-line"></i> ${tName(prev.id) || prev.name}</a>` : '<span></span>'}
       ${next ? `<a href="#/person/${next.id}">${tName(next.id) || next.name} <i class="ri-arrow-right-line"></i></a>` : '<span></span>'}
     </div>`;
+
+  // Wire share button
+  const shareBtn = container.querySelector('#share-person-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      const scripture = scripturesData[0] || null;
+      sharePersonCard(person, displayName, scripture, imgUrl);
+    });
+  }
 }
