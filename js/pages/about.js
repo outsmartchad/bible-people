@@ -2,7 +2,7 @@ import { PEOPLE } from '../data.js';
 import { getPersonImage } from '../app.js';
 import { t, tName, tSubtitle } from '../i18n/i18n.js';
 
-const LIBRARY_IMG = 'https://readdy.ai/api/search-image?query=ornate%20ancient%20library%20interior%20warm%20golden%20light%20illuminated%20manuscripts%20sacred%20books%20beautiful%20classical%20architecture%20cathedral%20ceiling%20stained%20glass%20warm%20amber%20atmosphere&width=600&height=500&seq=about01&orientation=landscape';
+const LIBRARY_IMG = 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&h=500&fit=crop&q=80';
 
 const QUICK_LINKS = ['moses', 'david', 'mary', 'paul'];
 

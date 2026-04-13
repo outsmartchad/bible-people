@@ -55,6 +55,19 @@ export function renderGallery(container) {
   let activeCat = 'All';
   let activeTest = 'All';
 
+  // Check for testament filter from URL (e.g. #/gallery?testament=old)
+  const hashQuery = location.hash.split('?')[1];
+  if (hashQuery) {
+    const params = new URLSearchParams(hashQuery);
+    const testParam = params.get('testament');
+    if (testParam === 'old' || testParam === 'new') {
+      activeTest = testParam;
+      document.querySelectorAll('#test-filters .filter-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.test === testParam);
+      });
+    }
+  }
+
   function filterCards() {
     const search = document.getElementById('search-input').value.toLowerCase();
     let count = 0;
@@ -88,4 +101,7 @@ export function renderGallery(container) {
   });
 
   document.getElementById('search-input').addEventListener('keyup', filterCards);
+
+  // Apply initial filter (for testament pre-filter from footer links)
+  if (activeTest !== 'All') filterCards();
 }
