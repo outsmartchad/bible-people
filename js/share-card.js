@@ -3,8 +3,8 @@
 
 const SITE_URL = 'outsmartchad.github.io/bible-people';
 
-function drawQRCode(ctx, x, y, size) {
-  const url = `https://${SITE_URL}`;
+function drawQRCode(ctx, x, y, size, personId) {
+  const url = `https://${SITE_URL}/#/person/${personId}`;
   // qrcode-generator loaded via CDN as global `qrcode`
   const qr = qrcode(0, 'L');
   qr.addData(url);
@@ -136,8 +136,8 @@ export async function generateShareCard(person, displayName, scripture, imgUrl) 
     ctx.fillText(`— ${scripture.reference || scripture.ref}`, 540, y + 16);
   }
 
-  // QR code (bottom right)
-  drawQRCode(ctx, 860, 860, 140);
+  // QR code (bottom right) — links to this person's page
+  drawQRCode(ctx, 860, 860, 140, person.id);
 
   // URL text
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
