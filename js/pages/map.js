@@ -1,5 +1,6 @@
 import { LOCATIONS } from '../data.js';
-import { t, tLocation } from '../i18n/i18n.js';
+import { t, tLocation, tName } from '../i18n/i18n.js';
+import { getPersonById } from '../app.js';
 
 const TYPE_COLORS = {
   City: '#6b1f3d', Mountain: '#8B4513', River: '#4169E1',
@@ -70,6 +71,94 @@ export function renderMap(container) {
   setTimeout(initMap, 50);
 }
 
+function renderLocationDetail(loc) {
+  const existing = document.querySelector('.map-detail');
+  if (existing) existing.remove();
+
+  const locName = tLocation(loc.name);
+  const hebrewName = loc.hebrewName || '';
+  const modernName = loc.modernName || '';
+  const description = loc.description || '';
+  const eventDetails = loc.eventDetails || [];
+  const keyEvents = eventDetails.filter(e => e.isKey);
+
+  const panel = document.createElement('div');
+  panel.className = 'map-detail';
+  panel.innerHTML = `
+    <button class="map-detail-close" aria-label="Close">&times;</button>
+    <div class="map-detail-header">
+      <h2>${locName}</h2>
+      ${hebrewName ? `<div class="map-detail-hebrew">${hebrewName}</div>` : ''}
+      ${modernName ? `<div class="map-detail-modern"><i class="ri-map-pin-line"></i> ${modernName}</div>` : ''}
+      <div class="map-detail-badges">
+        <span class="loc-badge ${badgeClass(loc.period)}">${t(loc.period) || loc.period}</span>
+        <span class="map-detail-type-badge"><i class="${TYPE_ICONS[loc.type] || 'ri-map-pin-line'}"></i> ${tType(loc.type)}</span>
+      </div>
+    </div>
+    ${description ? `<div class="map-detail-desc">${description}</div>` : ''}
+    <div class="map-detail-stats">
+      <div class="map-detail-stat">
+        <div class="map-detail-stat-num">${loc.events}</div>
+        <div class="map-detail-stat-label">${t('events')}</div>
+      </div>
+      <div class="map-detail-stat">
+        <div class="map-detail-stat-num">${keyEvents.length}</div>
+        <div class="map-detail-stat-label">${t('keyEvents') || 'Key Events'}</div>
+      </div>
+    </div>
+    ${eventDetails.length > 0 ? `
+      <div class="map-detail-events">
+        <h3><i class="ri-calendar-event-line"></i> ${t('events')}</h3>
+        ${eventDetails.map(ev => {
+          const person = ev.person ? getPersonById(ev.person) : null;
+          const personName = person
+            ? (tName(ev.person) || person.name)
+            : '';
+          return `<div class="map-detail-event${ev.isKey ? ' key' : ''}">
+            <div class="map-detail-event-head">
+              <span class="map-detail-event-title">${ev.title}</span>
+              ${ev.isKey ? '<span class="key-badge">Key Event</span>' : ''}
+            </div>
+            <div class="map-detail-event-meta">
+              ${ev.date ? `<span class="map-detail-event-date"><i class="ri-time-line"></i> ${ev.date}</span>` : ''}
+              ${personName ? `<a href="#/person/${ev.person}" class="map-detail-event-person"><i class="ri-user-line"></i> ${personName}</a>` : ''}
+            </div>
+            ${ev.description ? `<p class="map-detail-event-desc">${ev.description}</p>` : ''}
+            ${ev.scripture ? `<div class="map-detail-event-scripture"><i class="ri-book-open-line"></i> ${ev.scripture}</div>` : ''}
+          </div>`;
+        }).join('')}
+      </div>
+    ` : ''}
+  `;
+
+  const mapArea = document.querySelector('.map-area');
+  mapArea.appendChild(panel);
+
+  // Trigger slide-in animation
+  requestAnimationFrame(() => panel.classList.add('open'));
+
+  // Highlight sidebar item
+  document.querySelectorAll('.location-item').forEach(el => {
+    const idx = parseInt(el.dataset.idx, 10);
+    el.classList.toggle('selected', LOCATIONS[idx] === loc);
+  });
+
+  // Close handler
+  panel.querySelector('.map-detail-close').addEventListener('click', () => {
+    closeDetailPanel();
+  });
+}
+
+function closeDetailPanel() {
+  const panel = document.querySelector('.map-detail');
+  if (!panel) return;
+  panel.classList.remove('open');
+  panel.addEventListener('transitionend', () => panel.remove(), { once: true });
+  document.querySelectorAll('.location-item.selected').forEach(el => {
+    el.classList.remove('selected');
+  });
+}
+
 function initMap() {
   const map = L.map('leaflet-map').setView([31.5, 35.0], 8);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -84,6 +173,7 @@ function initMap() {
     }).bindPopup(`<strong>${tLocation(loc.name)}</strong><br>${loc.type} · ${loc.period} · ${loc.events} ${t('events')}`);
     marker.addTo(map);
     marker._locData = loc;
+    marker.on('click', () => renderLocationDetail(loc));
     return marker;
   });
 
@@ -128,6 +218,7 @@ function initMap() {
       const loc = LOCATIONS[i];
       map.flyTo([loc.lat, loc.lng], 12);
       markers[i].openPopup();
+      renderLocationDetail(loc);
     });
   });
 }

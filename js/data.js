@@ -2612,24 +2612,329 @@ Nicodemus appears twice more in John's Gospel, each time showing greater courage
 ];
 
 export const LOCATIONS = [
-  { name: 'Jerusalem', lat: 31.7683, lng: 35.2137, type: 'City', period: 'Both', events: 9 },
-  { name: 'Bethlehem', lat: 31.7054, lng: 35.2024, type: 'City', period: 'Both', events: 4 },
-  { name: 'Nazareth', lat: 32.6996, lng: 35.3035, type: 'City', period: 'NT', events: 3 },
-  { name: 'Sea of Galilee', lat: 32.8231, lng: 35.5831, type: 'Sea/Lake', period: 'NT', events: 5 },
-  { name: 'Capernaum', lat: 32.8812, lng: 35.5725, type: 'City', period: 'NT', events: 4 },
-  { name: 'Jordan River', lat: 31.7594, lng: 35.5223, type: 'River', period: 'Both', events: 4 },
-  { name: 'Jericho', lat: 31.871, lng: 35.444, type: 'City', period: 'Both', events: 4 },
-  { name: 'Hebron', lat: 31.5326, lng: 35.0998, type: 'City', period: 'Both', events: 3 },
-  { name: 'Beersheba', lat: 31.2518, lng: 34.7913, type: 'City', period: 'OT', events: 3 },
-  { name: 'Mount Carmel', lat: 32.7356, lng: 35.0468, type: 'Mountain', period: 'OT', events: 2 },
-  { name: 'Samaria', lat: 32.2747, lng: 35.1904, type: 'City', period: 'Both', events: 4 },
-  { name: 'Mount Tabor', lat: 32.6866, lng: 35.3942, type: 'Mountain', period: 'Both', events: 2 },
-  { name: 'Garden of Gethsemane', lat: 31.7792, lng: 35.2397, type: 'Garden', period: 'NT', events: 2 },
-  { name: 'Mount Sinai', lat: 28.5396, lng: 33.9757, type: 'Mountain', period: 'OT', events: 4 },
-  { name: 'Shiloh', lat: 32.0553, lng: 35.2886, type: 'City', period: 'OT', events: 3 },
-  { name: 'Masada', lat: 31.3156, lng: 35.3536, type: 'Fortress', period: 'Both', events: 3 },
-  { name: 'Bethany', lat: 31.7688, lng: 35.2556, type: 'City', period: 'NT', events: 3 },
-  { name: 'Caesarea Philippi', lat: 33.2484, lng: 35.6936, type: 'City', period: 'NT', events: 1 },
-  { name: 'En Gedi', lat: 31.4533, lng: 35.3894, type: 'City', period: 'OT', events: 1 },
-  { name: 'Road to Emmaus', lat: 31.8389, lng: 35.0153, type: 'Region', period: 'NT', events: 1 }
+  {
+    name: 'Jerusalem',
+    lat: 31.7683,
+    lng: 35.2137,
+    type: 'City',
+    period: 'Both',
+    events: 9,
+    hebrewName: 'יְרוּשָׁלַיִם',
+    modernName: 'Jerusalem, Israel',
+    description: 'The holy city and spiritual center of the biblical narrative, serving as the capital of the united monarchy under David and Solomon. Jerusalem housed the Temple, the central place of worship for ancient Israel, and became the setting for the climactic events of Jesus\'s ministry, death, and resurrection.',
+    eventDetails: [
+      { title: 'David Captures Jerusalem', date: 'c. 1000 BC', person: 'david', description: 'King David conquers the Jebusite stronghold of Zion and establishes Jerusalem as the capital of the united kingdom of Israel. He brings the Ark of the Covenant to the city, making it both the political and spiritual center of the nation.', scripture: '2 Samuel 5:6-10', isKey: true },
+      { title: 'Solomon Builds the Temple', date: 'c. 960 BC', person: 'solomon', description: 'King Solomon constructs the First Temple on Mount Moriah, fulfilling his father David\'s dream. The Temple becomes the dwelling place of God\'s presence and the center of Israelite worship for nearly four centuries.', scripture: '1 Kings 6:1-38', isKey: true },
+      { title: 'Hezekiah\'s Reforms', date: 'c. 715 BC', person: 'hezekiah', description: 'King Hezekiah purifies the Temple and restores proper worship in Jerusalem after years of pagan influence. He also constructs the Siloam Tunnel to secure the city\'s water supply against Assyrian siege.', scripture: '2 Chronicles 29:1-36', isKey: false },
+      { title: 'Josiah\'s Reforms', date: 'c. 622 BC', person: 'josiah', description: 'King Josiah discovers the Book of the Law in the Temple and initiates sweeping religious reforms throughout Judah. He destroys pagan altars and renews the covenant between God and the people.', scripture: '2 Kings 22:8-13', isKey: false },
+      { title: 'Nehemiah Rebuilds the Walls', date: 'c. 445 BC', person: 'nehemiah', description: 'Nehemiah leads the effort to rebuild Jerusalem\'s walls after the Babylonian exile, completing the work in just 52 days despite fierce opposition. The rebuilding restores Jerusalem\'s security and dignity as the holy city.', scripture: 'Nehemiah 2:17-20', isKey: true },
+      { title: 'Jesus\'s Triumphal Entry', date: 'c. AD 30', person: 'jesus', description: 'Jesus rides into Jerusalem on a donkey as crowds wave palm branches and shout "Hosanna," fulfilling the prophecy of Zechariah. This event marks the beginning of Passion Week and Jesus\'s final days before the crucifixion.', scripture: 'Matthew 21:1-11', isKey: true },
+      { title: 'The Last Supper', date: 'c. AD 30', person: 'jesus', description: 'Jesus shares a final Passover meal with his twelve disciples in an upper room in Jerusalem. He institutes the Lord\'s Supper, washes his disciples\' feet, and predicts his betrayal by Judas.', scripture: 'Luke 22:14-23', isKey: true },
+      { title: 'The Crucifixion', date: 'c. AD 30', person: 'jesus', description: 'Jesus is crucified at Golgotha outside Jerusalem\'s walls after being tried by the Sanhedrin and Pontius Pilate. His death is understood as the atoning sacrifice for humanity\'s sins and the fulfillment of Old Testament prophecy.', scripture: 'John 19:17-30', isKey: true },
+      { title: 'Pentecost and the Early Church', date: 'c. AD 30', person: 'peter', description: 'The Holy Spirit descends on the disciples gathered in Jerusalem on the day of Pentecost, empowering them to speak in many languages. Peter preaches to the crowd and about three thousand people are baptized, marking the birth of the church.', scripture: 'Acts 2:1-41', isKey: true }
+    ]
+  },
+  {
+    name: 'Bethlehem',
+    lat: 31.7054,
+    lng: 35.2024,
+    type: 'City',
+    period: 'Both',
+    events: 4,
+    hebrewName: 'בֵּית לֶחֶם',
+    modernName: 'Bethlehem, West Bank',
+    description: 'A small town south of Jerusalem meaning "House of Bread," Bethlehem is the ancestral home of King David and the prophesied birthplace of the Messiah. It gained eternal significance as the place where Jesus was born, fulfilling Micah\'s prophecy.',
+    eventDetails: [
+      { title: 'Ruth Meets Boaz', date: 'c. 1100 BC', person: 'ruth', description: 'Ruth the Moabite gleans in the fields of Boaz in Bethlehem after returning with her mother-in-law Naomi from Moab. Boaz shows her kindness, and their marriage produces Obed, the grandfather of King David.', scripture: 'Ruth 2:1-23', isKey: true },
+      { title: 'Samuel Anoints David', date: 'c. 1025 BC', person: 'samuel', description: 'The prophet Samuel travels to Bethlehem to anoint one of Jesse\'s sons as the next king of Israel. God chooses the youngest, David, a shepherd boy, rejecting outward appearances in favor of the heart.', scripture: '1 Samuel 16:1-13', isKey: true },
+      { title: 'The Birth of Jesus', date: 'c. 4 BC', person: 'jesus', description: 'Jesus is born in Bethlehem while Mary and Joseph are there for a Roman census, fulfilling the prophecy of Micah 5:2. He is laid in a manger because there is no room at the inn, and shepherds come to worship him after an angelic announcement.', scripture: 'Luke 2:1-20', isKey: true },
+      { title: 'The Visit of the Magi', date: 'c. 4 BC', person: 'jesus', description: 'Wise men from the East follow a star to Bethlehem to find the newborn King of the Jews. They present gifts of gold, frankincense, and myrrh, then return home by another route after being warned in a dream not to report to Herod.', scripture: 'Matthew 2:1-12', isKey: false }
+    ]
+  },
+  {
+    name: 'Nazareth',
+    lat: 32.6996,
+    lng: 35.3035,
+    type: 'City',
+    period: 'NT',
+    events: 3,
+    hebrewName: 'נָצְרַת',
+    modernName: 'Nazareth, Israel',
+    description: 'A small village in the hills of lower Galilee where Jesus grew up and spent most of his life before beginning his public ministry. Though insignificant in the Old Testament period, Nazareth became forever linked with Jesus, who was known as "Jesus of Nazareth."',
+    eventDetails: [
+      { title: 'The Annunciation to Mary', date: 'c. 5 BC', person: 'mary', description: 'The angel Gabriel appears to the virgin Mary in Nazareth and announces that she will conceive and bear a son named Jesus, who will be called the Son of the Most High. Mary responds with faithful acceptance of God\'s plan.', scripture: 'Luke 1:26-38', isKey: true },
+      { title: 'Jesus Grows Up in Nazareth', date: 'c. 4 BC - AD 27', person: 'jesus', description: 'Jesus spends approximately thirty years living in Nazareth, working as a carpenter with his father Joseph. These hidden years shape the humanity of Jesus before his public ministry begins.', scripture: 'Luke 2:39-40', isKey: false },
+      { title: 'Jesus Rejected at Nazareth', date: 'c. AD 28', person: 'jesus', description: 'Jesus returns to his hometown synagogue and reads from Isaiah, declaring the Scripture fulfilled in their hearing. The people of Nazareth reject him, leading Jesus to observe that a prophet is without honor in his own country.', scripture: 'Luke 4:16-30', isKey: true }
+    ]
+  },
+  {
+    name: 'Sea of Galilee',
+    lat: 32.8231,
+    lng: 35.5831,
+    type: 'Sea/Lake',
+    period: 'NT',
+    events: 5,
+    hebrewName: 'יָם כִּנֶּרֶת',
+    modernName: 'Lake Tiberias (Kinneret), Israel',
+    description: 'A freshwater lake in northern Israel also known as the Sea of Tiberias or Lake Gennesaret, where much of Jesus\'s ministry took place. Its shores hosted the calling of the first disciples, miraculous feedings, and Jesus walking on water.',
+    eventDetails: [
+      { title: 'Calling of the First Disciples', date: 'c. AD 27', person: 'jesus', description: 'Jesus walks along the Sea of Galilee and calls Simon Peter and Andrew, then James and John, to leave their fishing nets and follow him. These fishermen become the core of Jesus\'s twelve apostles.', scripture: 'Matthew 4:18-22', isKey: true },
+      { title: 'Jesus Calms the Storm', date: 'c. AD 28', person: 'jesus', description: 'A violent storm strikes while Jesus and his disciples cross the Sea of Galilee. Jesus rebukes the wind and waves, and they become completely calm, astonishing the disciples who ask, "Who is this that even the wind and sea obey him?"', scripture: 'Mark 4:35-41', isKey: true },
+      { title: 'Feeding of the Five Thousand', date: 'c. AD 29', person: 'jesus', description: 'Jesus feeds a crowd of five thousand men (plus women and children) with only five loaves of bread and two fish near the shore of the Sea of Galilee. Twelve baskets of leftovers are collected, demonstrating God\'s abundant provision.', scripture: 'John 6:1-14', isKey: true },
+      { title: 'Jesus Walks on Water', date: 'c. AD 29', person: 'jesus', description: 'Jesus walks on the Sea of Galilee toward his disciples\' boat during a storm in the night. Peter attempts to walk on the water too but begins to sink when he takes his eyes off Jesus, who catches him and calms the wind.', scripture: 'Matthew 14:22-33', isKey: true },
+      { title: 'The Miraculous Catch of Fish', date: 'c. AD 30', person: 'peter', description: 'After his resurrection, Jesus appears to his disciples by the Sea of Galilee and instructs them to cast their nets on the right side of the boat. They catch 153 large fish, and Jesus restores Peter by asking him three times, "Do you love me?"', scripture: 'John 21:1-14', isKey: false }
+    ]
+  },
+  {
+    name: 'Capernaum',
+    lat: 32.8812,
+    lng: 35.5725,
+    type: 'City',
+    period: 'NT',
+    events: 4,
+    hebrewName: 'כְּפַר נַחוּם',
+    modernName: 'Kfar Nahum (ruins), Israel',
+    description: 'A fishing village on the northwest shore of the Sea of Galilee that served as Jesus\'s home base during his Galilean ministry. Capernaum witnessed more of Jesus\'s miracles than any other city, yet Jesus later pronounced woe upon it for its unbelief.',
+    eventDetails: [
+      { title: 'Jesus Makes Capernaum His Home', date: 'c. AD 27', person: 'jesus', description: 'After being rejected in Nazareth, Jesus moves to Capernaum, fulfilling Isaiah\'s prophecy about a great light dawning in the region of Zebulun and Naphtali. The town becomes his base of operations for ministry throughout Galilee.', scripture: 'Matthew 4:13-16', isKey: true },
+      { title: 'Healing of the Centurion\'s Servant', date: 'c. AD 28', person: 'jesus', description: 'A Roman centurion in Capernaum asks Jesus to heal his paralyzed servant. Jesus marvels at the centurion\'s faith when he says he is not worthy for Jesus to enter his house, declaring he has not found such great faith in all Israel.', scripture: 'Matthew 8:5-13', isKey: true },
+      { title: 'Healing of the Paralytic', date: 'c. AD 28', person: 'jesus', description: 'Four men lower their paralyzed friend through a hole in the roof of a crowded house in Capernaum to reach Jesus. Jesus first forgives the man\'s sins, then heals his paralysis, demonstrating his authority to do both.', scripture: 'Mark 2:1-12', isKey: false },
+      { title: 'Calling of Matthew', date: 'c. AD 28', person: 'matthew', description: 'Jesus sees Matthew (also called Levi) sitting at his tax collector\'s booth in Capernaum and calls him with the simple words "Follow me." Matthew immediately leaves everything and follows Jesus, later hosting a banquet in his honor.', scripture: 'Matthew 9:9-13', isKey: true }
+    ]
+  },
+  {
+    name: 'Jordan River',
+    lat: 31.7594,
+    lng: 35.5223,
+    type: 'River',
+    period: 'Both',
+    events: 4,
+    hebrewName: 'נְהַר הַיַּרְדֵּן',
+    modernName: 'Jordan River, Israel/Jordan',
+    description: 'The principal river of the Holy Land, flowing from the Sea of Galilee south to the Dead Sea. The Jordan served as the boundary the Israelites crossed into the Promised Land and later became the site of Jesus\'s baptism by John.',
+    eventDetails: [
+      { title: 'Israel Crosses the Jordan', date: 'c. 1406 BC', person: 'joshua', description: 'God parts the waters of the Jordan River so the Israelites can cross on dry ground into the Promised Land, with the priests carrying the Ark of the Covenant leading the way. Joshua sets up twelve memorial stones to commemorate the miraculous crossing.', scripture: 'Joshua 3:14-17', isKey: true },
+      { title: 'Naaman Healed of Leprosy', date: 'c. 850 BC', person: 'elisha', description: 'The prophet Elisha instructs Naaman, the commander of the Aramean army, to wash seven times in the Jordan River to be cured of leprosy. After initial reluctance, Naaman obeys and is completely healed, leading him to acknowledge the God of Israel.', scripture: '2 Kings 5:1-14', isKey: false },
+      { title: 'Elijah Parts the Jordan', date: 'c. 850 BC', person: 'elijah', description: 'The prophet Elijah strikes the waters of the Jordan with his cloak and they divide, allowing him and Elisha to cross on dry ground. Shortly after, Elijah is taken up to heaven in a whirlwind with a chariot of fire.', scripture: '2 Kings 2:8-11', isKey: true },
+      { title: 'Baptism of Jesus', date: 'c. AD 27', person: 'jesus', description: 'Jesus comes to the Jordan River and is baptized by John the Baptist. As he rises from the water, the heavens open, the Spirit descends like a dove, and a voice from heaven declares, "This is my beloved Son, in whom I am well pleased."', scripture: 'Matthew 3:13-17', isKey: true }
+    ]
+  },
+  {
+    name: 'Jericho',
+    lat: 31.871,
+    lng: 35.444,
+    type: 'City',
+    period: 'Both',
+    events: 4,
+    hebrewName: 'יְרִיחוֹ',
+    modernName: 'Jericho (Ariha), West Bank',
+    description: 'One of the oldest continuously inhabited cities in the world, located near the Jordan River in the Jordan Valley. Jericho is famous for its miraculous conquest by Joshua and later appears in Jesus\'s ministry as a place of healing and transformation.',
+    eventDetails: [
+      { title: 'Rahab Hides the Spies', date: 'c. 1406 BC', person: 'rahab', description: 'Rahab, a woman of Jericho, hides two Israelite spies on her roof and helps them escape over the city wall. In return, she is promised safety for herself and her family when Israel attacks the city.', scripture: 'Joshua 2:1-21', isKey: true },
+      { title: 'The Walls of Jericho Fall', date: 'c. 1406 BC', person: 'joshua', description: 'Following God\'s instructions, the Israelites march around Jericho once a day for six days, then seven times on the seventh day. When the priests blow their trumpets and the people shout, the walls collapse and the city is taken.', scripture: 'Joshua 6:1-20', isKey: true },
+      { title: 'Jesus Heals Blind Bartimaeus', date: 'c. AD 30', person: 'jesus', description: 'As Jesus leaves Jericho, a blind beggar named Bartimaeus calls out to him, "Son of David, have mercy on me!" Despite the crowd telling him to be quiet, he persists, and Jesus heals his sight, commending his faith.', scripture: 'Mark 10:46-52', isKey: true },
+      { title: 'Zacchaeus the Tax Collector', date: 'c. AD 30', person: 'jesus', description: 'Zacchaeus, a wealthy and corrupt chief tax collector in Jericho, climbs a sycamore tree to see Jesus passing through. Jesus calls him down and stays at his house, leading Zacchaeus to repent and give half his possessions to the poor.', scripture: 'Luke 19:1-10', isKey: false }
+    ]
+  },
+  {
+    name: 'Hebron',
+    lat: 31.5326,
+    lng: 35.0998,
+    type: 'City',
+    period: 'Both',
+    events: 3,
+    hebrewName: 'חֶבְרוֹן',
+    modernName: 'Hebron (Al-Khalil), West Bank',
+    description: 'One of the oldest cities in the world and the traditional burial place of the patriarchs and matriarchs at the Cave of Machpelah. Hebron served as David\'s first capital before he conquered Jerusalem and held deep significance as Abraham\'s dwelling place.',
+    eventDetails: [
+      { title: 'Abraham Settles at Hebron', date: 'c. 2000 BC', person: 'abraham', description: 'Abraham moves to Hebron and settles by the oaks of Mamre, where he builds an altar to the Lord. Hebron becomes his primary dwelling place, and it is here that God appears to him with promises about his descendants.', scripture: 'Genesis 13:18', isKey: true },
+      { title: 'Abraham Buys the Cave of Machpelah', date: 'c. 1900 BC', person: 'abraham', description: 'After Sarah\'s death, Abraham purchases the Cave of Machpelah near Hebron from Ephron the Hittite as a burial site. This becomes the tomb of Abraham, Sarah, Isaac, Rebekah, Jacob, and Leah, making it one of the most sacred sites in the biblical world.', scripture: 'Genesis 23:1-20', isKey: true },
+      { title: 'David Crowned King at Hebron', date: 'c. 1010 BC', person: 'david', description: 'After Saul\'s death, the men of Judah come to Hebron and anoint David as king over the house of Judah. David reigns from Hebron for seven and a half years before unifying all Israel and moving his capital to Jerusalem.', scripture: '2 Samuel 2:1-4', isKey: true }
+    ]
+  },
+  {
+    name: 'Beersheba',
+    lat: 31.2518,
+    lng: 34.7913,
+    type: 'City',
+    period: 'OT',
+    events: 3,
+    hebrewName: 'בְּאֵר שֶׁבַע',
+    modernName: 'Be\'er Sheva, Israel',
+    description: 'A city in the Negev desert marking the traditional southern boundary of Israel in the phrase "from Dan to Beersheba." The patriarchs Abraham, Isaac, and Jacob all lived here, and it was a place of covenant-making and divine encounters.',
+    eventDetails: [
+      { title: 'Abraham\'s Covenant with Abimelech', date: 'c. 2050 BC', person: 'abraham', description: 'Abraham and Abimelech, king of Gerar, swear a covenant at Beersheba over a dispute about a well. Abraham plants a tamarisk tree and calls on the name of the Lord, the Everlasting God. The name Beersheba means "Well of the Oath."', scripture: 'Genesis 21:22-34', isKey: true },
+      { title: 'God Appears to Isaac', date: 'c. 1900 BC', person: 'isaac', description: 'God appears to Isaac at Beersheba and reaffirms the covenant promises made to Abraham, pledging to bless him and multiply his descendants. Isaac builds an altar there and his servants dig a well.', scripture: 'Genesis 26:23-25', isKey: true },
+      { title: 'Elijah Flees to Beersheba', date: 'c. 860 BC', person: 'elijah', description: 'After his victory on Mount Carmel, Elijah flees from Queen Jezebel\'s death threat and travels to Beersheba. He leaves his servant there and continues into the wilderness, where an angel sustains him with food for his journey to Mount Horeb.', scripture: '1 Kings 19:1-8', isKey: false }
+    ]
+  },
+  {
+    name: 'Mount Carmel',
+    lat: 32.7356,
+    lng: 35.0468,
+    type: 'Mountain',
+    period: 'OT',
+    events: 2,
+    hebrewName: 'הַר הַכַּרְמֶל',
+    modernName: 'Mount Carmel, Haifa, Israel',
+    description: 'A coastal mountain range in northern Israel overlooking the Mediterranean Sea, most famous as the site of Elijah\'s dramatic confrontation with the prophets of Baal. Mount Carmel symbolizes God\'s power over false gods and the vindication of faithful prophets.',
+    eventDetails: [
+      { title: 'Elijah Defeats the Prophets of Baal', date: 'c. 860 BC', person: 'elijah', description: 'Elijah challenges 450 prophets of Baal to a contest on Mount Carmel: both sides prepare a sacrifice and call on their god to send fire. When Baal\'s prophets fail, Elijah prays and God sends fire that consumes the sacrifice, the wood, the stones, and even the water in the trench.', scripture: '1 Kings 18:20-40', isKey: true },
+      { title: 'Elijah Prays for Rain', date: 'c. 860 BC', person: 'elijah', description: 'After defeating the prophets of Baal, Elijah climbs to the top of Mount Carmel and prays for rain to end the three-and-a-half-year drought. His servant looks toward the sea seven times until a small cloud appears, and soon a great rainstorm comes.', scripture: '1 Kings 18:41-46', isKey: false }
+    ]
+  },
+  {
+    name: 'Samaria',
+    lat: 32.2747,
+    lng: 35.1904,
+    type: 'City',
+    period: 'Both',
+    events: 4,
+    hebrewName: 'שׁוֹמְרוֹן',
+    modernName: 'Sebastia (ruins), West Bank',
+    description: 'The capital of the northern kingdom of Israel, built by King Omri and later associated with idolatry under Ahab and Jezebel. In the New Testament era, Samaria became a region where Jesus broke social barriers by ministering to Samaritans.',
+    eventDetails: [
+      { title: 'Ahab and Jezebel\'s Reign', date: 'c. 874 BC', person: 'ahab', description: 'King Ahab rules the northern kingdom from Samaria and, under the influence of his wife Jezebel, introduces widespread Baal worship throughout Israel. Their reign represents one of the darkest spiritual periods in Israel\'s history.', scripture: '1 Kings 16:29-33', isKey: true },
+      { title: 'Elisha and the Siege of Samaria', date: 'c. 850 BC', person: 'elisha', description: 'During a severe famine caused by the Aramean siege of Samaria, Elisha prophesies that food will be abundant by the next day. God causes the Aramean army to flee in panic, and the prophecy is fulfilled when the Israelites plunder the abandoned camp.', scripture: '2 Kings 6:24-7:20', isKey: false },
+      { title: 'Jesus and the Samaritan Woman', date: 'c. AD 28', person: 'jesus', description: 'Jesus stops at Jacob\'s well near the Samaritan town of Sychar and asks a Samaritan woman for water, breaking social taboos. Their conversation about living water leads to her faith, and many Samaritans from the town believe in Jesus.', scripture: 'John 4:1-42', isKey: true },
+      { title: 'Philip Preaches in Samaria', date: 'c. AD 35', person: 'philip-apostle', description: 'After Stephen\'s martyrdom scatters the Jerusalem church, Philip goes to Samaria and preaches the gospel with signs and wonders. Many Samaritans believe and are baptized, and the apostles Peter and John come from Jerusalem to lay hands on the new believers.', scripture: 'Acts 8:4-17', isKey: true }
+    ]
+  },
+  {
+    name: 'Mount Tabor',
+    lat: 32.6866,
+    lng: 35.3942,
+    type: 'Mountain',
+    period: 'Both',
+    events: 2,
+    hebrewName: 'הַר תָּבוֹר',
+    modernName: 'Mount Tabor, Israel',
+    description: 'A prominent dome-shaped mountain in the Jezreel Valley of lower Galilee, traditionally identified as the site of the Transfiguration of Jesus. In the Old Testament, it served as a rallying point for the Israelite army under Deborah and Barak.',
+    eventDetails: [
+      { title: 'Deborah and Barak\'s Victory', date: 'c. 1200 BC', person: 'deborah', description: 'The judge Deborah commands Barak to gather ten thousand men at Mount Tabor to fight Sisera, the commander of the Canaanite army. God sends a storm that floods the Kishon River, disabling Sisera\'s iron chariots and giving Israel a decisive victory.', scripture: 'Judges 4:6-16', isKey: true },
+      { title: 'The Transfiguration of Jesus', date: 'c. AD 29', person: 'jesus', description: 'Jesus takes Peter, James, and John up a high mountain (traditionally Mount Tabor) where his appearance is transformed, his face shining like the sun and his clothes becoming dazzling white. Moses and Elijah appear, and a voice from heaven declares Jesus as God\'s beloved Son.', scripture: 'Matthew 17:1-8', isKey: true }
+    ]
+  },
+  {
+    name: 'Garden of Gethsemane',
+    lat: 31.7792,
+    lng: 35.2397,
+    type: 'Garden',
+    period: 'NT',
+    events: 2,
+    hebrewName: 'גַּת שְׁמָנִים',
+    modernName: 'Church of All Nations garden, Jerusalem, Israel',
+    description: 'An olive grove at the foot of the Mount of Olives in Jerusalem where Jesus went to pray on the night before his crucifixion. The name means "oil press," and the garden witnessed Jesus\'s deepest agony and his arrest by the temple guards.',
+    eventDetails: [
+      { title: 'Jesus Prays in Agony', date: 'c. AD 30', person: 'jesus', description: 'After the Last Supper, Jesus withdraws to Gethsemane with his disciples and prays in deep anguish, asking the Father to remove the cup of suffering if possible, yet submitting to God\'s will. His sweat falls like drops of blood as an angel strengthens him.', scripture: 'Luke 22:39-46', isKey: true },
+      { title: 'The Arrest of Jesus', date: 'c. AD 30', person: 'judas-iscariot', description: 'Judas Iscariot arrives at Gethsemane with a crowd armed with swords and clubs, betraying Jesus with a kiss. Peter draws a sword and cuts off the ear of the high priest\'s servant, but Jesus heals the wound and surrenders willingly.', scripture: 'Matthew 26:47-56', isKey: true }
+    ]
+  },
+  {
+    name: 'Mount Sinai',
+    lat: 28.5396,
+    lng: 33.9757,
+    type: 'Mountain',
+    period: 'OT',
+    events: 4,
+    hebrewName: 'הַר סִינַי',
+    modernName: 'Jebel Musa, Sinai Peninsula, Egypt',
+    description: 'The sacred mountain where God revealed himself to Moses and gave the Ten Commandments and the Law to Israel. Also known as Mount Horeb, it is the site of the most dramatic divine-human encounter in the Old Testament, with thunder, lightning, and the voice of God.',
+    eventDetails: [
+      { title: 'The Burning Bush', date: 'c. 1446 BC', person: 'moses', description: 'While tending his father-in-law Jethro\'s flock near Mount Sinai, Moses encounters a bush that burns without being consumed. God speaks from the bush, revealing his name as "I AM WHO I AM" and commissioning Moses to lead Israel out of Egypt.', scripture: 'Exodus 3:1-15', isKey: true },
+      { title: 'God Gives the Ten Commandments', date: 'c. 1446 BC', person: 'moses', description: 'Three months after leaving Egypt, Israel camps at the base of Mount Sinai as God descends in fire and smoke. Moses ascends the mountain and receives the Ten Commandments inscribed on stone tablets, establishing the covenant between God and Israel.', scripture: 'Exodus 19:16-20:17', isKey: true },
+      { title: 'The Golden Calf', date: 'c. 1446 BC', person: 'aaron', description: 'While Moses is on Mount Sinai for forty days, the Israelites grow impatient and pressure Aaron to make a golden calf idol. God\'s anger burns against the people, and Moses breaks the stone tablets upon seeing the calf, then intercedes for Israel\'s forgiveness.', scripture: 'Exodus 32:1-20', isKey: true },
+      { title: 'Elijah at Mount Horeb', date: 'c. 860 BC', person: 'elijah', description: 'Fleeing from Jezebel, Elijah travels forty days to Mount Horeb (Sinai) and hides in a cave. God passes by — not in the wind, earthquake, or fire, but in a still small voice — and recommissions Elijah for his remaining prophetic work.', scripture: '1 Kings 19:9-18', isKey: true }
+    ]
+  },
+  {
+    name: 'Shiloh',
+    lat: 32.0553,
+    lng: 35.2886,
+    type: 'City',
+    period: 'OT',
+    events: 3,
+    hebrewName: 'שִׁילוֹ',
+    modernName: 'Khirbet Seilun (ruins), West Bank',
+    description: 'The first permanent site of the Tabernacle after the Israelites entered Canaan, serving as Israel\'s religious center for over 300 years before the Temple was built in Jerusalem. Shiloh held the Ark of the Covenant and was the place where the land was divided among the tribes.',
+    eventDetails: [
+      { title: 'The Tabernacle Established at Shiloh', date: 'c. 1400 BC', person: 'joshua', description: 'After the conquest of Canaan, Joshua sets up the Tabernacle at Shiloh and divides the remaining land among the seven tribes that had not yet received their inheritance. Shiloh becomes the central place of worship for all Israel.', scripture: 'Joshua 18:1-10', isKey: true },
+      { title: 'Hannah\'s Prayer for a Son', date: 'c. 1100 BC', person: 'hannah', description: 'Hannah, barren and deeply distressed, goes to the Tabernacle at Shiloh and pours out her heart to God in prayer, vowing to dedicate her son to the Lord\'s service. God answers her prayer, and she gives birth to Samuel, the last judge and a great prophet.', scripture: '1 Samuel 1:9-20', isKey: true },
+      { title: 'God Calls Young Samuel', date: 'c. 1080 BC', person: 'samuel', description: 'The boy Samuel, serving in the Tabernacle at Shiloh under the priest Eli, hears God calling his name in the night. After Eli helps him recognize the voice, Samuel receives his first prophetic message — a judgment against Eli\'s house for the sins of his sons.', scripture: '1 Samuel 3:1-21', isKey: true }
+    ]
+  },
+  {
+    name: 'Masada',
+    lat: 31.3156,
+    lng: 35.3536,
+    type: 'Fortress',
+    period: 'Both',
+    events: 3,
+    hebrewName: 'מְצָדָה',
+    modernName: 'Masada National Park, Israel',
+    description: 'A dramatic flat-topped mountain fortress overlooking the Dead Sea, fortified by Herod the Great as a refuge palace. Masada is best known for the last stand of Jewish rebels against Rome in AD 73, though it also connects to David\'s time as a wilderness refuge.',
+    eventDetails: [
+      { title: 'David Hides in the Wilderness', date: 'c. 1015 BC', person: 'david', description: 'While fleeing from King Saul, David takes refuge in the strongholds of the Judean wilderness near the Dead Sea, an area that includes Masada. These wilderness years forge David\'s character and produce many of the psalms of lament and trust in God.', scripture: '1 Samuel 23:14', isKey: false },
+      { title: 'Herod Fortifies Masada', date: 'c. 37 BC', person: 'jesus', description: 'King Herod the Great builds an elaborate fortress-palace complex atop Masada, complete with storerooms, cisterns, a bathhouse, and two palaces. The fortification serves as his refuge against both domestic enemies and the threat of Cleopatra of Egypt.', scripture: 'Historical (Josephus, Wars 7)', isKey: true },
+      { title: 'The Last Stand at Masada', date: 'AD 73', person: 'jesus', description: 'After the fall of Jerusalem in AD 70, nearly a thousand Jewish zealots hold out at Masada for three years against the Roman Tenth Legion. When the Romans finally breach the walls, the defenders choose death over slavery, making Masada an enduring symbol of resistance.', scripture: 'Historical (Josephus, Wars 7.8-9)', isKey: true }
+    ]
+  },
+  {
+    name: 'Bethany',
+    lat: 31.7688,
+    lng: 35.2556,
+    type: 'City',
+    period: 'NT',
+    events: 3,
+    hebrewName: 'בֵּית עַנְיָה',
+    modernName: 'Al-Eizariya, West Bank',
+    description: 'A small village on the eastern slope of the Mount of Olives, about two miles from Jerusalem, home to Jesus\'s close friends Mary, Martha, and Lazarus. Bethany served as a place of rest and friendship during Jesus\'s final visits to Jerusalem.',
+    eventDetails: [
+      { title: 'The Raising of Lazarus', date: 'c. AD 30', person: 'lazarus', description: 'Jesus arrives in Bethany four days after his friend Lazarus has died and been buried. Standing before the tomb, Jesus commands "Lazarus, come forth!" and the dead man walks out, still wrapped in burial cloths. This miracle strengthens the faith of many but also intensifies the plot to kill Jesus.', scripture: 'John 11:1-44', isKey: true },
+      { title: 'Mary Anoints Jesus', date: 'c. AD 30', person: 'jesus', description: 'At a dinner in Bethany, Mary breaks open an alabaster jar of expensive perfume and anoints Jesus\'s feet, wiping them with her hair. Though Judas objects to the cost, Jesus defends her, saying she has done this in preparation for his burial.', scripture: 'John 12:1-8', isKey: true },
+      { title: 'The Ascension of Jesus', date: 'c. AD 30', person: 'jesus', description: 'Jesus leads his disciples out to the vicinity of Bethany, blesses them, and is taken up into heaven before their eyes. Two angels appear and promise that Jesus will return in the same way they have seen him go.', scripture: 'Luke 24:50-53', isKey: true }
+    ]
+  },
+  {
+    name: 'Caesarea Philippi',
+    lat: 33.2484,
+    lng: 35.6936,
+    type: 'City',
+    period: 'NT',
+    events: 1,
+    hebrewName: 'קֵיסָרְיָה שֶׁל פִילִיפּוֹס',
+    modernName: 'Banias Nature Reserve, Golan Heights, Israel',
+    description: 'A city at the base of Mount Hermon near one of the sources of the Jordan River, originally a center of pagan worship with a grotto dedicated to the god Pan. Jesus chose this dramatic setting of pagan temples to ask the pivotal question about his identity.',
+    eventDetails: [
+      { title: 'Peter\'s Confession of Christ', date: 'c. AD 29', person: 'peter', description: 'At Caesarea Philippi, Jesus asks his disciples, "Who do you say I am?" Peter answers, "You are the Christ, the Son of the living God." Jesus blesses Peter and declares that on this rock he will build his church, and the gates of hell will not prevail against it.', scripture: 'Matthew 16:13-20', isKey: true }
+    ]
+  },
+  {
+    name: 'En Gedi',
+    lat: 31.4533,
+    lng: 35.3894,
+    type: 'City',
+    period: 'OT',
+    events: 1,
+    hebrewName: 'עֵין גֶּדִי',
+    modernName: 'Ein Gedi Nature Reserve, Israel',
+    description: 'A lush oasis with freshwater springs and waterfalls on the western shore of the Dead Sea, surrounded by barren desert cliffs. En Gedi provided refuge for David when he fled from King Saul and is celebrated in the Song of Solomon for its beauty.',
+    eventDetails: [
+      { title: 'David Spares Saul\'s Life', date: 'c. 1015 BC', person: 'david', description: 'While hiding in the caves of En Gedi, David discovers King Saul has entered the very cave where he is hiding. Instead of killing his pursuer, David secretly cuts off a corner of Saul\'s robe, demonstrating his refusal to harm the Lord\'s anointed and his trust in God\'s timing.', scripture: '1 Samuel 24:1-22', isKey: true }
+    ]
+  },
+  {
+    name: 'Road to Emmaus',
+    lat: 31.8389,
+    lng: 35.0153,
+    type: 'Region',
+    period: 'NT',
+    events: 1,
+    hebrewName: 'דֶּרֶךְ עֶמָּאוּס',
+    modernName: 'Near Abu Ghosh or Emmaus Nicopolis, Israel (disputed)',
+    description: 'The road from Jerusalem to the village of Emmaus, about seven miles west, where two disciples encountered the risen Jesus on the day of his resurrection. The exact location of ancient Emmaus remains debated among scholars.',
+    eventDetails: [
+      { title: 'Jesus Appears on the Road to Emmaus', date: 'c. AD 30', person: 'jesus', description: 'On the day of his resurrection, Jesus joins two disciples walking from Jerusalem to Emmaus, but they do not recognize him. He explains how all the Scriptures point to the Messiah, and their eyes are finally opened when he breaks bread with them at supper.', scripture: 'Luke 24:13-35', isKey: true }
+    ]
+  }
 ];
