@@ -78,7 +78,7 @@ export function renderPerson(container, id) {
         <div class="how-saw-god">
           <h3><i class="ri-eye-line"></i> ${t('howSawGod').replace('{name}', displayName)}</h3>
           <div class="saw-god-content">
-            ${(person.lessons || []).map((l, i) => {
+            ${lessonsData.map((l, i) => {
               const text = typeof l === 'string' ? l : l.text;
               const icons = ['ri-number-1', 'ri-number-2', 'ri-number-3'];
               return `<div class="saw-god-item"><i class="${icons[i] || 'ri-checkbox-circle-line'}"></i><p>${text}</p></div>`;
@@ -91,7 +91,7 @@ export function renderPerson(container, id) {
         ${timelineHtml}
         <div class="scripture-links">
           <h4>${t('scriptureLinks') || 'Scripture Links'}</h4>
-          ${(person.keyScriptures || []).map(s => `<a href="#" class="scripture-link"><i class="ri-links-line"></i> ${s.reference || s.ref}</a>`).join('')}
+          ${scripturesData.map(s => `<a href="#" class="scripture-link"><i class="ri-links-line"></i> ${s.reference || s.ref}</a>`).join('')}
         </div>
       </div>
     </div>
