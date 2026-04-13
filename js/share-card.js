@@ -5,23 +5,27 @@ const SITE_URL = 'outsmartchad.github.io/bible-people';
 
 function drawQRCode(ctx, x, y, size, personId) {
   const url = `https://${SITE_URL}/#/person/${personId}`;
-  // qrcode-generator loaded via CDN as global `qrcode`
   const qr = qrcode(0, 'L');
   qr.addData(url);
   qr.make();
 
   const moduleCount = qr.getModuleCount();
-  const cellSize = size / moduleCount;
+  // Use integer cell size to avoid sub-pixel blurring
+  const cellSize = Math.floor(size / moduleCount);
+  const actualSize = cellSize * moduleCount;
+  const padding = 8;
 
-  // White background with padding
+  // White background with quiet zone (QR spec requires it)
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(x - 4, y - 4, size + 8, size + 8);
+  ctx.fillRect(x - padding, y - padding, actualSize + padding * 2, actualSize + padding * 2);
 
-  // Draw QR modules
+  // Draw QR modules with crisp integer coordinates
   for (let row = 0; row < moduleCount; row++) {
     for (let col = 0; col < moduleCount; col++) {
-      ctx.fillStyle = qr.isDark(row, col) ? '#2D2118' : '#ffffff';
-      ctx.fillRect(x + col * cellSize, y + row * cellSize, cellSize + 0.5, cellSize + 0.5);
+      if (qr.isDark(row, col)) {
+        ctx.fillStyle = '#2D2118';
+        ctx.fillRect(x + col * cellSize, y + row * cellSize, cellSize, cellSize);
+      }
     }
   }
 }
@@ -137,22 +141,22 @@ export async function generateShareCard(person, displayName, scripture, imgUrl) 
   }
 
   // QR code (bottom right) — links to this person's page
-  drawQRCode(ctx, 860, 860, 140, person.id);
+  drawQRCode(ctx, 810, 800, 220, person.id);
 
   // URL text
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '20px "Lato", sans-serif';
   ctx.textAlign = 'left';
-  ctx.fillText(SITE_URL, 80, 940);
+  ctx.fillText(SITE_URL, 80, 900);
 
   // Branded footer
   ctx.fillStyle = '#f0d080';
   ctx.font = 'bold 28px "Crimson Text", Georgia, serif';
   ctx.textAlign = 'left';
-  ctx.fillText('Bible People', 80, 990);
+  ctx.fillText('Bible People', 80, 960);
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '16px "Lato", sans-serif';
-  ctx.fillText('Stories, Lives & Journeys', 80, 1016);
+  ctx.fillText('Stories, Lives & Journeys', 80, 990);
 
   return canvas;
 }
