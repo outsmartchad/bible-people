@@ -1948,7 +1948,7 @@ Arriving in Jerusalem, Nehemiah surveyed the rubble by night, organized the peop
     category: 'Patriarch',
     era: 'c. Creation',
     imageQuery: 'biblical Adam first man Garden of Eden lush paradise innocent noble figure classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Johann_Wenzel_Peter_-_Adam_and_Eve_in_the_earthly_paradise.jpg/400px-Johann_Wenzel_Peter_-_Adam_and_Eve_in_the_earthly_paradise.jpg',
     bio: `Adam is the first human being in the biblical narrative, created by God from the dust of the ground and given the breath of life. Placed in the Garden of Eden — a paradise of abundance and perfect communion with God — Adam was given dominion over every living creature and the joyful task of naming them. He was also given one prohibition: not to eat from the Tree of the Knowledge of Good and Evil. In his original state, Adam walked with God in unbroken fellowship, tending the garden and living without shame, pain, or death.
 
 God saw that it was not good for Adam to be alone, and so he caused a deep sleep to fall upon Adam and fashioned Eve from his rib — the first woman, his companion and equal. Together they lived in innocence until the serpent tempted Eve, and she and Adam ate the forbidden fruit. Adam's choice to disobey God — what theologians call the Fall — brought sin, suffering, and death into the world. When confronted by God, Adam blamed Eve, and Eve blamed the serpent, establishing the pattern of human deflection that has persisted ever since.
@@ -1986,7 +1986,7 @@ The consequences were devastating: expulsion from Eden, painful toil to work the
     category: 'Women of Faith',
     era: 'c. Creation',
     imageQuery: 'biblical Eve first woman Garden of Eden beautiful flowing hair gentle serene lush garden classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Eve_Spinning_%28SM_2068%29.png/400px-Eve_Spinning_%28SM_2068%29.png',
     bio: `Eve is the first woman in the biblical account, created by God from the rib of Adam to be his companion, helper, and equal. Her name means "living" or "mother of all living," and she holds the distinction of being the matriarch of the entire human race. In the Garden of Eden, Eve lived in perfect harmony with Adam and with God, enjoying the beauty and abundance of paradise without shame, fear, or death. She was not an afterthought in creation but the crowning completion of it — when God made Eve, he declared all of creation "very good."
 
 The pivotal moment of Eve's story comes when the serpent — described as the most cunning of all creatures — approached her and challenged God's command not to eat from the Tree of Knowledge. The serpent told her, "You will not certainly die. For God knows that when you eat from it your eyes will be opened, and you will be like God, knowing good and evil." Eve saw that the fruit was desirable, took it, ate it, and gave some to Adam, who was with her. Their eyes were opened, but not to glory — to shame. They hid from God, and when confronted, Eve said, "The serpent deceived me, and I ate."
@@ -2023,7 +2023,7 @@ The consequences for Eve were profound: pain in childbearing and a fractured rel
     category: 'Hero of Faith',
     era: 'c. Patriarchal Era',
     imageQuery: 'biblical Job suffering righteous man torn robes ashes mourning yet faithful classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Gerard_Seghers_-_The_Patient_Job_-_WGA21132.jpg/400px-Gerard_Seghers_-_The_Patient_Job_-_WGA21132.jpg',
     bio: `Job is one of the most enigmatic and profound figures in the Bible — a man described as "blameless and upright," who feared God and shunned evil, yet was subjected to catastrophic suffering that tested the very foundations of his faith. He was extraordinarily wealthy, with thousands of livestock, a large household, and ten children. He was the greatest man among all the people of the East. Then, in a single day, he lost everything: his livestock stolen or destroyed, his servants killed, and all ten of his children crushed when a great wind collapsed the house where they were feasting.
 
 The Book of Job reveals that this suffering originated from a conversation between God and Satan. Satan argued that Job only feared God because of his blessings — remove them, and Job would curse God to his face. God permitted Satan to test Job, stripping away his wealth, his children, and finally his health, covering him with painful sores from head to foot. Job sat in ashes, scraping his wounds with a broken piece of pottery, while his wife urged him to curse God and die, and his three friends insisted his suffering must be punishment for hidden sin. Through it all, Job refused to curse God, though he raged, questioned, and demanded an audience with the Almighty.
@@ -2061,7 +2061,7 @@ God's answer came not as an explanation but as a revelation — four chapters of
     category: 'Judge',
     era: 'c. 1191–1151 BC',
     imageQuery: 'biblical Gideon judge of Israel torch pitcher trumpet night battle Midianites 300 warriors classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/The_pictorial_Bible_and_commentator-_presenting_the_great_truths_of_God%27s_word_in_the_most_simple%2C_pleasing%2C_affectionate%2C_and_instructive_manner_%281878%29_%2814577665277%29.jpg/400px-The_pictorial_Bible_and_commentator-_presenting_the_great_truths_of_God%27s_word_in_the_most_simple%2C_pleasing%2C_affectionate%2C_and_instructive_manner_%281878%29_%2814577665277%29.jpg',
     bio: `Gideon is one of the most memorable judges of Israel — a reluctant hero who went from threshing wheat in a winepress to hide from Midianite raiders to leading one of the most dramatic military victories in biblical history. When the angel of the LORD appeared to him and said, "The LORD is with you, mighty warrior," Gideon's response was anything but confident: "If the LORD is with us, why has all this happened to us?" Israel had been oppressed by the Midianites for seven years, their crops destroyed and their people driven into mountain caves.
 
 God called Gideon to deliver Israel, but Gideon needed convincing. He asked for a sign — a fleece left on the threshing floor overnight. When the fleece was wet with dew but the ground dry, Gideon asked for the reverse. God patiently obliged both times. Then, in a move that defied all military logic, God told Gideon to reduce his army from 32,000 to just 300 men — so that Israel would know the victory came from God, not from human strength. The method of selection was memorably strange: only those who lapped water like dogs were kept.
@@ -2098,7 +2098,7 @@ Armed with nothing but trumpets, empty jars, and torches, Gideon's 300 men surro
     category: 'Judge',
     era: 'c. 1118–1078 BC',
     imageQuery: 'biblical Samson muscular long hair powerful breaking pillars Philistine temple classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Simson_en_Delila_Rijksmuseum_SK-A-1627.jpeg/400px-Simson_en_Delila_Rijksmuseum_SK-A-1627.jpeg',
     bio: `Samson is the most dramatic and tragic of Israel's judges — a man of supernatural strength and devastating weakness. His birth was announced by the angel of the LORD to his barren mother, with the instruction that he was to be a Nazirite from the womb: no razor would touch his head, no wine would pass his lips, and he would begin the deliverance of Israel from the Philistines. From his youth, the Spirit of the LORD would come upon Samson with overwhelming power — he killed a lion with his bare hands, struck down thirty Philistines at Ashkelon, and caught three hundred foxes to burn the Philistine grain fields.
 
 Yet Samson's strength was matched by his weakness for Philistine women. His first marriage to a woman of Timnah ended in betrayal and tragedy. He then visited a prostitute in Gaza and tore the city gates from their hinges. Finally, he fell in love with Delilah, who was bribed by the Philistine lords to discover the secret of his strength. Three times Samson lied to her; the fourth time, worn down by her relentless nagging, he told her the truth — his strength lay in his uncut hair, the sign of his Nazirite vow. While he slept, Delilah had his hair shaved, and the Spirit of the LORD departed from him. The Philistines seized him, gouged out his eyes, and set him to grinding grain in prison.
@@ -2135,7 +2135,7 @@ But Samson's story does not end in defeat. His hair began to grow back, and at a
     category: 'Prophet',
     era: 'c. 622–570 BC',
     imageQuery: 'biblical Ezekiel prophet visions valley of dry bones wheels within wheels divine glory classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Michelangelo_-_Prophet_Ezekiel.jpg/400px-Michelangelo_-_Prophet_Ezekiel.jpg',
     bio: `Ezekiel was a priest turned prophet, called by God during one of the darkest chapters in Israel's history — the Babylonian exile. Taken captive to Babylon along with King Jehoiachin in 597 BC, Ezekiel received his prophetic commission five years later beside the Kebar River, in a vision of staggering majesty: four living creatures, wheels within wheels covered with eyes, and above them the likeness of the glory of the LORD on a sapphire throne. This opening vision set the tone for one of the most visually dramatic books in the Bible.
 
 Ezekiel's ministry was unlike any other prophet's. God required him to perform bizarre symbolic acts — lying on his side for 390 days to bear Israel's sin, cooking food over dung, shaving his head and dividing the hair into thirds to represent Jerusalem's fate. He prophesied against Israel's idolatry, corrupt leaders, and false prophets with unflinching severity. His most devastating message was the departure of God's glory from the temple — Ezekiel watched as the shekinah glory rose from the cherubim, paused at the threshold, moved to the east gate, and finally left the city entirely. For a priest, this was the ultimate horror.
@@ -2172,7 +2172,7 @@ Yet Ezekiel is also the prophet of resurrection and restoration. His vision of t
     category: 'Patriarch',
     era: 'c. 1440–1370 BC',
     imageQuery: 'biblical Caleb faithful spy elderly warrior strong confident grapes of Canaan promised land classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Bible_primer%2C_Old_Testament%2C_for_use_in_the_primary_department_of_Sunday_schools_%281919%29_%2814595374530%29.jpg/400px-Bible_primer%2C_Old_Testament%2C_for_use_in_the_primary_department_of_Sunday_schools_%281919%29_%2814595374530%29.jpg',
     bio: `Caleb son of Jephunneh stands as one of the Old Testament's greatest examples of unwavering faith and lifelong courage. He first appears in the narrative when Moses sent twelve spies into Canaan to scout the Promised Land. Ten of the spies returned terrified, reporting that the land was filled with giants and fortified cities — "We seemed like grasshoppers in our own eyes." But Caleb, together with Joshua, brought a different report: "We should go up and take possession of the land, for we can certainly do it." He silenced the fearful people and urged immediate action, trusting in God's promise rather than the apparent odds.
 
 The people chose fear over faith, and God's judgment fell: the entire generation that had left Egypt would die in the wilderness without entering the Promised Land. Only two men from that generation were spared — Joshua and Caleb — because they had "followed the LORD wholeheartedly." For forty years Caleb wandered in the desert alongside the doubters, watching an entire generation perish, waiting patiently for the promise he had claimed decades earlier. He did not grow bitter, did not question God's timing, and did not lose his edge.
@@ -2209,7 +2209,7 @@ At the age of eighty-five, when the conquest of Canaan was underway, Caleb appro
     category: 'Antagonist',
     era: 'c. After Creation',
     imageQuery: 'biblical Cain dark brooding face jealousy anger offering rejected field dark atmosphere classical sacred art dramatic lighting portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Blake_Cain_Fleeing_from_the_Wrath_of_God_%28The_Body_of_Abel_Found_by_Adam_and_Eve%29_c1805-1809.jpg/400px-Blake_Cain_Fleeing_from_the_Wrath_of_God_%28The_Body_of_Abel_Found_by_Adam_and_Eve%29_c1805-1809.jpg',
     bio: `Cain, the firstborn son of Adam and Eve, holds the tragic distinction of being the first murderer in human history. His name possibly means "acquired" — Eve said at his birth, "With the help of the LORD I have brought forth a man." Cain became a farmer, working the soil, while his younger brother Abel became a shepherd. Both brought offerings to the LORD: Abel brought fat portions from the firstborn of his flock, while Cain brought some of the fruits of the soil. God looked with favor on Abel and his offering, but not on Cain and his. The text does not specify exactly why, but the New Testament suggests that Abel offered in faith while Cain did not.
 
 Cain's response to rejection was not repentance but rage. God warned him directly: "Why are you angry? If you do what is right, will you not be accepted? But if you do not do what is right, sin is crouching at your door; it desires to have you, but you must rule over it." This is one of the most remarkable passages in Genesis — God himself counseling the first sinner's son about the nature of temptation. Cain ignored the warning. He invited Abel into the field and murdered him. When God asked, "Where is your brother Abel?" Cain gave the infamous reply: "Am I my brother's keeper?"
@@ -2246,7 +2246,7 @@ God's punishment was severe but merciful: Cain was cursed from the ground, conde
     category: 'Patriarch',
     era: 'c. After Creation',
     imageQuery: 'biblical Abel shepherd young innocent faithful offering lamb to God gentle peaceful classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Cain_and_Abel.jpg/400px-Cain_and_Abel.jpg',
     bio: `Abel, the second son of Adam and Eve, is remembered as the first person in Scripture to offer an acceptable sacrifice to God — and the first to die for righteousness. His name means "breath" or "vapor," a poignant foreshadowing of a life cut tragically short. While his older brother Cain tilled the soil, Abel kept flocks, and when the time came to bring offerings to the LORD, Abel brought fat portions from the firstborn of his flock — the best of what he had. God looked with favor on Abel and his offering, a detail the New Testament attributes to Abel's faith.
 
 The biblical text is sparse about Abel's character, but what is said carries enormous weight. Hebrews 11:4 declares, "By faith Abel brought God a better offering than Cain did. By faith he was commended as righteous, when God spoke well of his offerings." Jesus himself called Abel "righteous Abel" in Matthew 23:35, and 1 John 3:12 explains that Cain murdered his brother "because his own actions were evil and his brother's were righteous." Abel's offering was not merely better in quality — it reflected a heart oriented toward God in genuine worship and trust.
@@ -2283,7 +2283,7 @@ Abel's murder at the hands of his brother makes him the Bible's first martyr —
     category: 'Patriarch',
     era: 'c. 2000–1900 BC',
     imageQuery: 'biblical Lot fleeing Sodom fire brimstone destruction behind him angels guiding escape classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Benjamin_West_-_Lot_Fleeing_from_Sodom_-_70.831_-_Detroit_Institute_of_Arts.jpg/400px-Benjamin_West_-_Lot_Fleeing_from_Sodom_-_70.831_-_Detroit_Institute_of_Arts.jpg',
     bio: `Lot was the nephew of Abraham, the son of Abraham's deceased brother Haran. He traveled with Abraham from Ur of the Chaldeans to Canaan and then to Egypt, accumulating significant wealth in flocks, herds, and tents. When the land could no longer support both their households, Abraham generously offered Lot first choice of territory. Lot made a fateful decision: he looked toward the well-watered Jordan plain and "pitched his tents near Sodom" — a city already notorious for its wickedness. What began as proximity became residence, and eventually Lot was sitting in Sodom's gate, a sign of civic involvement and belonging.
 
 Lot's story illustrates the slow gravitational pull of compromise. He chose Sodom for its prosperity but found himself trapped in its depravity. When two angels came to investigate the city, Lot offered them hospitality, but the men of Sodom surrounded his house demanding to assault them. Lot's offer of his own daughters to the mob — a disturbing detail the text does not soften — reveals how deeply Sodom's values had corrupted his moral compass. The angels struck the mob with blindness and told Lot to gather his family and flee, for God was about to destroy the city.
@@ -2320,7 +2320,7 @@ Even then, Lot hesitated. The angels had to physically grasp his hand and drag h
     category: 'Women of Faith',
     era: 'c. 1900–1800 BC',
     imageQuery: 'biblical Rebekah beautiful woman water well veil camels desert Abraham servant classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Harold_Copping_-_Rebekah_at_the_well_-_%28MeisterDrucke-50130%29.jpg/400px-Harold_Copping_-_Rebekah_at_the_well_-_%28MeisterDrucke-50130%29.jpg',
     bio: `Rebekah is one of the great matriarchs of Israel — a woman of beauty, generosity, faith, and ultimately cunning deception. Her story begins with one of the most charming narratives in Genesis: Abraham sent his servant to find a wife for Isaac from among his relatives in Mesopotamia. The servant prayed for a specific sign — that the right woman would offer water not only to him but to his ten camels as well. Before he had finished praying, Rebekah appeared at the well, beautiful and unmarried, and did exactly that — drawing water for a stranger and his entire caravan. Her extraordinary hospitality confirmed her as God's chosen bride for Isaac.
 
 Rebekah left her family with remarkable decisiveness. When asked if she was willing to go immediately, she replied simply, "I will go." She traveled hundreds of miles to marry a man she had never met, and when she first saw Isaac walking in the field, she veiled herself as a sign of respect. Isaac loved her, and she became his comfort after his mother Sarah's death. But Rebekah was barren for twenty years. Isaac prayed, and God answered — Rebekah conceived twins who struggled within her. God told her, "Two nations are in your womb; the older will serve the younger."
@@ -2357,7 +2357,7 @@ This prophecy became the lens through which Rebekah interpreted everything. She 
     category: 'Women of Faith',
     era: 'c. 1800–1750 BC',
     imageQuery: 'biblical Rachel beautiful shepherdess Jacob beloved wife gentle face pastoral sheep classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Laban_and_Rachel_-_Jean-Baptiste-Henri_Deshays_de_Colleville.jpg/400px-Laban_and_Rachel_-_Jean-Baptiste-Henri_Deshays_de_Colleville.jpg',
     bio: `Rachel is one of the most beloved figures in the Hebrew Bible — beautiful, deeply loved, and yet marked by years of longing, rivalry, and sorrow. Jacob first saw her at a well in Paddan Aram, where she came to water her father Laban's sheep. It was love at first sight. Jacob, who had fled from his brother Esau's wrath, offered to work seven years for Rachel's hand in marriage, and the text says those years "seemed like only a few days to him because of his love for her." But on the wedding night, Laban substituted his older daughter Leah under the veil — a stunning deception that forced Jacob to work another seven years for Rachel.
 
 Rachel's married life was defined by an agonizing paradox: she had her husband's love but not his children. While Leah bore son after son, Rachel remained barren. Her anguish poured out in a desperate cry to Jacob: "Give me children, or I'll die!" She gave her servant Bilhah to Jacob as a surrogate — a cultural practice of the time — and Bilhah bore Dan and Naphtali. The rivalry between Rachel and Leah was intense and deeply personal, each sister longing for what the other possessed. Finally, "God remembered Rachel" and she conceived, bearing Joseph — who would become the savior of his family in Egypt.
@@ -2394,7 +2394,7 @@ Rachel's death is one of the most poignant scenes in Genesis. While traveling to
     category: 'Women of Faith',
     era: 'c. 1800–1750 BC',
     imageQuery: 'biblical Leah tender eyes modest veil gentle sorrowful yet faithful mother of many sons classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/052.3_402_Rachel_et_Lia_%28Genesis_29_16%29_%E2%80%A2_invenit_James_Tissot_%E2%80%A2_pinxit_James_Tissot_%E2%80%A2_excudit_Maurice_de_Brunoff_apud_Philip_de_Vere_%E2%80%A2_praesentat_Phillip_Medhurst.jpg/400px-052.3_402_Rachel_et_Lia_%28Genesis_29_16%29_%E2%80%A2_invenit_James_Tissot_%E2%80%A2_pinxit_James_Tissot_%E2%80%A2_excudit_Maurice_de_Brunoff_apud_Philip_de_Vere_%E2%80%A2_praesentat_Phillip_Medhurst.jpg',
     bio: `Leah, the older daughter of Laban, is one of the most sympathetic and overlooked figures in the patriarchal narratives. The Bible describes her with a single devastating detail: "Leah had weak eyes, but Rachel was lovely in form, and beautiful." From the beginning, Leah lived in the shadow of her younger sister. Her father used her as a pawn, substituting her for Rachel on what should have been Rachel's wedding night — a deception that gave Leah a husband who did not want her. The morning-after scene is heartbreaking in its brevity: "When morning came, there was Leah!"
 
 Leah's marriage was defined by unrequited love. "The LORD saw that Leah was not loved," the text says plainly, and he opened her womb while Rachel remained barren. Leah named her sons with desperate hope — Reuben ("See, a son!") because "the LORD has seen my misery. Surely my husband will love me now." Simeon, because "the LORD heard that I am not loved." Levi, because "Now at last my husband will become attached to me." Each name is a prayer for Jacob's affection. Finally, with Judah, something shifted: "This time I will praise the LORD." She stopped naming her sons after her longing for Jacob and instead praised God — and it was through Judah's line that both David and Jesus would come.
@@ -2431,7 +2431,7 @@ Leah bore six of Jacob's twelve sons and one daughter, Dinah — more children t
     category: 'Women of Faith',
     era: 'c. 1405–1280 BC',
     imageQuery: 'biblical Miriam prophetess tambourine dancing Red Sea celebration Moses sister joyful worship classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Miriams_Tanz.jpg/400px-Miriams_Tanz.jpg',
     bio: `Miriam, the older sister of Moses and Aaron, was a prophetess and one of the three leaders God appointed to guide Israel out of Egypt. Her story begins in one of the most dramatic scenes of the Exodus narrative: as an unnamed young girl, she watched over her baby brother's basket in the Nile reeds, and when Pharaoh's daughter discovered the infant, Miriam boldly stepped forward and offered to find a Hebrew nurse — securing her own mother, Jochebed, as Moses' caretaker. Even as a child, Miriam displayed the quick thinking and courage that would mark her entire life.
 
 Miriam's greatest moment came at the Red Sea. After God parted the waters and Israel crossed on dry ground, after the Egyptian army was swallowed by the returning tide, it was Miriam who took a tambourine and led the women of Israel in the first recorded song of victory in the Bible: "Sing to the LORD, for he is highly exalted. Both horse and driver he has hurled into the sea." This spontaneous explosion of worship established Miriam as a worship leader and prophetess — one of only a handful of women given that title in the Old Testament. The prophet Micah later confirmed her role: "I sent Moses to lead you, also Aaron and Miriam."
@@ -2468,7 +2468,7 @@ Yet Miriam's story also contains a painful chapter. In Numbers 12, she and Aaron
     category: 'Women of Faith',
     era: 'c. 1020–970 BC',
     imageQuery: 'biblical Abigail wise beautiful woman donkeys provisions bread wine bowing before David peacemaker classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Abiga%C3%ADl_aplacando_la_ira_de_David%2C_Antonio_Palomino.jpg/400px-Abiga%C3%ADl_aplacando_la_ira_de_David%2C_Antonio_Palomino.jpg',
     bio: `Abigail is described in 1 Samuel 25 as both intelligent and beautiful — a rare dual commendation in Scripture — and her story is one of the Bible's finest examples of wisdom, courage, and peacemaking under pressure. She was married to Nabal, a wealthy but surly and mean-spirited man from Carmel whose name literally means "fool." While David and his men were fugitives in the wilderness, they had protected Nabal's shepherds and flocks without payment. When David sent messengers requesting provisions during sheep-shearing season — a time of customary generosity — Nabal insulted them and refused.
 
 David's response was immediate and deadly: he strapped on his sword and marched toward Nabal's household with four hundred armed men, vowing to kill every male in Nabal's household by morning. One of Nabal's servants, recognizing the catastrophe, ran to Abigail and told her everything. Without hesitating and without telling her husband, Abigail loaded donkeys with two hundred loaves of bread, two skins of wine, five dressed sheep, roasted grain, raisin cakes, and fig cakes, and rode out to intercept David. She dismounted and bowed before him with one of the most eloquent speeches in the Old Testament — acknowledging David's righteous cause, taking responsibility for the situation, and appealing to his future kingship as reason to avoid bloodshed.
@@ -2505,7 +2505,7 @@ David was stunned. He praised God for sending Abigail and admitted she had kept 
     category: 'Hero of Faith',
     era: 'c. 520–460 BC',
     imageQuery: 'biblical Mordecai Jewish elder Persian royal robes sackcloth courage faith palace gate Susa classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Aert_de_Gelder_-_Esther_and_Mordecai_-_WGA8524.jpg/400px-Aert_de_Gelder_-_Esther_and_Mordecai_-_WGA8524.jpg',
     bio: `Mordecai son of Jair, from the tribe of Benjamin, is the quiet hero behind the dramatic events of the Book of Esther. A Jewish exile living in the Persian capital of Susa, he had raised his orphaned cousin Hadassah (Esther) as his own daughter. When King Xerxes (Ahasuerus) sought a new queen, Mordecai positioned Esther in the selection process while instructing her to conceal her Jewish identity. His combination of protective caution and strategic boldness would prove essential in the crisis to come.
 
 Mordecai's refusal to bow before Haman — the king's chief official — set the central conflict in motion. The text says Mordecai "would not kneel down or pay him honor," likely because Haman was an Agagite, a descendant of the Amalekite kings whom God had ordered Israel to oppose. Enraged, Haman plotted not merely to punish Mordecai but to annihilate every Jew in the Persian Empire. He cast lots (purim) to determine the date and secured a royal decree authorizing the genocide. When Mordecai learned of the edict, he tore his clothes, put on sackcloth and ashes, and wailed through the streets of Susa. His message to Esther contained one of the most famous challenges in Scripture: "Who knows but that you have come to your royal position for such a time as this?"
@@ -2542,7 +2542,7 @@ Mordecai's faith was vindicated in spectacular fashion. Esther's intervention ex
     category: 'Hero of Faith',
     era: 'c. AD 1–60',
     imageQuery: 'biblical Lazarus emerging from tomb burial wrappings grave clothes resurrection miracle Jesus weeping classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Raising-of-Lazarus.jpg/400px-Raising-of-Lazarus.jpg',
     bio: `Lazarus of Bethany is best known for the most dramatic miracle Jesus performed during his earthly ministry — being raised from the dead after four days in the tomb. He was the brother of Mary and Martha, and the Gospel of John states simply but profoundly that "Jesus loved Martha and her sister and Lazarus." Their home in Bethany, just two miles from Jerusalem, appears to have been a place of rest and friendship for Jesus — a rare sanctuary of intimate relationship amid the pressures of his public ministry.
 
 When Lazarus fell ill, his sisters sent word to Jesus: "Lord, the one you love is sick." But Jesus deliberately delayed, staying two more days before traveling to Bethany. By the time he arrived, Lazarus had been dead and entombed for four days. Martha met Jesus on the road and said, "Lord, if you had been here, my brother would not have died." Mary said the same words. Jesus, deeply moved, wept — the shortest and one of the most powerful verses in Scripture. At the tomb, Jesus ordered the stone removed. Martha protested: "By this time there is a bad odor, for he has been there four days." Jesus prayed aloud, then cried with a loud voice, "Lazarus, come out!" The dead man walked out, still wrapped in his grave clothes.
@@ -2579,7 +2579,7 @@ The raising of Lazarus became a turning point in John's Gospel. Many Jews who wi
     category: 'Hero of Faith',
     era: 'c. 10 BC – c. AD 60',
     imageQuery: 'biblical Nicodemus Pharisee night robes scholarly elder secret meeting with Jesus moonlight oil lamp classical sacred art warm golden light portrait',
-    imageUrl: '',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Henry_Ossawa_Tanner_-_Jesus_and_nicodemus.jpg/400px-Henry_Ossawa_Tanner_-_Jesus_and_nicodemus.jpg',
     bio: `Nicodemus is one of the most intriguing figures in the Gospel of John — a Pharisee, a member of the Jewish ruling council (the Sanhedrin), and a man whose journey from secret curiosity to public devotion unfolds across three carefully placed scenes. He first appears in John 3, coming to Jesus "at night" — a detail loaded with both practical caution and theological symbolism. As a ruler of the Jews, he had much to lose by associating with the controversial rabbi from Galilee. Yet he could not ignore what he had seen: "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."
 
 Jesus' response to Nicodemus produced one of the most quoted passages in all of Scripture. "Very truly I tell you, no one can see the kingdom of God unless they are born again." Nicodemus, the learned theologian, was baffled: "How can someone be born when they are old? Surely they cannot enter a second time into their mother's womb!" Jesus explained that he was speaking of spiritual rebirth — being born of water and the Spirit. The conversation culminated in John 3:16, the verse that has become the most famous summary of the Christian gospel. Nicodemus came with questions and received answers that have echoed for two thousand years.
