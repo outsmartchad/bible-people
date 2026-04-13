@@ -92,6 +92,7 @@ export function renderPerson(container, id) {
       <div class="main-content">
         <h2><i class="ri-book-open-line"></i> ${t('theStory')}</h2>
         <div class="bio-text">${bioHtml}</div>
+        ${timelineHtml ? `<div class="timeline-inline"><h2><i class="ri-time-line"></i> ${t('timeline')}</h2><div class="timeline-list">${timelineHtml}</div></div>` : ''}
         ${journeyHtml ? `<h2><i class="ri-compass-line"></i> ${t('spiritualJourney')}</h2><div class="journey-grid">${journeyHtml}</div>` : ''}
         ${lessonsHtml ? `<h2><i class="ri-heart-line"></i> ${t('learningToWalk')}</h2><div class="lessons-list">${lessonsHtml}</div>` : ''}
         ${scripturesHtml ? `<div class="scriptures-section"><h3><i class="ri-bookmark-line"></i> ${t('keyScriptures')}</h3>${scripturesHtml}</div>` : ''}
@@ -106,14 +107,6 @@ export function renderPerson(container, id) {
           </div>
         </div>
         ${questionsHtml}
-      </div>
-      <div class="timeline-sidebar">
-        <h3>${t('timeline')}</h3>
-        ${timelineHtml}
-        <div class="scripture-links">
-          <h4>${t('scriptureLinks') || 'Scripture Links'}</h4>
-          ${scripturesData.map(s => `<a href="#" class="scripture-link"><i class="ri-links-line"></i> ${s.reference || s.ref}</a>`).join('')}
-        </div>
       </div>
     </div>
     ${relatedHtml ? `<div class="related-section"><h3>${t('relatedPeople')}</h3><div class="related-grid">${relatedHtml}</div></div>` : ''}
