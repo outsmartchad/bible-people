@@ -31,6 +31,11 @@ export function tCategory(cat) {
   return t(cat) || cat;
 }
 
+export function tPersonContent(personId) {
+  const lang = LANGS[currentLang] || en;
+  return lang.personContent?.[personId] || null;
+}
+
 export function getLang() {
   return currentLang;
 }
@@ -81,4 +86,18 @@ export function updateStaticText() {
   if (copyright) copyright.textContent = t('copyright');
   const verse = document.querySelector('.footer-bottom .verse');
   if (verse) verse.textContent = t('footerVerse');
+
+  // Footer brand text
+  const brandP = document.querySelector('.footer-brand > p');
+  if (brandP) brandP.textContent = t('footerBrandDesc');
+
+  // Footer link items
+  const footerLinkItems = document.querySelectorAll('.footer-links li a');
+  const linkKeys = ['home', 'peopleGallery', 'oldTestament', 'newTestament', 'bibleMap', 'about'];
+  footerLinkItems.forEach((a, i) => {
+    if (linkKeys[i]) a.textContent = t(linkKeys[i]);
+  });
+
+  // Page title
+  document.title = t('pageTitle');
 }

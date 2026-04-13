@@ -50,14 +50,14 @@ export function renderMap(container) {
       <div id="locations-list">
         ${LOCATIONS.map((l, i) => `<div class="location-item" data-idx="${i}">
           <div class="loc-name"><i class="${TYPE_ICONS[l.type] || 'ri-map-pin-line'}" style="color:${TYPE_COLORS[l.type]};margin-right:6px"></i>${tLocation(l.name)}</div>
-          <div class="loc-meta"><span class="loc-badge ${badgeClass(l.period)}">${l.period}</span> · ${l.events} ${t('events')}</div>
+          <div class="loc-meta"><span class="loc-badge ${badgeClass(l.period)}">${t(l.period) || l.period}</span> · ${l.events} ${t('events')}</div>
         </div>`).join('')}
       </div>
     </div>
     <div class="map-area">
       <div class="map-info">
         <h3><i class="ri-map-pin-2-fill" style="color:var(--gold)"></i> ${t('biblicalIsrael')}</h3>
-        <p>Click any marker to explore events and history.</p>
+        <p>${t('mapInfoDesc')}</p>
         <p style="margin-top:4px;font-weight:600">${LOCATIONS.length} ${t('locations')} · ${totalEvents} ${t('events')}</p>
       </div>
       <div class="map-legend">

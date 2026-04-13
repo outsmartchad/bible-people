@@ -1,6 +1,8 @@
 import { PEOPLE } from '../data.js';
 import { getPersonImage, getPersonById } from '../app.js';
-import { t, tName, tSubtitle } from '../i18n/i18n.js';
+import * as i18n from '../i18n/i18n.js';
+const { t, tName, tSubtitle } = i18n;
+const tPersonContent = i18n.tPersonContent || (() => null);
 
 export function renderPerson(container, id) {
   const person = getPersonById(id);
@@ -18,21 +20,29 @@ export function renderPerson(container, id) {
   const displayName = tName(person.id) || person.name;
   const displaySubtitle = tSubtitle(person.id) || person.subtitle;
 
-  const bioHtml = person.bio.split('\n\n').map(p => `<p>${p}</p>`).join('');
+  // Use translated content if available, otherwise fall back to English data
+  const tc = tPersonContent(person.id);
+  const bio = tc?.bio || person.bio;
+  const journeyData = tc?.journeyCards || person.journeyCards || [];
+  const lessonsData = tc?.lessons || person.lessons || [];
+  const scripturesData = tc?.keyScriptures || person.keyScriptures || [];
+  const timelineData = tc?.timeline || person.timeline || [];
+
+  const bioHtml = bio.split('\n\n').map(p => `<p>${p}</p>`).join('');
   const journeyIcons = ['ri-star-line', 'ri-fire-line', 'ri-compass-line', 'ri-sun-line'];
-  const journeyHtml = (person.journeyCards || []).map((c, i) =>
+  const journeyHtml = journeyData.map((c, i) =>
     `<div class="journey-card"><i class="${c.icon || journeyIcons[i % 4]}"></i><h4>${c.title}</h4><p>${c.description || c.text || ''}</p></div>`
   ).join('');
-  const lessonsHtml = (person.lessons || []).map((l, i) => {
+  const lessonsHtml = lessonsData.map((l, i) => {
     const isString = typeof l === 'string';
-    const title = isString ? `Lesson ${i + 1}` : l.title;
+    const title = isString ? `${t('lesson')} ${i + 1}` : l.title;
     const text = isString ? l : l.text;
     return `<div class="lesson-item"><div class="lesson-num">${i + 1}</div><div class="lesson-content"><h4>${title}</h4><p>${text}</p></div></div>`;
   }).join('');
-  const scripturesHtml = (person.keyScriptures || []).map(s =>
+  const scripturesHtml = scripturesData.map(s =>
     `<div class="scripture-block"><blockquote>${s.text}</blockquote><cite>${s.reference || s.ref || ''}</cite></div>`
   ).join('');
-  const timelineHtml = (person.timeline || []).map(t =>
+  const timelineHtml = timelineData.map(t =>
     `<div class="timeline-item"><div class="timeline-date">${t.date}</div><div class="timeline-event">${t.event}</div></div>`
   ).join('');
 

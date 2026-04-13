@@ -71,5 +71,9 @@ export const en = {
   footerCite: '— Psalm 119:105',
   copyright: '© 2026 Bible People. All rights reserved.',
   footerVerse: '"In the beginning was the Word" — John 1:1',
+  pageTitle: 'Bible People — Stories, Lives & Journeys from Scripture',
+  footerBrandDesc: 'Walking with the faithful through scripture — stories of faith, courage, and redemption that have shaped the world.',
+  mapInfoDesc: 'Click any marker to explore events and history.',
+  lesson: 'Lesson',
   personNames: {}, personSubtitles: {}, locationNames: {},
 };
