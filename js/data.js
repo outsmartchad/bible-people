@@ -1778,6 +1778,7 @@ Yet Ahab was a complex figure — militarily capable and occasionally responsive
     category: 'Apostle',
     era: 'c. AD 1–80',
     imageQuery: 'biblical apostle Matthias lots casting chosen replacement Judas faithful follower classical sacred art warm golden light portrait',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Rubens_apostle_Matthias_grt.jpg/400px-Rubens_apostle_Matthias_grt.jpg',
     bio: `Matthias holds the unique distinction of being chosen to replace Judas Iscariot as the twelfth apostle. After Jesus' ascension, Peter proposed that someone who had been with Jesus from his baptism through the resurrection must fill the vacancy. Two men were nominated — Matthias and Joseph called Barsabbas. After prayer, they cast lots, and Matthias was chosen.
 
 The qualifications for Matthias reveal something important: he had been a faithful follower of Jesus throughout the entire ministry, even though the Gospels never mention him by name. He was there the whole time, serving faithfully in obscurity. After his selection, Matthias is not mentioned again in Acts, but tradition says he preached in Judea, Cappadocia, and Ethiopia and was eventually martyred.`,
@@ -1812,6 +1813,7 @@ The qualifications for Matthias reveal something important: he had been a faithf
     category: 'Apostle',
     era: 'c. AD 10–84',
     imageQuery: 'biblical Luke physician writer historian careful scholar pen scroll ox symbol classical sacred art warm golden light portrait',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Brooklyn_Museum_-_Saint_Luke_%28Saint_Luc%29_-_James_Tissot.jpg/400px-Brooklyn_Museum_-_Saint_Luke_%28Saint_Luc%29_-_James_Tissot.jpg',
     bio: `Luke, called "the beloved physician" by Paul, was a Gentile convert who wrote two of the New Testament's longest books — the Gospel of Luke and the Acts of the Apostles. Together they account for over a quarter of the New Testament. Luke was a careful historian who interviewed eyewitnesses and wrote "an orderly account" so that Theophilus could "know the certainty of the things you have been taught."
 
 Luke traveled with Paul on portions of his missionary journeys (the "we" passages in Acts) and stayed with Paul during his imprisonments. He is the only Gospel writer who records the parables of the Good Samaritan and the Prodigal Son, and his account gives special attention to women, the poor, outcasts, and the universal scope of God's salvation. He was likely Paul's last companion: "Only Luke is with me" (2 Timothy 4:11).`,
@@ -1846,6 +1848,7 @@ Luke traveled with Paul on portions of his missionary journeys (the "we" passage
     category: 'Apostle',
     era: 'c. AD 5–61',
     imageQuery: 'biblical Barnabas encouraging warm face generous Levite Cyprus missionary companion of Paul classical sacred art warm golden light portrait',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Berchem%2C_Nicolaes_Pietersz._-_Paul_and_Barnabas_at_Lystra_-_1650.jpg/400px-Berchem%2C_Nicolaes_Pietersz._-_Paul_and_Barnabas_at_Lystra_-_1650.jpg',
     bio: `Barnabas (meaning "Son of Encouragement"), born Joseph, was a Levite from Cyprus who sold a field and laid the proceeds at the apostles' feet in one of the early church's first acts of generosity. He was instrumental in vouching for the newly converted Paul when the fearful Jerusalem church refused to accept the former persecutor.
 
 Barnabas was sent to Antioch to investigate reports of Gentile conversion, and there he sought out Paul in Tarsus and brought him to help teach the growing church. Together they undertook the first missionary journey, planting churches across Cyprus and Asia Minor. They later separated over a sharp disagreement about John Mark (Barnabas' cousin) — Paul refused to take Mark, but Barnabas gave him a second chance. Tradition says that investment paid off: Mark later wrote the Gospel of Mark and was reconciled with Paul.`,
@@ -1880,6 +1883,7 @@ Barnabas was sent to Antioch to investigate reports of Gentile conversion, and t
     category: 'Apostle',
     era: 'c. AD 17–97',
     imageQuery: 'biblical Timothy young man faithful pastor gentle devoted Paul protege church leader classical sacred art warm golden light portrait',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Saint_Timothy_the_Apostle.jpg/400px-Saint_Timothy_the_Apostle.jpg',
     bio: `Timothy was a young disciple from Lystra, the son of a Jewish mother (Eunice) and a Greek father, who became Paul's most trusted protege and ministry partner. Paul called him "my true son in the faith" and wrote two personal letters to him (1 and 2 Timothy) that serve as pastoral handbooks for church leaders.
 
 Despite his youth and apparent timidity — Paul had to encourage him not to let anyone look down on his youth and to "fan into flame the gift of God" — Timothy faithfully served as Paul's representative to churches in Thessalonica, Corinth, Ephesus, and Philippi. Paul's final letter, written from a Roman prison before his execution, was addressed to Timothy, asking him to come quickly and to "preach the word; be prepared in season and out of season." Tradition says Timothy served as bishop of Ephesus and was martyred there.`,
@@ -1914,6 +1918,7 @@ Despite his youth and apparent timidity — Paul had to encourage him not to let
     category: 'Hero of Faith',
     era: 'c. 480–430 BC',
     imageQuery: 'biblical Nehemiah builder governor sword trowel rebuilding Jerusalem walls determination leadership classical sacred art warm golden light portrait',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/108.Nehemiah_Views_the_Ruins_of_Jerusalem%27s_Walls.jpg/400px-108.Nehemiah_Views_the_Ruins_of_Jerusalem%27s_Walls.jpg',
     bio: `Nehemiah was a Jewish exile serving as cupbearer to the Persian king Artaxerxes — a position of high trust and influence. When he heard that Jerusalem's walls lay in ruins and its people in disgrace, he wept, fasted, and prayed. Then he boldly asked the king for permission and resources to rebuild, and Artaxerxes granted everything.
 
 Arriving in Jerusalem, Nehemiah surveyed the rubble by night, organized the people into work crews, and rebuilt the walls in just 52 days — despite fierce opposition from Sanballat, Tobiah, and Geshem, who mocked, plotted, and threatened. Nehemiah armed the workers with swords and trowels, praying with one hand and building with the other. After completing the walls, he partnered with Ezra to lead spiritual reform, reading the Law to the assembled people and renewing their covenant with God. Nehemiah is the Bible's supreme model of godly leadership: prayer + planning + perseverance.`,

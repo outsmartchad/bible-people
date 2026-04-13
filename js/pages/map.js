@@ -1,5 +1,5 @@
 import { LOCATIONS } from '../data.js';
-import { t, tLocation, tName } from '../i18n/i18n.js';
+import { t, tLocation, tName, tLocationContent } from '../i18n/i18n.js';
 import { getPersonById } from '../app.js';
 
 const TYPE_COLORS = {
@@ -78,8 +78,13 @@ function renderLocationDetail(loc) {
   const locName = tLocation(loc.name);
   const hebrewName = loc.hebrewName || '';
   const modernName = loc.modernName || '';
-  const description = loc.description || '';
-  const eventDetails = loc.eventDetails || [];
+  const tc = tLocationContent(loc.name);
+  const description = tc?.description || loc.description || '';
+  const rawEvents = loc.eventDetails || [];
+  const eventDetails = rawEvents.map((ev, i) => {
+    const tEv = tc?.eventDetails?.[i];
+    return tEv ? { ...ev, title: tEv.title, description: tEv.description, scripture: tEv.scripture } : ev;
+  });
   const keyEvents = eventDetails.filter(e => e.isKey);
 
   const panel = document.createElement('div');
@@ -117,7 +122,7 @@ function renderLocationDetail(loc) {
           return `<div class="map-detail-event${ev.isKey ? ' key' : ''}">
             <div class="map-detail-event-head">
               <span class="map-detail-event-title">${ev.title}</span>
-              ${ev.isKey ? '<span class="key-badge">Key Event</span>' : ''}
+              ${ev.isKey ? `<span class="key-badge">${t('keyEvent') || 'Key Event'}</span>` : ''}
             </div>
             <div class="map-detail-event-meta">
               ${ev.date ? `<span class="map-detail-event-date"><i class="ri-time-line"></i> ${ev.date}</span>` : ''}

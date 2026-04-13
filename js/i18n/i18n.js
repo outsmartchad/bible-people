@@ -36,6 +36,11 @@ export function tPersonContent(personId) {
   return lang.personContent?.[personId] || null;
 }
 
+export function tLocationContent(locationName) {
+  const lang = LANGS[currentLang] || en;
+  return lang.locationContent?.[locationName] || null;
+}
+
 export function getLang() {
   return currentLang;
 }

@@ -75,6 +75,9 @@ export const en = {
   footerBrandDesc: 'Walking with the faithful through scripture — stories of faith, courage, and redemption that have shaped the world.',
   mapInfoDesc: 'Click any marker to explore events and history.',
   lesson: 'Lesson',
+  // Map detail
+  keyEvent: 'Key Event',
+  keyEvents: 'Key Events',
   // Quiz
   quiz: 'Quiz',
   quizTitle: 'Who Am I?',
