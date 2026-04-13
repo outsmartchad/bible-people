@@ -4,6 +4,7 @@ import { renderGallery } from './pages/gallery.js';
 import { renderMap } from './pages/map.js';
 import { renderAbout } from './pages/about.js';
 import { renderPerson } from './pages/person.js';
+import { setLang, getLang, updateStaticText, updateLangSwitcher } from './i18n/i18n.js';
 
 export function getPersonImage(person) {
   if (person.imageUrl) return person.imageUrl;
@@ -31,7 +32,6 @@ function updateNav(hash) {
 function route() {
   const hash = location.hash.slice(1) || '/';
   updateNav(hash);
-  // Close mobile menu on navigation
   document.querySelector('nav')?.classList.remove('open');
   window.scrollTo(0, 0);
   if (hash === '/' || hash === '') renderHome(app);
@@ -40,7 +40,15 @@ function route() {
   else if (hash === '/about') renderAbout(app);
   else if (hash.startsWith('/person/')) renderPerson(app, hash.split('/person/')[1]);
   else renderHome(app);
+  updateStaticText();
+  updateLangSwitcher();
 }
+
+// Language switcher event delegation
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.lang-btn');
+  if (btn) setLang(btn.dataset.lang);
+});
 
 window.addEventListener('hashchange', route);
 window.addEventListener('DOMContentLoaded', route);

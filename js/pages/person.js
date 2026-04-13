@@ -1,5 +1,6 @@
 import { PEOPLE } from '../data.js';
 import { getPersonImage, getPersonById } from '../app.js';
+import { t, tName, tSubtitle } from '../i18n/i18n.js';
 
 export function renderPerson(container, id) {
   const person = getPersonById(id);
@@ -13,7 +14,9 @@ export function renderPerson(container, id) {
   const next = idx < PEOPLE.length - 1 ? PEOPLE[idx + 1] : null;
   const imgUrl = getPersonImage(person);
   const tClass = person.testament === 'old' ? 'testament-old' : 'testament-new';
-  const tLabel = person.testament === 'old' ? 'Old Testament' : 'New Testament';
+  const tLabel = person.testament === 'old' ? t('oldTestament') : t('newTestament');
+  const displayName = tName(person.id) || person.name;
+  const displaySubtitle = tSubtitle(person.id) || person.subtitle;
 
   const bioHtml = person.bio.split('\n\n').map(p => `<p>${p}</p>`).join('');
   const journeyIcons = ['ri-star-line', 'ri-fire-line', 'ri-compass-line', 'ri-sun-line'];
@@ -36,18 +39,18 @@ export function renderPerson(container, id) {
   const relatedHtml = (person.relatedPeople || []).map(rid => {
     const rp = getPersonById(rid);
     if (!rp) return '';
-    return `<a href="#/person/${rp.id}" class="related-person"><img src="${getPersonImage(rp)}" alt="${rp.name}"><p>${rp.name}</p></a>`;
+    return `<a href="#/person/${rp.id}" class="related-person"><img src="${getPersonImage(rp)}" alt="${tName(rp.id) || rp.name}"><p>${tName(rp.id) || rp.name}</p></a>`;
   }).join('');
 
   container.innerHTML = `
-    <div class="breadcrumb"><a href="#/">Home</a> &rsaquo; <a href="#/gallery">Gallery</a> &rsaquo; ${person.name}</div>
+    <div class="breadcrumb"><a href="#/">${t('home')}</a> &rsaquo; <a href="#/gallery">${t('peopleGallery')}</a> &rsaquo; ${displayName}</div>
     <div class="person-hero">
       <img class="person-hero-bg" src="${imgUrl}" alt="${person.name}">
       <div class="person-hero-content">
         <img class="person-portrait" src="${imgUrl}" alt="${person.name}">
         <div class="person-info">
-          <div class="name">${person.name}</div>
-          <div class="sub">${person.subtitle}</div>
+          <div class="name">${displayName}</div>
+          <div class="sub">${displaySubtitle}</div>
           <div class="badges">
             <span class="badge ${tClass}">${tLabel}</span>
             <span class="badge era">${person.era}</span>
@@ -57,18 +60,18 @@ export function renderPerson(container, id) {
     </div>
     <div class="person-layout">
       <div class="main-content">
-        <h2><i class="ri-book-open-line"></i> The Story</h2>
+        <h2><i class="ri-book-open-line"></i> ${t('theStory')}</h2>
         <div class="bio-text">${bioHtml}</div>
-        ${journeyHtml ? `<h2><i class="ri-compass-line"></i> Spiritual Journey</h2><div class="journey-grid">${journeyHtml}</div>` : ''}
-        ${lessonsHtml ? `<h2><i class="ri-heart-line"></i> Learning to Walk with God</h2><div class="lessons-list">${lessonsHtml}</div>` : ''}
-        ${scripturesHtml ? `<div class="scriptures-section"><h3><i class="ri-bookmark-line"></i> Key Scriptures</h3>${scripturesHtml}</div>` : ''}
+        ${journeyHtml ? `<h2><i class="ri-compass-line"></i> ${t('spiritualJourney')}</h2><div class="journey-grid">${journeyHtml}</div>` : ''}
+        ${lessonsHtml ? `<h2><i class="ri-heart-line"></i> ${t('learningToWalk')}</h2><div class="lessons-list">${lessonsHtml}</div>` : ''}
+        ${scripturesHtml ? `<div class="scriptures-section"><h3><i class="ri-bookmark-line"></i> ${t('keyScriptures')}</h3>${scripturesHtml}</div>` : ''}
       </div>
       <div class="timeline-sidebar">
-        <h3>Timeline</h3>
+        <h3>${t('timeline')}</h3>
         ${timelineHtml}
       </div>
     </div>
-    ${relatedHtml ? `<div class="related-section"><h3>Related People</h3><div class="related-grid">${relatedHtml}</div></div>` : ''}
+    ${relatedHtml ? `<div class="related-section"><h3>${t('relatedPeople')}</h3><div class="related-grid">${relatedHtml}</div></div>` : ''}
     <div class="person-nav">
       ${prev ? `<a href="#/person/${prev.id}"><i class="ri-arrow-left-line"></i> ${prev.name}</a>` : '<span></span>'}
       ${next ? `<a href="#/person/${next.id}">${next.name} <i class="ri-arrow-right-line"></i></a>` : '<span></span>'}

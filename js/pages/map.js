@@ -1,4 +1,5 @@
 import { LOCATIONS } from '../data.js';
+import { t, tLocation } from '../i18n/i18n.js';
 
 const TYPE_COLORS = {
   City: '#6b1f3d', Mountain: '#8B4513', River: '#4169E1',
@@ -17,8 +18,8 @@ function badgeClass(period) {
 export function renderMap(container) {
   container.innerHTML = `<div class="map-page"><div class="map-container">
     <div class="map-sidebar">
-      <h2>Biblical Map</h2>
-      <div class="subtitle">Explore locations from Scripture</div>
+      <h2>${t('biblicalMap')}</h2>
+      <div class="subtitle">${t('exploreLocations')}</div>
       <div class="filter-label">PERIOD</div>
       <div class="period-filters">
         <span class="period-btn active" data-period="All">All</span>
@@ -33,13 +34,13 @@ export function renderMap(container) {
       <div class="locations-label">LOCATIONS</div>
       <div id="locations-list">
         ${LOCATIONS.map((l, i) => `<div class="location-item" data-idx="${i}">
-          <div class="loc-name">${l.name}</div>
+          <div class="loc-name">${tLocation(l.name)}</div>
           <div class="loc-meta">${l.type} · <span class="loc-badge ${badgeClass(l.period)}">${l.period}</span> · ${l.events} events</div>
         </div>`).join('')}
       </div>
     </div>
     <div class="map-area">
-      <div class="map-info"><h3>Biblical Israel</h3><p>${LOCATIONS.length} locations · ${LOCATIONS.reduce((s, l) => s + l.events, 0)} events</p></div>
+      <div class="map-info"><h3>${t('biblicalIsrael')}</h3><p>${LOCATIONS.length} ${t('locations')} · ${LOCATIONS.reduce((s, l) => s + l.events, 0)} ${t('events')}</p></div>
       <div id="leaflet-map"></div>
     </div>
   </div></div>`;

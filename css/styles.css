@@ -14,6 +14,10 @@ nav a{color:var(--gold-light);font-size:14px;font-weight:400;letter-spacing:.5px
 nav a:hover,nav a.active{color:var(--white)}
 .btn-outline-nav{border:1px solid rgba(255,255,255,.3);padding:8px 20px;border-radius:9999px;color:var(--white)!important;font-size:13px;transition:background .2s}
 .btn-outline-nav:hover{background:rgba(255,255,255,.1)}
+.lang-switcher{display:flex;gap:4px;margin-left:8px}
+.lang-btn{background:none;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.6);padding:4px 10px;border-radius:4px;font-size:12px;cursor:pointer;font-family:var(--font-body);transition:all .2s}
+.lang-btn.active{background:var(--gold);border-color:var(--gold);color:var(--white)}
+.lang-btn:hover{border-color:var(--gold-light);color:var(--white)}
 
 /* Hero */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--white);overflow:hidden}

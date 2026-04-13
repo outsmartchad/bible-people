@@ -1,5 +1,6 @@
 import { PEOPLE } from '../data.js';
 import { getPersonImage } from '../app.js';
+import { t, tName, tCategory } from '../i18n/i18n.js';
 
 const CATEGORIES = ['All', ...new Set(PEOPLE.map(p => p.category))];
 
@@ -7,33 +8,34 @@ export function renderGallery(container) {
   const ntCount = PEOPLE.filter(p => p.testament === 'new').length;
   container.innerHTML = `
     <section class="gallery-hero">
-      <h1>People of the Bible</h1>
-      <p>Explore the lives of men and women whose faith, courage, and obedience shaped the story of salvation.</p>
+      <h1>${t('peopleOfBible')}</h1>
+      <p>${t('galleryDesc')}</p>
       <div class="gallery-stats">
-        <div class="gallery-stat"><div class="num">${PEOPLE.length}</div><div class="lbl">People</div></div>
-        <div class="gallery-stat"><div class="num">${CATEGORIES.length - 1}</div><div class="lbl">Categories</div></div>
-        <div class="gallery-stat"><div class="num">${ntCount}</div><div class="lbl">New Testament</div></div>
+        <div class="gallery-stat"><div class="num">${PEOPLE.length}</div><div class="lbl">${t('people')}</div></div>
+        <div class="gallery-stat"><div class="num">${CATEGORIES.length - 1}</div><div class="lbl">${t('categories')}</div></div>
+        <div class="gallery-stat"><div class="num">${ntCount}</div><div class="lbl">${t('newTestament')}</div></div>
       </div>
     </section>
     <div class="filter-section">
       <div class="filter-row" id="cat-filters">
-        ${CATEGORIES.map((c, i) => `<span class="filter-chip${i === 0 ? ' active' : ''}" data-cat="${c}">${c}</span>`).join('')}
+        ${CATEGORIES.map((c, i) => `<span class="filter-chip${i === 0 ? ' active' : ''}" data-cat="${c}">${c === 'All' ? t('all') : tCategory(c)}</span>`).join('')}
       </div>
       <div class="filter-row" id="test-filters">
-        <span class="filter-chip active" data-test="All">All</span>
-        <span class="filter-chip" data-test="old">Old Testament</span>
-        <span class="filter-chip" data-test="new">New Testament</span>
+        <span class="filter-chip active" data-test="All">${t('all')}</span>
+        <span class="filter-chip" data-test="old">${t('oldTestament')}</span>
+        <span class="filter-chip" data-test="new">${t('newTestament')}</span>
       </div>
-      <div class="search-box"><i class="ri-search-line"></i><input type="text" id="search-input" placeholder="Search by name..."></div>
+      <div class="search-box"><i class="ri-search-line"></i><input type="text" id="search-input" placeholder="${t('searchByName')}"></div>
     </div>
     <div class="gallery-grid" id="gallery-grid">
       ${PEOPLE.map(p => {
         const tClass = p.testament === 'old' ? 'old' : 'new';
-        const tLabel = p.testament === 'old' ? 'Old Testament' : 'New Testament';
-        return `<a href="#/person/${p.id}" class="person-card" data-category="${p.category}" data-testament="${p.testament}" data-name="${p.name.toLowerCase()}">
-          <img src="${getPersonImage(p)}" alt="${p.name}" loading="lazy">
+        const tLabel = p.testament === 'old' ? t('oldTestament') : t('newTestament');
+        const name = tName(p.id) || p.name;
+        return `<a href="#/person/${p.id}" class="person-card" data-category="${p.category}" data-testament="${p.testament}" data-name="${p.name.toLowerCase()} ${(tName(p.id)||'').toLowerCase()}">
+          <img src="${getPersonImage(p)}" alt="${name}" loading="lazy">
           <div class="overlay">
-            <div class="name">${p.name}</div>
+            <div class="name">${name}</div>
             <div class="testament ${tClass}">${tLabel}</div>
           </div>
         </a>`;

@@ -148,7 +148,7 @@ Yet David's story also contains one of the Bible's most devastating moral failur
       { date: 'c. 1010 BC', event: 'Becomes king of Judah; later king of all Israel; conquers Jerusalem' },
       { date: 'c. 970 BC', event: 'Dies after 40-year reign; Solomon succeeds him' }
     ],
-    relatedPeople: ['saul', 'solomon', 'samuel', 'jonathan', 'jesus']
+    relatedPeople: ['saul', 'solomon', 'samuel', 'moses', 'jesus']
   },
   {
     id: 'mary',
@@ -440,7 +440,7 @@ Daniel's most famous episode is his survival in the lions' den, where jealous ri
       { date: 'c. 553 BC', event: 'Receives apocalyptic visions of future kingdoms and the Ancient of Days' },
       { date: 'c. 539 BC', event: 'Survives the lions\' den under Darius the Mede' }
     ],
-    relatedPeople: ['ezekiel', 'jeremiah', 'nehemiah', 'esther', 'haman']
+    relatedPeople: ['isaiah', 'jeremiah', 'nehemiah', 'esther', 'haman']
   },
   {
     id: 'noah',
@@ -1068,7 +1068,7 @@ After his deliverance, Jonah obeyed and preached to Nineveh. The entire city rep
       { date: 'c. 780 BC', event: 'Preaches in Nineveh; the city repents' },
       { date: 'c. 750 BC', event: 'His story is preserved as a lasting lesson about God\'s universal compassion' }
     ],
-    relatedPeople: ['elijah', 'elisha', 'nahum', 'jesus', 'moses']
+    relatedPeople: ['elijah', 'elisha', 'daniel', 'jesus', 'moses']
   },
   {
     id: 'john-baptist',
@@ -1346,7 +1346,7 @@ Under Joshua's command, Israel crossed the Jordan River on dry ground, conquered
       { date: 'c. 1400 BC', event: 'Born in Egypt; serves as Moses\' assistant from youth' },
       { date: 'c. 1320 BC', event: 'One of twelve spies; only he and Caleb trust God\'s promise' },
       { date: 'c. 1280 BC', event: 'Assumes leadership after Moses\' death; conquers Jericho and Canaan' },
-      { date: 'c. 1290 BC', event: 'Dies at 110; buried in his allotted land at Timnath Serah' }
+      { date: 'c. 1250 BC', event: 'Dies at 110; buried in his allotted land at Timnath Serah' }
     ],
     relatedPeople: ['moses', 'rahab', 'aaron', 'deborah', 'david']
   },
@@ -1451,9 +1451,9 @@ After twenty years working for his uncle Laban (who deceived him in return), Jac
       { date: 'c. 1860 BC', event: 'Born as the younger twin of Esau, grasping his brother\'s heel' },
       { date: 'c. 1837 BC', event: 'Steals Esau\'s blessing; flees to Haran; dreams of the ladder at Bethel' },
       { date: 'c. 1817 BC', event: 'Wrestles with God at the Jabbok; renamed Israel' },
-      { date: 'c. 1730 BC', event: 'Dies in Egypt at age 130; buried in the Cave of Machpelah' }
+      { date: 'c. 1730 BC', event: 'Dies in Egypt at age 147; buried in the Cave of Machpelah' }
     ],
-    relatedPeople: ['isaac', 'abraham', 'joseph', 'sarah', 'esau']
+    relatedPeople: ['isaac', 'abraham', 'joseph', 'sarah', 'noah']
   },
   {
     id: 'stephen',
